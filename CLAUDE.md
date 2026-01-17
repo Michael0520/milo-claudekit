@@ -67,6 +67,15 @@ plugins/
 │   ├── src/
 │   │   └── review.ts
 │   └── README.md
+├── milo-core/             # Personal settings backup
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   ├── rules/
+│   ├── docs/
+│   ├── agents/
+│   ├── commands/
+│   ├── hooks/
+│   └── README.md
 └── worktree-manager/      # Git worktree management
     ├── .claude-plugin/
     │   └── plugin.json
@@ -113,6 +122,7 @@ Each plugin follows a consistent structure:
 | dependabot | Commands | Local | Manage Dependabot PRs in GitHub repositories |
 | git | Commands + Hook | Local | Git operations with commit threshold enforcement |
 | license | Commands | Local | Manage open source licenses |
+| milo-core | Rules + Docs + Agents | Local | Personal Claude Code settings backup |
 | one-ui-migration | Skill | Local | Angular 16→20 migration with DDD architecture |
 | rubric | Commands + Hook | Local | Automated code standards checks |
 | superpowers | Skills + Commands | External | TDD, debugging, code review, planning workflows |
@@ -144,7 +154,7 @@ Rubric plugin:
 **Marketplace Configuration** (`.claude-plugin/marketplace.json`):
 - **name**: `milo-claudekit`
 - **owner**: `Michael0520`
-- **plugins**: 7 local plugins + 1 external plugin (superpowers)
+- **plugins**: 8 local plugins + 1 external plugin (superpowers)
 
 **Installation**:
 ```

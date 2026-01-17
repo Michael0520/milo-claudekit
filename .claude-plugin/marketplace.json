@@ -43,6 +43,11 @@
       "description": "Angular 16 to 20 migration with DDD architecture"
     },
     {
+      "name": "milo-core",
+      "source": "./plugins/milo-core",
+      "description": "Personal Claude Code settings, rules, docs, and agents"
+    },
+    {
       "name": "superpowers",
       "source": {
         "source": "github",

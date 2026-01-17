@@ -20,6 +20,7 @@ In `claude` run:
 | dependabot | Manage Dependabot PRs in GitHub repositories | [README](./plugins/dependabot/README.md) |
 | git | Common repository operations for git | [README](./plugins/git/README.md) |
 | license | Manage open source licenses | [README](./plugins/license/README.md) |
+| milo-core | Personal Claude Code settings, rules, docs, and agents | [README](./plugins/milo-core/README.md) |
 | one-ui-migration | Angular 16 to 20 migration with DDD architecture | [README](./plugins/one-ui-migration/README.md) |
 | rubric | Automated code standards checks based on rubrics | [README](./plugins/rubric/README.md) |
 | superpowers | TDD, debugging, code review, planning workflows | [README](https://github.com/obra/superpowers/blob/main/README.md) |
