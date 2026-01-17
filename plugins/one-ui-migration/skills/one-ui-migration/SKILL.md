@@ -120,6 +120,20 @@ rules/
 
 ---
 
+## Migration Planning
+
+For complex migrations, use **migration-planning** skill:
+
+```
+/one-ui-migration:plan {feature-name}
+```
+
+This integrates `superpowers:brainstorming` and `superpowers:writing-plans` with tool reference checklists.
+
+See: `skills/migration-planning/SKILL.md`
+
+---
+
 ## Post-Migration Validation
 
 Use **one-ui-migration-checker** agent:
