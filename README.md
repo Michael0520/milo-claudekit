@@ -8,24 +8,26 @@ A collection of plugins for Claude Code.
 In `claude` run:
 
 ```
-/plugin marketplace install Michael0520/milo-claudekit
+/plugin marketplace add Michael0520/milo-claudekit
+/plugin install <plugin-name>@milo-claudekit
 ```
 
 ## Plugins
 
-| Plugin     | Description                                      | Documentation                                                           |
-|------------|--------------------------------------------------|-------------------------------------------------------------------------|
-| Dependabot | Manage Dependabot PRs in GitHub repositories     | [README](./plugins/dependabot/README.md)                                |
-| Git        | Common repository operations for git             | [README](./plugins/git/README.md)                                       |
-| Hono       | Provides Hono CLI skill for Hono framework       | [README](https://github.com/elct9620/claude-hono-plugin/blob/main/README.md) |
-| License    | Manage open source licenses                      | [README](./plugins/license/README.md)                                   |
-| Rubric     | Automated code standards checks based on rubrics | [README](./plugins/rubric/README.md)                                    |
-| Ruby       | Ruby documentation and development utilities     | [README](https://github.com/elct9620/claude-ruby-plugin/blob/main/README.md) |
-| Spec       | Specification management knowledge and templates  | [README](https://github.com/elct9620/claude-spec-plugin/blob/main/README.md) |
+| Plugin | Description | Documentation |
+|--------|-------------|---------------|
+| chrome-devtools-mcp | UI testing and browser automation via Chrome DevTools MCP | [README](./plugins/chrome-devtools-mcp/README.md) |
+| dependabot | Manage Dependabot PRs in GitHub repositories | [README](./plugins/dependabot/README.md) |
+| git | Common repository operations for git | [README](./plugins/git/README.md) |
+| license | Manage open source licenses | [README](./plugins/license/README.md) |
+| one-ui-migration | Angular 16 to 20 migration with DDD architecture | [README](./plugins/one-ui-migration/README.md) |
+| rubric | Automated code standards checks based on rubrics | [README](./plugins/rubric/README.md) |
+| worktree-manager | Git worktree management for parallel development | [README](./plugins/worktree-manager/README.md) |
 
 ## Configuration
 
 | Plugin | Configurable | Documentation |
 |--------|--------------|---------------|
-| Git    | Yes          | [Configuration](./plugins/git/README.md#configuration) |
-| Rubric | Yes          | [Configuration](./plugins/rubric/README.md#configuration) |
+| Git | Yes | [Configuration](./plugins/git/README.md#configuration) |
+| Rubric | Yes | [Configuration](./plugins/rubric/README.md#configuration) |
+| Worktree Manager | Yes | [Configuration](./plugins/worktree-manager/README.md#configuration) |

@@ -28,25 +28,19 @@
       "description": "Automated code standards checks based on custom rubrics"
     },
     {
-      "name": "spec",
-      "source": {
-        "source": "github",
-        "repo": "elct9620/claude-spec-plugin"
-      }
+      "name": "chrome-devtools-mcp",
+      "source": "./plugins/chrome-devtools-mcp",
+      "description": "UI testing and browser automation via Chrome DevTools MCP"
     },
     {
-      "name": "hono",
-      "source": {
-        "source": "github",
-        "repo": "elct9620/claude-hono-plugin"
-      }
+      "name": "worktree-manager",
+      "source": "./plugins/worktree-manager",
+      "description": "Git worktree management for parallel development"
     },
     {
-      "name": "ruby",
-      "source": {
-        "source": "github",
-        "repo": "elct9620/claude-ruby-plugin"
-      }
+      "name": "one-ui-migration",
+      "source": "./plugins/one-ui-migration",
+      "description": "Angular 16 to 20 migration with DDD architecture"
     }
   ]
 }
