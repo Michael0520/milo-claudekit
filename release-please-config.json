@@ -50,11 +50,32 @@
       "component": "rubric",
       "extra-files": [".claude-plugin/plugin.json"]
     },
-    "plugins/spec": {
+    "plugins/chrome-devtools-mcp": {
       "release-type": "simple",
-      "package-name": "@aotoki/claudekit-spec",
+      "package-name": "@milo/claudekit-chrome-devtools-mcp",
       "changelog-path": "CHANGELOG.md",
-      "component": "spec",
+      "component": "chrome-devtools-mcp",
+      "extra-files": [".claude-plugin/plugin.json"]
+    },
+    "plugins/worktree-manager": {
+      "release-type": "simple",
+      "package-name": "@milo/claudekit-worktree-manager",
+      "changelog-path": "CHANGELOG.md",
+      "component": "worktree-manager",
+      "extra-files": [".claude-plugin/plugin.json"]
+    },
+    "plugins/one-ui-migration": {
+      "release-type": "simple",
+      "package-name": "@milo/claudekit-one-ui-migration",
+      "changelog-path": "CHANGELOG.md",
+      "component": "one-ui-migration",
+      "extra-files": [".claude-plugin/plugin.json"]
+    },
+    "plugins/milo-core": {
+      "release-type": "simple",
+      "package-name": "@milo/claudekit-milo-core",
+      "changelog-path": "CHANGELOG.md",
+      "component": "milo-core",
       "extra-files": [".claude-plugin/plugin.json"]
     }
   },
