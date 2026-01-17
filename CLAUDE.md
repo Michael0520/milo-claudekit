@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Milo ClaudeKit is a collection of Claude Code plugins maintained by Michael0520. The repository is organized as a pnpm monorepo containing multiple plugins that extend Claude Code's capabilities.
+Milo ClaudeKit is a collection of Claude Code plugins maintained by Michael0520. The repository is organized as a bun monorepo containing multiple plugins that extend Claude Code's capabilities.
 
 ## Repository Structure
 
-This is a pnpm workspace monorepo with two main directories:
+This is a bun workspace monorepo with two main directories:
 
 **`packages/`** - Shared TypeScript libraries:
 - `@claudekit/config` - Configuration loading with deep merge support for `claudekit.json` and `claudekit.local.json`
@@ -93,7 +93,7 @@ plugins/
 
 Build all plugins:
 ```bash
-pnpm build
+bun run build
 ```
 
 This runs the build script in each workspace package recursively.
@@ -164,7 +164,7 @@ Rubric plugin:
 
 ## Development Notes
 
-- **Package Manager**: pnpm
+- **Package Manager**: bun
 - **Plugin Distribution**: Via Claude Code plugin marketplace at `Michael0520/milo-claudekit`
 - **License**: MIT
 
@@ -175,4 +175,4 @@ Rubric plugin:
 3. Add commands (`commands/*.md`) or skills (`skills/*/SKILL.md`)
 4. Optional: Add hooks for intercepting operations
 5. Update `marketplace.json` to include the new plugin
-6. Build if needed: `pnpm build`
+6. Build if needed: `bun run build`
