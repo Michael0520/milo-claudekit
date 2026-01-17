@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.5.0...claudekit-v0.6.0) (2026-01-17)
+
+
+### Features
+
+* **milo-core:** expand checker from 16 to 27 rules ([3ac8089](https://github.com/Michael0520/milo-claudekit/commit/3ac80890a6dbe25ed4f4347e431bca6739c1a44d))
+* **one-ui-migration:** add /one-ui-migration:plan command ([5bc9e0a](https://github.com/Michael0520/milo-claudekit/commit/5bc9e0a2a579f8de0a030d3613998a83ec273467))
+* **one-ui-migration:** add migration-planning link to main skill ([acd1079](https://github.com/Michael0520/milo-claudekit/commit/acd10792e197f3e2679944560c666314e43640df))
+* **one-ui-migration:** add migration-planning skill for superpowers integration ([f1080a0](https://github.com/Michael0520/milo-claudekit/commit/f1080a014396d90f85a3b9be18ccab2ee2327ec1))
+
 ## [0.5.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.4.0...claudekit-v0.5.0) (2026-01-17)
 
 
