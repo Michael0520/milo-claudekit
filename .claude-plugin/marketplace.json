@@ -41,6 +41,13 @@
       "name": "one-ui-migration",
       "source": "./plugins/one-ui-migration",
       "description": "Angular 16 to 20 migration with DDD architecture"
+    },
+    {
+      "name": "superpowers",
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers"
+      }
     }
   ]
 }

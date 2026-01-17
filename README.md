@@ -22,6 +22,7 @@ In `claude` run:
 | license | Manage open source licenses | [README](./plugins/license/README.md) |
 | one-ui-migration | Angular 16 to 20 migration with DDD architecture | [README](./plugins/one-ui-migration/README.md) |
 | rubric | Automated code standards checks based on rubrics | [README](./plugins/rubric/README.md) |
+| superpowers | TDD, debugging, code review, planning workflows | [README](https://github.com/obra/superpowers/blob/main/README.md) |
 | worktree-manager | Git worktree management for parallel development | [README](./plugins/worktree-manager/README.md) |
 
 ## Configuration
