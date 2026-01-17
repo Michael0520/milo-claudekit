@@ -39,8 +39,10 @@ function deepMerge(target, source) {
 }
 async function loadConfig() {
 	const projectRoot = process.env.CLAUDE_PROJECT_DIR || process.cwd();
-	const configPath = CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`).find(isConfigExists);
-	const localConfigPath = LOCAL_CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`).find(isConfigExists);
+	const searchPaths = CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`);
+	const configPath = searchPaths.find(isConfigExists);
+	const localSearchPaths = LOCAL_CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`);
+	const localConfigPath = localSearchPaths.find(isConfigExists);
 	const projectConfig = {};
 	if (configPath) try {
 		const fileContent = await fsAsync.readFile(configPath, "utf-8");
@@ -70,7 +72,8 @@ const BlockDecision = "block";
 function deepSnakeToCamel(obj) {
 	if (Array.isArray(obj)) return obj.map(deepSnakeToCamel);
 	else if (obj !== null && typeof obj === "object") return Object.fromEntries(Object.entries(obj).map(([key, value]) => {
-		return [key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase()), deepSnakeToCamel(value)];
+		const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+		return [camelKey, deepSnakeToCamel(value)];
 	}));
 	return obj;
 }
@@ -88,13 +91,15 @@ async function loadHook(source = process.stdin) {
 		});
 		source.on("end", () => {
 			try {
-				resolve(deepSnakeToCamel(JSON.parse(data)));
+				const parsed = JSON.parse(data);
+				const camelCased = deepSnakeToCamel(parsed);
+				resolve(camelCased);
 			} catch (error) {
-				reject(/* @__PURE__ */ new Error(`Unable to parse input as JSON: ${error}`));
+				reject(new Error(`Unable to parse input as JSON: ${error}`));
 			}
 		});
 		source.on("error", (error) => {
-			reject(/* @__PURE__ */ new Error(`Error reading input: ${error}`));
+			reject(new Error(`Error reading input: ${error}`));
 		});
 	});
 }
@@ -125,7 +130,8 @@ async function getChangedFilesCount() {
 				reject(error);
 				return;
 			}
-			resolve(stdout.split("\n").filter((line) => line.trim() !== "").length);
+			const changedFiles$1 = stdout.split("\n").filter((line) => line.trim() !== "");
+			resolve(changedFiles$1.length);
 		});
 	});
 }
@@ -136,12 +142,14 @@ async function getChangedLinesCount() {
 				reject(error);
 				return;
 			}
-			resolve(stdout.split("\n").filter((line) => line.trim() !== "").map((line) => {
+			const lines = stdout.split("\n").filter((line) => line.trim() !== "").map((line) => {
 				const parts = line.split("	");
 				const added = parseInt(parts[0] || "0", 10);
 				const deleted = parseInt(parts[1] || "0", 10);
 				return (isNaN(added) ? 0 : added) + (isNaN(deleted) ? 0 : deleted);
-			}).reduce((acc, curr) => acc + curr, 0));
+			});
+			const totalChangedLines = lines.reduce((acc, curr) => acc + curr, 0);
+			resolve(totalChangedLines);
 		});
 	});
 }
@@ -152,10 +160,12 @@ async function getUntrackedLinesCount() {
 				reject(error);
 				return;
 			}
-			resolve(stdout.split("\n").filter((line) => line.trim() !== "" && !line.includes("total")).map((line) => {
+			const lines = stdout.split("\n").filter((line) => line.trim() !== "" && !line.includes("total")).map((line) => {
 				const parts = line.trim().split(/\s+/);
 				return parseInt(parts[0] || "0", 10);
-			}).reduce((acc, curr) => acc + curr, 0));
+			});
+			const totalUntrackedLines = lines.reduce((acc, curr) => acc + curr, 0);
+			resolve(totalUntrackedLines);
 		});
 	});
 }
@@ -164,7 +174,8 @@ async function getUntrackedLinesCount() {
 //#region src/commit.ts
 const DEFAULT_BLOCK_REASON = "There are too many changes {changedFiles}/{maxChangedFiles} changed files and {totalChangedLines}/{maxChangedLines} changed lines in the working directory. Please review and commit your changes before proceeding.";
 const config = await loadConfig();
-if (!(config.commit?.threshold.enabled ?? false)) {
+const isCommitHookEnabled = config.commit?.threshold.enabled ?? false;
+if (!isCommitHookEnabled) {
 	console.log(stop(true, `Commit hook is disabled in configuration`));
 	process.exit(0);
 }
@@ -172,7 +183,8 @@ if (!await isGitAvailable()) {
 	console.log(stop(true, `Git is not available in the current project`));
 	process.exit(0);
 }
-if ((await loadHook()).stopHookActive) {
+const hook = await loadHook();
+if (hook.stopHookActive) {
 	console.log(stop(true, `Commit hook is skipped because stop hook is active`));
 	process.exit(0);
 }
@@ -189,4 +201,3 @@ const isBlocked = conditionLogic === CommitLogic.AND ? isExceededFiles && isExce
 console.log(stop(!isBlocked, stopReasonTemplate.replace("{changedFiles}", changedFiles.toString()).replace("{maxChangedFiles}", maxFilesChanged.toString()).replace("{changedLines}", changedLines.toString()).replace("{untrackedLines}", untrackedLines.toString()).replace("{totalChangedLines}", (changedLines + untrackedLines).toString()).replace("{maxChangedLines}", maxLinesChanged.toString())));
 
 //#endregion
-export {  };

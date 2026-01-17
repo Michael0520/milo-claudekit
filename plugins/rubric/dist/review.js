@@ -32,8 +32,10 @@ function deepMerge(target, source) {
 }
 async function loadConfig() {
 	const projectRoot = process.env.CLAUDE_PROJECT_DIR || process.cwd();
-	const configPath = CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`).find(isConfigExists);
-	const localConfigPath = LOCAL_CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`).find(isConfigExists);
+	const searchPaths = CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`);
+	const configPath = searchPaths.find(isConfigExists);
+	const localSearchPaths = LOCAL_CONFIG_SEARCH_PATHS.map((p) => `${projectRoot}/${p}`);
+	const localConfigPath = localSearchPaths.find(isConfigExists);
 	const projectConfig = {};
 	if (configPath) try {
 		const fileContent = await fsAsync.readFile(configPath, "utf-8");
@@ -71,7 +73,8 @@ const BlockDecision = "block";
 function deepSnakeToCamel(obj) {
 	if (Array.isArray(obj)) return obj.map(deepSnakeToCamel);
 	else if (obj !== null && typeof obj === "object") return Object.fromEntries(Object.entries(obj).map(([key, value]) => {
-		return [key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase()), deepSnakeToCamel(value)];
+		const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+		return [camelKey, deepSnakeToCamel(value)];
 	}));
 	return obj;
 }
@@ -89,13 +92,15 @@ async function loadHook(source = process.stdin) {
 		});
 		source.on("end", () => {
 			try {
-				resolve(deepSnakeToCamel(JSON.parse(data)));
+				const parsed = JSON.parse(data);
+				const camelCased = deepSnakeToCamel(parsed);
+				resolve(camelCased);
 			} catch (error) {
-				reject(/* @__PURE__ */ new Error(`Unable to parse input as JSON: ${error}`));
+				reject(new Error(`Unable to parse input as JSON: ${error}`));
 			}
 		});
 		source.on("error", (error) => {
-			reject(/* @__PURE__ */ new Error(`Error reading input: ${error}`));
+			reject(new Error(`Error reading input: ${error}`));
 		});
 	});
 }
@@ -171,11 +176,13 @@ function parseFrontmatter(content) {
 		paths: null
 	};
 	const frontmatter = match[1];
-	const name = frontmatter.match(/^name:\s*(.+)$/m)?.[1]?.trim() ?? null;
+	const nameMatch = frontmatter.match(/^name:\s*(.+)$/m);
+	const name = nameMatch?.[1]?.trim() ?? null;
 	const pathsMatch = frontmatter.match(/^paths:\s*(.+)$/m);
+	const paths = pathsMatch?.[1] ? splitGlobPatterns(pathsMatch[1].trim()) : null;
 	return {
 		name,
-		paths: pathsMatch?.[1] ? splitGlobPatterns(pathsMatch[1].trim()) : null
+		paths
 	};
 }
 /**
@@ -197,7 +204,7 @@ function globToRegex(glob) {
 	regex = regex.replace(/\*\*\//g, "\0");
 	regex = regex.replace(/\*/g, "[^/]*");
 	regex = regex.replace(/\x00/g, "(.*\\/)?");
-	return /* @__PURE__ */ new RegExp(`^${regex}$`);
+	return new RegExp(`^${regex}$`);
 }
 /**
 * Discover rules from .claude/rules/ directory
@@ -211,7 +218,8 @@ function discoverRules() {
 			const fullPath = path.join(dir, entry.name);
 			if (entry.isDirectory()) scanDir(fullPath);
 			else if (entry.isFile() && entry.name.endsWith(".md")) {
-				const frontmatter = parseFrontmatter(fs$1.readFileSync(fullPath, "utf-8"));
+				const content = fs$1.readFileSync(fullPath, "utf-8");
+				const frontmatter = parseFrontmatter(content);
 				const name = frontmatter.name || path.basename(fullPath, ".md");
 				if (frontmatter.paths === null) rules.push(createRule(name, /.*/, fullPath));
 				else for (const pattern of frontmatter.paths) rules.push(createRule(name, globToRegex(pattern), fullPath));
@@ -228,7 +236,8 @@ function discoverRules() {
 * Load rules from rubric config
 */
 function loadRubricRules(config$1) {
-	return (config$1.rubric?.rules ?? []).map((rule) => createRule(rule.name || "Unnamed Rule", new RegExp(rule.pattern), rule.path));
+	const rubricRules$1 = config$1.rubric?.rules ?? [];
+	return rubricRules$1.map((rule) => createRule(rule.name || "Unnamed Rule", new RegExp(rule.pattern), rule.path));
 }
 
 //#endregion
@@ -241,15 +250,17 @@ const config = await loadConfig();
 const filePath = hook.toolInput.filePath;
 const rubricRules = loadRubricRules(config);
 const discoveredRules = discoverRules();
-const matchedRules = matchRules([...rubricRules, ...discoveredRules], filePath);
+const allRules = [...rubricRules, ...discoveredRules];
+const matchedRules = matchRules(allRules, filePath);
 if (matchedRules.length === 0) {
 	console.log(postToolUse(true));
 	process.exit(0);
 }
 const references = matchedRules.map((rule) => rule.reference);
-const reviewMessage = (config.rubric?.reviewMessage || DEFAULT_REVIEW_MESSAGE).replace("{references}", references.join(", "));
-if (config.rubric?.enforce ?? true) console.log(postToolUse(false, reviewMessage));
+const messageTemplate = config.rubric?.reviewMessage || DEFAULT_REVIEW_MESSAGE;
+const reviewMessage = messageTemplate.replace("{references}", references.join(", "));
+const isEnforced = config.rubric?.enforce ?? true;
+if (isEnforced) console.log(postToolUse(false, reviewMessage));
 else console.log(postToolUse(true, "The changes match rubric rules.", reviewMessage));
 
 //#endregion
-export {  };
