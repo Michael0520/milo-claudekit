@@ -35,7 +35,3 @@
 * **rubric:** correct globstar pattern to match zero or more directories ([4157cfe](https://github.com/Michael0520/milo-claudekit/commit/4157cfec5004f078904070a25eeb7062bdf30ff7))
 * **rubric:** improve review hook clarity and remove unsupported tool ([3c57343](https://github.com/Michael0520/milo-claudekit/commit/3c57343dd992de447e2f113c3a2404a2ccc3dbc0))
 * **spec:** remove unsupported experimental field from plugin manifest ([d3d3766](https://github.com/Michael0520/milo-claudekit/commit/d3d37669ddc553956cf64afae64377abcba3d88b))
-
-## Changelog
-
-All notable changes to this project will be documented in this file.
