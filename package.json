@@ -2,13 +2,20 @@
   "name": "@aotoki/claudekit",
   "version": "0.6.0",
   "description": "A collection of plugins for Claude Code used by Aotokitsuruya.",
+  "workspaces": ["packages/*", "plugins/*"],
+  "catalog": {
+    "@types/node": "25.0.6",
+    "prettier": "3.7.4",
+    "rolldown": "^1.0.0-beta.59",
+    "typescript": "5.9.3",
+    "vitest": "4.0.16"
+  },
   "scripts": {
-    "build": "pnpm -r run build",
-    "test": "pnpm -r run test",
-    "tsc": "pnpm -r run tsc"
+    "build": "bun run --filter '*' build",
+    "test": "bun run --filter '*' test",
+    "tsc": "bun run --filter '*' tsc"
   },
   "keywords": [],
   "author": "Aotokitsuruya",
-  "license": "MIT",
-  "packageManager": "pnpm@10.15.1"
+  "license": "MIT"
 }
