@@ -6,7 +6,7 @@
 - `rm -rf`, `sudo rm`, `chmod 777`
 - Commit secrets, API keys, credentials
 - Auto-commit without user approval
-- Use `npm` (use `pnpm` instead)
+- Use `npm` (use `bun` instead)
 - Using `any` type
 
 ### Required
@@ -44,7 +44,7 @@ See `~/.claude/docs/prompt-templates.md` for reusable patterns.
 | **Planning** | `superpowers:writing-plans` |
 | **DDD** | `~/.claude/rules/ddd.md` |
 | **Git** | `<type>(scope): description` |
-| **Package** | Always use `pnpm` |
+| **Package** | Always use `bun` |
 
 ## Tech Stack
 
