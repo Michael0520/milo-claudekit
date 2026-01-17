@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.0](https://github.com/Michael0520/milo-claudekit/compare/dependabot-v0.4.1...dependabot-v0.5.0) (2026-01-17)
+
+
+### Features
+
+* **dependabot:** add setup command for dependabot.yml configuration ([9c76fe8](https://github.com/Michael0520/milo-claudekit/commit/9c76fe8fbea635e151763bb95fc8271aebf44f5d))
+* **dependabot:** enhance merge workflow with mergeability checks ([480c2e6](https://github.com/Michael0520/milo-claudekit/commit/480c2e601a8c71ab40ee67e4d514fcd7712eb21b))
+* **dependabot:** improve merge command with user confirmations ([65dcb3c](https://github.com/Michael0520/milo-claudekit/commit/65dcb3c1d032ef31bc4eb6190b567cb71af1af46))
+
+
+### Bug Fixes
+
+* **dependabot:** improve conflict detection before rebasing ([368807a](https://github.com/Michael0520/milo-claudekit/commit/368807a4c71990668c44591ea1caa1895be65a03))
+
 ## [0.4.1](https://github.com/elct9620/claudekit/compare/dependabot-v0.4.0...dependabot-v0.4.1) (2025-11-10)
 
 
