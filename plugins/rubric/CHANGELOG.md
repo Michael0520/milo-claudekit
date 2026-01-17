@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/Michael0520/milo-claudekit/compare/rubric-v0.5.0...rubric-v0.6.0) (2026-01-17)
+
+
+### Features
+
+* migrate package manager from pnpm to bun ([6261db5](https://github.com/Michael0520/milo-claudekit/commit/6261db5a6841ff8d672ee4ea84533a3c4f203ac7))
+
 ## [0.5.0](https://github.com/elct9620/claudekit/compare/rubric-v0.4.1...rubric-v0.5.0) (2025-12-11)
 
 
