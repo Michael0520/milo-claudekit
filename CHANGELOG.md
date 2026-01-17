@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.6.0...claudekit-v0.7.0) (2026-01-17)
+
+
+### Features
+
+* migrate package manager from pnpm to bun ([6261db5](https://github.com/Michael0520/milo-claudekit/commit/6261db5a6841ff8d672ee4ea84533a3c4f203ac7))
+* migrate package manager from pnpm to bun ([daffaf4](https://github.com/Michael0520/milo-claudekit/commit/daffaf4f7579833a930caad6a1d5264b42d81a77))
+
 ## [0.6.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.5.0...claudekit-v0.6.0) (2026-01-17)
 
 
