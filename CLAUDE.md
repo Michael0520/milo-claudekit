@@ -107,15 +107,16 @@ Each plugin follows a consistent structure:
 
 ## Plugins Overview
 
-| Plugin | Type | Description |
-|--------|------|-------------|
-| chrome-devtools-mcp | Skill | UI testing and browser automation via Chrome DevTools MCP |
-| dependabot | Commands | Manage Dependabot PRs in GitHub repositories |
-| git | Commands + Hook | Git operations with commit threshold enforcement |
-| license | Commands | Manage open source licenses |
-| one-ui-migration | Skill | Angular 16→20 migration with DDD architecture |
-| rubric | Commands + Hook | Automated code standards checks |
-| worktree-manager | Skill | Git worktree management for parallel development |
+| Plugin | Type | Source | Description |
+|--------|------|--------|-------------|
+| chrome-devtools-mcp | Skill | Local | UI testing and browser automation via Chrome DevTools MCP |
+| dependabot | Commands | Local | Manage Dependabot PRs in GitHub repositories |
+| git | Commands + Hook | Local | Git operations with commit threshold enforcement |
+| license | Commands | Local | Manage open source licenses |
+| one-ui-migration | Skill | Local | Angular 16→20 migration with DDD architecture |
+| rubric | Commands + Hook | Local | Automated code standards checks |
+| superpowers | Skills + Commands | External | TDD, debugging, code review, planning workflows |
+| worktree-manager | Skill | Local | Git worktree management for parallel development |
 
 ## Configuration System
 
@@ -143,7 +144,7 @@ Rubric plugin:
 **Marketplace Configuration** (`.claude-plugin/marketplace.json`):
 - **name**: `milo-claudekit`
 - **owner**: `Michael0520`
-- **plugins**: 7 local plugins
+- **plugins**: 7 local plugins + 1 external plugin (superpowers)
 
 **Installation**:
 ```
