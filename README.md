@@ -1,14 +1,14 @@
-Claude Kit
+Milo ClaudeKit
 ===
 
-A collection of plugins for Claude Code used by Aotokitsuruya.
+A collection of plugins for Claude Code.
 
 ## Installation
 
 In `claude` run:
 
 ```
-/plugin marketplace install elct9620/claudekit
+/plugin marketplace install Michael0520/milo-claudekit
 ```
 
 ## Plugins
