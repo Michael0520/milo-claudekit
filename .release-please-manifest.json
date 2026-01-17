@@ -8,6 +8,6 @@
   "plugins/rubric": "0.5.0",
   "plugins/chrome-devtools-mcp": "1.0.0",
   "plugins/worktree-manager": "1.0.0",
-  "plugins/one-ui-migration": "1.0.0",
+  "plugins/one-ui-migration": "1.1.0",
   "plugins/milo-core": "1.0.0"
 }
