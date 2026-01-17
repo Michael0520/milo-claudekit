@@ -49,14 +49,14 @@ jobs:
         with:
           node-version: 'lts/*'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Build plugins
-        run: pnpm build
+        run: bun run build
 
       - name: Commit rebuilt dist files
         uses: actions/github-script@v8
