@@ -17,10 +17,12 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 | **Add form validation** | `rules/tools/one-validators.md` |
 | **Create a form** | `rules/tools/form-builder.md` |
 | **Manage state (Store)** | `rules/tools/signal-store.md` |
+| **Handle loading states** | `rules/tools/loading-states.md` |
 | **Create a table** | `rules/tools/common-table.md` |
 | **Create a dialog** | `rules/tools/dialog.md` |
 | **Use MX components** | `rules/tools/mx-components.md` |
 | **Page structure** | `rules/tools/page-layout.md` |
+| **Configure routes** | `rules/tools/routing.md` |
 | **Translate text** | `rules/tools/transloco.md` |
 | **Handle authentication** | `rules/tools/auth.md` |
 
@@ -76,6 +78,7 @@ Route definitions?    → shell/
 ❌ Use BehaviorSubject
 ❌ Use constructor injection
 ❌ Use mat-raised-button (use mat-flat-button)
+❌ Use text icons (use svgIcon="icon:xxx")
 ❌ Add padding to page components
 ❌ Create new translation keys
 ```
@@ -98,14 +101,16 @@ Route definitions?    → shell/
 ```
 rules/
 ├── index.md                    # Router entry
-├── tools/                      # Tool reference (9 files)
+├── tools/                      # Tool reference (11 files)
 │   ├── one-validators.md
 │   ├── form-builder.md
 │   ├── signal-store.md
+│   ├── loading-states.md
 │   ├── common-table.md
 │   ├── dialog.md
 │   ├── mx-components.md
 │   ├── page-layout.md
+│   ├── routing.md
 │   ├── transloco.md
 │   └── auth.md
 ├── guides/                     # Integration guides (3 files)
