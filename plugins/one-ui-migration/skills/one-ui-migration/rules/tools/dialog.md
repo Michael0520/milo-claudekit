@@ -51,6 +51,80 @@ import { smallDialogConfig, mediumDialogConfig, largeDialogConfig, extraLargeDia
 
 ---
 
+## ConfirmDialogComponent (Delete Confirmation)
+
+Use for delete confirmations and other destructive actions.
+
+```typescript
+import { ConfirmDialogComponent } from '@one-ui/shared/ui';
+import { CONFIRM_DIALOG_CONFIG } from '@one-ui/shared/domain';
+```
+
+### Opening Confirm Dialog
+
+```typescript
+readonly #dialog = inject(MatDialog);
+readonly #viewContainerRef = inject(ViewContainerRef);
+
+onDelete(ids: string[]): void {
+  const dialogRef = this.#dialog.open(ConfirmDialogComponent, {
+    ...CONFIRM_DIALOG_CONFIG,
+    viewContainerRef: this.#viewContainerRef,
+    data: {
+      title: this.#transloco.translate('general.dialog.delete_title'),
+      message: this.#transloco.translate('general.dialog.delete_message', { count: ids.length }),
+      confirmText: this.#transloco.translate('general.button.delete'),
+      cancelText: this.#transloco.translate('general.button.cancel')
+    }
+  });
+
+  dialogRef.afterClosed().subscribe((confirmed) => {
+    if (confirmed) {
+      this.#store.deleteItems({ ids });
+    }
+  });
+}
+```
+
+### ConfirmDialog Data Interface
+
+```typescript
+interface ConfirmDialogData {
+  title: string;       // Dialog title
+  message: string;     // Confirmation message
+  confirmText: string; // Confirm button text
+  cancelText: string;  // Cancel button text
+}
+```
+
+### Complete Delete Flow
+
+```
+Table (select items)
+    ↓
+Page Component (onDelete)
+    ↓
+ConfirmDialogComponent (user confirms)
+    ↓
+Store.deleteItems (API call)
+    ↓
+Store.loadItems (refresh table)
+```
+
+```typescript
+// In Store
+deleteItems: mutationMethod<{ ids: string[] }, void>({
+  store,
+  observe: ({ ids }) => api.delete$(ids),
+  next: () => {
+    // Refresh list after delete
+    store.loadItems();
+  }
+})
+```
+
+---
+
 ## Dialog Component Template
 
 ```typescript

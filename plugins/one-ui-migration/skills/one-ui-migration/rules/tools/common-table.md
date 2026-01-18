@@ -11,7 +11,7 @@ When displaying CRUD lists.
 ## Import
 
 ```typescript
-import { CommonTableComponent, SELECT_COLUMN_KEY, EDIT_COLUMN_KEY } from '@one-ui/shared/ui';
+import { CommonTableComponent, SELECT_COLUMN_KEY, EDIT_COLUMN_KEY, oneUiTableMaxSizeDirective } from '@one-ui/shared/ui';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 ```
@@ -136,6 +136,31 @@ readonly columns = computed(() => [
   min-width: 300px;
   max-width: 300px;
 }
+```
+
+---
+
+## Table Footer (oneUiTableMaxSize)
+
+Display max item count in table footer.
+
+```typescript
+import { oneUiTableMaxSizeDirective } from '@one-ui/shared/ui';
+```
+
+```html
+<one-ui-common-table ...>
+  <!-- ... other templates ... -->
+
+  <ng-template #tableFooterTemplate>
+    <span oneUiTableMaxSize>{{ t('general.table_function.limit_count') }} {{ tableMaxSize() }}</span>
+  </ng-template>
+</one-ui-common-table>
+```
+
+In component:
+```typescript
+tableMaxSize = input.required<number>();  // Pass from store or config
 ```
 
 ---

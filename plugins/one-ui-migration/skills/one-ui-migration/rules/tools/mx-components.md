@@ -10,6 +10,53 @@ Creating forms, displaying status, loading buttons, etc.
 
 ---
 
+## Mat-Icon (CRITICAL)
+
+**Must use `svgIcon` attribute, NOT text content.**
+
+```typescript
+import { MatIconModule } from '@angular/material/icon';
+```
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `<mat-icon>refresh</mat-icon>` | `<mat-icon svgIcon="icon:refresh"></mat-icon>` |
+| `<mat-icon>edit</mat-icon>` | `<mat-icon svgIcon="icon:edit"></mat-icon>` |
+| `<mat-icon>delete</mat-icon>` | `<mat-icon svgIcon="icon:delete"></mat-icon>` |
+
+### Common Icons
+
+| Icon | svgIcon Value | Use Case |
+|------|---------------|----------|
+| Refresh | `icon:refresh` | Table refresh button |
+| Edit | `icon:edit` | Edit row |
+| Delete | `icon:delete` | Delete action |
+| Add | `icon:add` | Create new |
+| Search | `icon:search` | Search field |
+| Info | `icon:info` | Information tooltip |
+| Warning | `icon:warning` | Warning status |
+| Error | `icon:error` | Error status |
+| Check | `icon:task_alt` | Success/enabled status |
+| Hide | `icon:hide_source` | Disabled status |
+| Visibility | `icon:visibility` | Show password |
+| Visibility Off | `icon:visibility_off` | Hide password |
+
+```html
+<!-- ❌ Wrong: Text icon -->
+<button mat-button>
+  <mat-icon>refresh</mat-icon>
+  Refresh
+</button>
+
+<!-- ✅ Correct: svgIcon -->
+<button mat-button (click)="refresh.emit()">
+  <mat-icon svgIcon="icon:refresh"></mat-icon>
+  {{ t('general.tooltip.refresh') }}
+</button>
+```
+
+---
+
 ## MxStatus
 
 Displays enabled/disabled and other statuses.
@@ -140,6 +187,97 @@ import { MxFileUploaderComponent } from '@moxa/formoxa/mx-file-uploader';
   <mat-error oneUiFormError="fileSelection"></mat-error>
 </mat-form-field>
 ```
+
+---
+
+## MxPasswordVisibility
+
+Password field visibility toggle component.
+
+```typescript
+import { MxPasswordVisibilityComponent } from '@moxa/formoxa/mx-password-visibility';
+```
+
+```html
+<mat-form-field>
+  <mat-label mxLabel>{{ t('general.common.password') }}</mat-label>
+  <input matInput [type]="passwordVisible ? 'text' : 'password'" formControlName="password" />
+  <mx-password-visibility matSuffix [(visible)]="passwordVisible" />
+  <mat-error oneUiFormError="password"></mat-error>
+</mat-form-field>
+```
+
+```typescript
+// In component
+passwordVisible = false;
+```
+
+---
+
+## mxAutoTooltip
+
+Auto-detects text overflow and shows tooltip only when text is truncated.
+
+```typescript
+import { MxAutoTooltipDirective } from '@moxa/formoxa/mx-auto-tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+```
+
+**Must use with `gl-ellipsis-text` class:**
+
+```html
+<td mat-cell *matCellDef="let row">
+  <span class="gl-ellipsis-text" mxAutoTooltip [matTooltip]="row.description">
+    {{ row.description }}
+  </span>
+</td>
+```
+
+```scss
+// Set column width constraints
+.mat-column-description {
+  min-width: 300px;
+  max-width: 300px;
+}
+```
+
+| Class/Directive | Purpose |
+|-----------------|---------|
+| `gl-ellipsis-text` | CSS class for text truncation with ellipsis |
+| `mxAutoTooltip` | Only shows tooltip when text overflows |
+| `[matTooltip]` | The full text to display in tooltip |
+
+---
+
+## Form Row Layout
+
+Use `.form-row` class to group multiple fields on the same row.
+
+```html
+<!-- ❌ Wrong: Fields on separate rows when Legacy has them on same row -->
+<mat-form-field>
+  <mat-label>{{ t('organization_name') }}</mat-label>
+  <input matInput formControlName="organizationName" />
+</mat-form-field>
+<mat-form-field>
+  <mat-label>{{ t('organizational_unit') }}</mat-label>
+  <input matInput formControlName="organizationalUnit" />
+</mat-form-field>
+
+<!-- ✅ Correct: Keep same row grouping as Legacy -->
+<div class="form-row">
+  <mat-form-field>
+    <mat-label>{{ t('organization_name') }}</mat-label>
+    <input matInput formControlName="organizationName" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ t('organizational_unit') }}</mat-label>
+    <input matInput formControlName="organizationalUnit" />
+  </mat-form-field>
+</div>
+```
+
+⚠️ **Migration Rule**: Analyze Legacy source for `fxLayout="row"` patterns and replicate with `.form-row` class.
 
 ---
 

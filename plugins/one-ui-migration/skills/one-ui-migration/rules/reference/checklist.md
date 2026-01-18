@@ -16,6 +16,7 @@ rg -n '\*ngIf|\*ngFor|\*ngSwitch' --type html {path}
 rg -n 'mat-raised-button' --type html {path}
 rg -n 'localStorage' --type ts --glob '!*.spec.ts' {path}
 rg -n '\| async' --type html {path}
+rg -n '<mat-icon>[a-z_]+</mat-icon>' --type html {path}  # Text icons (should use svgIcon)
 
 # Lint & Test
 nx lint {scope}-{feature}-domain
@@ -347,6 +348,18 @@ form = this.#fb.group({
 | Default change detection | `changeDetection: ChangeDetectionStrategy.OnPush` |
 
 🔍 檢查: `rg -n 'mat-raised-button' --type html {path}`
+
+### Icons (CRITICAL)
+
+- [ ] All icons use `svgIcon` attribute (NOT text content)
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `<mat-icon>refresh</mat-icon>` | `<mat-icon svgIcon="icon:refresh"></mat-icon>` |
+| `<mat-icon>edit</mat-icon>` | `<mat-icon svgIcon="icon:edit"></mat-icon>` |
+| `<mat-icon>delete</mat-icon>` | `<mat-icon svgIcon="icon:delete"></mat-icon>` |
+
+🔍 檢查: `rg -n '<mat-icon>[a-z_]+</mat-icon>' --type html {path}`
 
 ### MX Components
 
