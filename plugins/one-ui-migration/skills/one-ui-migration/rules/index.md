@@ -21,6 +21,7 @@ MIGRATE, DON'T INNOVATE
 | Add form validation | [tools/one-validators.md](./tools/one-validators.md) |
 | Create a form | [tools/form-builder.md](./tools/form-builder.md) |
 | Manage state | [tools/signal-store.md](./tools/signal-store.md) |
+| Handle loading states | [tools/loading-states.md](./tools/loading-states.md) |
 | Create a table | [tools/common-table.md](./tools/common-table.md) |
 | Create a dialog | [tools/dialog.md](./tools/dialog.md) |
 | Use MX components | [tools/mx-components.md](./tools/mx-components.md) |
