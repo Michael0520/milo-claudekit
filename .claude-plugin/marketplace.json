@@ -48,6 +48,11 @@
       "description": "Personal Claude Code settings, rules, docs, and agents"
     },
     {
+      "name": "legacy-analyzer",
+      "source": "./plugins/legacy-analyzer",
+      "description": "Analyze legacy codebase scope to produce migration specification"
+    },
+    {
       "name": "superpowers",
       "source": {
         "source": "github",
