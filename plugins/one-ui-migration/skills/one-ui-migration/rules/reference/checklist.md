@@ -1,7 +1,7 @@
 # Migration Checklist
 
-> 發現問題 → 看 Wrong/Correct → 快速修復
-> 需要更多說明 → 點擊 📖 連結
+> Found an issue → See Wrong/Correct → Quick fix
+> Need more details → Click 📖 link
 
 ---
 
@@ -28,7 +28,7 @@ npx tsc --noEmit --project libs/{scope}/{feature}/domain/tsconfig.lib.json
 
 ## Angular 20 Syntax (8 items)
 
-📖 詳細: [angular-20-syntax.md](./angular-20-syntax.md)
+📖 Details: [angular-20-syntax.md](./angular-20-syntax.md)
 
 ### Control Flow
 
@@ -42,7 +42,7 @@ npx tsc --noEmit --project libs/{scope}/{feature}/domain/tsconfig.lib.json
 | `*ngFor="let item of items"` | `@for (item of items; track item.id) { }` |
 | `[ngSwitch]="value"` | `@switch (value) { @case ('a') { } }` |
 
-🔍 檢查: `rg -n '\*ngIf|\*ngFor|\*ngSwitch' --type html {path}`
+🔍 Check: `rg -n '\*ngIf|\*ngFor|\*ngSwitch' --type html {path}`
 
 ### Dependency Injection
 
@@ -53,7 +53,7 @@ npx tsc --noEmit --project libs/{scope}/{feature}/domain/tsconfig.lib.json
 | `constructor(private store: MyStore)` | `readonly #store = inject(MyStore);` |
 | `constructor(@Inject(TOKEN) data)` | `readonly data = inject(TOKEN);` |
 
-🔍 檢查: `rg -n 'constructor\(private' --type ts {path}`
+🔍 Check: `rg -n 'constructor\(private' --type ts {path}`
 
 ### Component I/O
 
@@ -77,13 +77,13 @@ npx tsc --noEmit --project libs/{scope}/{feature}/domain/tsconfig.lib.json
 | `subject.value` | `sig()` |
 | `subject.next(value)` | `sig.set(value)` |
 
-🔍 檢查: `rg -n 'BehaviorSubject|Subject<' --type ts {path}`
+🔍 Check: `rg -n 'BehaviorSubject|Subject<' --type ts {path}`
 
 ---
 
 ## State Management (8 items)
 
-📖 詳細: [signal-store.md](../tools/signal-store.md) | [loading-states.md](../tools/loading-states.md)
+📖 Details: [signal-store.md](../tools/signal-store.md) | [loading-states.md](../tools/loading-states.md)
 
 ### SignalStore Pattern
 
@@ -132,13 +132,13 @@ export const FeatureStore = signalStore(
 | `*ngIf="loading$ \| async"` | `@if (loading()) { }` |
 | `combineLatest([a$, b$])` | `computed(() => [a(), b()])` |
 
-🔍 檢查: `rg -n '\| async' --type html {path}`
+🔍 Check: `rg -n '\| async' --type html {path}`
 
 ---
 
 ## Loading States (5 items)
 
-📖 詳細: [loading-states.md](../tools/loading-states.md)
+📖 Details: [loading-states.md](../tools/loading-states.md)
 
 ### Button Loading
 
@@ -164,7 +164,7 @@ export const FeatureStore = signalStore(
 </button>
 ```
 
-🔍 檢查: `rg -n 'mxButtonIsLoading.*disabled.*form\.invalid[^|]' --type html {path}`
+🔍 Check: `rg -n 'mxButtonIsLoading.*disabled.*form\.invalid[^|]' --type html {path}`
 
 ### Dialog Close Timing
 
@@ -205,7 +205,7 @@ onSubmit(): void {
 
 ## DDD Architecture (18 items)
 
-📖 詳細: [ddd-architecture.md](./ddd-architecture.md)
+📖 Details: [ddd-architecture.md](./ddd-architecture.md)
 
 ### Layer Placement
 
@@ -293,7 +293,7 @@ export class UserTableComponent {
 
 ## Form Validation (9 items)
 
-📖 詳細: [one-validators.md](../tools/one-validators.md) | [form-builder.md](../tools/form-builder.md)
+📖 Details: [one-validators.md](../tools/one-validators.md) | [form-builder.md](../tools/form-builder.md)
 
 ### Import
 
@@ -335,7 +335,7 @@ form = this.#fb.group({
 
 ## UI Components (12 items)
 
-📖 詳細: [mx-components.md](../tools/mx-components.md) | [dialog.md](../tools/dialog.md)
+📖 Details: [mx-components.md](../tools/mx-components.md) | [dialog.md](../tools/dialog.md)
 
 ### Buttons
 
@@ -347,7 +347,7 @@ form = this.#fb.group({
 | `mat-raised-button` | `mat-flat-button` |
 | Default change detection | `changeDetection: ChangeDetectionStrategy.OnPush` |
 
-🔍 檢查: `rg -n 'mat-raised-button' --type html {path}`
+🔍 Check: `rg -n 'mat-raised-button' --type html {path}`
 
 ### Icons (CRITICAL)
 
@@ -359,7 +359,7 @@ form = this.#fb.group({
 | `<mat-icon>edit</mat-icon>` | `<mat-icon svgIcon="icon:edit"></mat-icon>` |
 | `<mat-icon>delete</mat-icon>` | `<mat-icon svgIcon="icon:delete"></mat-icon>` |
 
-🔍 檢查: `rg -n '<mat-icon>[a-z_]+</mat-icon>' --type html {path}`
+🔍 Check: `rg -n '<mat-icon>[a-z_]+</mat-icon>' --type html {path}`
 
 ### MX Components
 
@@ -434,7 +434,7 @@ this.#dialog.open(FeatureDialogComponent, {
 
 ## Translation Keys (9 items)
 
-📖 詳細: [transloco.md](../tools/transloco.md)
+📖 Details: [transloco.md](../tools/transloco.md)
 
 ### Critical Rules
 
@@ -497,7 +497,7 @@ this.#dialog.open(FeatureDialogComponent, {
 
 ## Page Layout (4 items)
 
-📖 詳細: [page-layout.md](../tools/page-layout.md)
+📖 Details: [page-layout.md](../tools/page-layout.md)
 
 - [ ] Use `gl-page-content` wrapper class
 - [ ] Use `content-wrapper` (not mat-card)
@@ -508,7 +508,7 @@ this.#dialog.open(FeatureDialogComponent, {
 
 ## Routing (4 items)
 
-📖 詳細: [routing.md](../tools/routing.md)
+📖 Details: [routing.md](../tools/routing.md)
 
 - [ ] Use `ROUTES_ALIASES` for route paths (not hardcoded strings)
 - [ ] Include `createBreadcrumbResolver` in route resolve
@@ -559,7 +559,7 @@ this.#dialog.open(FeatureDialogComponent, {
 
 ## Tab Group (5 items)
 
-📖 詳細: [mx-components.md](../tools/mx-components.md)
+📖 Details: [mx-components.md](../tools/mx-components.md)
 
 - [ ] Import `MxTabGroupDirective` from `@moxa/formoxa/mx-tabs`
 - [ ] Add `MxTabGroupDirective` to imports array
@@ -586,7 +586,7 @@ import { MxTabGroupDirective } from '@moxa/formoxa/mx-tabs';
 
 ## Storage & Auth (3 items)
 
-📖 詳細: [auth.md](../tools/auth.md)
+📖 Details: [auth.md](../tools/auth.md)
 
 - [ ] Token uses `sessionStorage` (not `localStorage`)
 - [ ] Token key is `'mx_token'`
@@ -597,7 +597,7 @@ import { MxTabGroupDirective } from '@moxa/formoxa/mx-tabs';
 | `localStorage.getItem('token')` | `sessionStorage.getItem('mx_token')` |
 | `localStorage.setItem(...)` | `sessionStorage.setItem('mx_token', value)` |
 
-🔍 檢查: `rg -n 'localStorage' --type ts {path}`
+🔍 Check: `rg -n 'localStorage' --type ts {path}`
 
 ---
 
@@ -619,13 +619,13 @@ import { MxTabGroupDirective } from '@moxa/formoxa/mx-tabs';
 | `enum Status { }` | `type Status = 'active' \| 'inactive'` |
 | `private store` | `readonly #store` |
 
-🔍 檢查: `rg -n ': any' --type ts --glob '!*.spec.ts' {path}`
+🔍 Check: `rg -n ': any' --type ts --glob '!*.spec.ts' {path}`
 
 ---
 
 ## Table Component (11 items)
 
-📖 詳細: [common-table.md](../tools/common-table.md) | [create-table.md](../guides/create-table.md)
+📖 Details: [common-table.md](../tools/common-table.md) | [create-table.md](../guides/create-table.md)
 
 - [ ] Use `CommonTableComponent` from `@one-ui/shared/ui`
 - [ ] Create data item interface in domain layer (`model.ts`)
