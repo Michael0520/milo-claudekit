@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Michael0520/milo-claudekit/compare/milo-core-v1.2.0...milo-core-v1.3.0) (2026-01-17)
+
+
+### Features
+
+* migrate package manager from pnpm to bun ([6261db5](https://github.com/Michael0520/milo-claudekit/commit/6261db5a6841ff8d672ee4ea84533a3c4f203ac7))
+
 ## [1.2.0](https://github.com/Michael0520/milo-claudekit/compare/milo-core-v1.1.0...milo-core-v1.2.0) (2026-01-17)
 
 
