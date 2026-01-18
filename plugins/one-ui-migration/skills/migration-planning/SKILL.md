@@ -25,11 +25,12 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 | Forms | `rules/tools/form-builder.md` + `rules/tools/one-validators.md` |
 | Tables | `rules/tools/common-table.md` + `rules/tools/transloco.md` |
 | Dialogs | `rules/tools/dialog.md` + `rules/tools/form-builder.md` |
-| State management | `rules/tools/signal-store.md` |
+| State management | `rules/tools/signal-store.md` + `rules/tools/loading-states.md` |
 | Status display | `rules/tools/mx-components.md` |
 | Page layout | `rules/tools/page-layout.md` + `rules/tools/transloco.md` |
 | Authentication | `rules/tools/auth.md` |
 | Translation | `rules/tools/transloco.md` |
+| Route configuration | `rules/tools/routing.md` |
 
 ---
 
@@ -46,8 +47,9 @@ Legacy component uses:
 - [ ] Forms → Reference `form-builder.md`, `one-validators.md`
 - [ ] Tables → Reference `common-table.md`
 - [ ] Dialogs → Reference `dialog.md`
-- [ ] State → Reference `signal-store.md`
+- [ ] State → Reference `signal-store.md`, `loading-states.md`
 - [ ] MX Components → Reference `mx-components.md`
+- [ ] Routes → Reference `routing.md`
 
 **Required tools for this migration:**
 1. `rules/tools/signal-store.md` - Store pattern
@@ -141,6 +143,20 @@ Every task MUST include a Tool References section:
 - [ ] Use `sessionStorage` (not `localStorage`)
 - [ ] Token key is `mx_token`
 
+### loading-states.md Checklist
+
+- [ ] State interface extends `LoadingState`
+- [ ] Use `loadingInitialState()` for initial state
+- [ ] Use `loading()` signal in templates
+- [ ] Loading button: `[mxButtonIsLoading]="loading()" [disabled]="loading()"`
+
+### routing.md Checklist
+
+- [ ] Use `ROUTES_ALIASES` for route paths
+- [ ] Use `createBreadcrumbResolver` for breadcrumb resolution
+- [ ] Routes use `loadChildren` with dynamic import
+- [ ] Shell module exports `createRoutes()` function
+
 ---
 
 ## Task Template
@@ -208,12 +224,14 @@ Legacy `user-management` uses:
 
 **Required tools**:
 1. `signal-store.md` - Store pattern
-2. `common-table.md` - Table component
-3. `dialog.md` - Dialog pattern
-4. `form-builder.md` - Form in dialog
-5. `one-validators.md` - Form validation
-6. `mx-components.md` - MxStatus, mxButtonIsLoading
-7. `transloco.md` - Translations
+2. `loading-states.md` - Loading state management
+3. `common-table.md` - Table component
+4. `dialog.md` - Dialog pattern
+5. `form-builder.md` - Form in dialog
+6. `one-validators.md` - Form validation
+7. `mx-components.md` - MxStatus, mxButtonIsLoading
+8. `transloco.md` - Translations
+9. `routing.md` - Route configuration
 
 ### Task Example
 
