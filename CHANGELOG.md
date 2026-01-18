@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.8.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.7.0...claudekit-v0.8.0) (2026-01-18)
+
+
+### Features
+
+* **legacy-analyzer:** add plugin for legacy codebase analysis ([3da0066](https://github.com/Michael0520/milo-claudekit/commit/3da006685afc95f73219ba68201624ffea900f03))
+* **legacy-analyzer:** simplify to single agent with spec + plan ([457fd08](https://github.com/Michael0520/milo-claudekit/commit/457fd08a40a922d25f73c34f8d25ddecc18472e4))
+* **one-ui-migration:** add missing UI component details ([f846de2](https://github.com/Michael0520/milo-claudekit/commit/f846de2afc962d65856f7b52082c6ac796b224f3))
+* **one-ui-migration:** add routing configuration guide ([a83aa47](https://github.com/Michael0520/milo-claudekit/commit/a83aa47bcf7bab2da23929b2fc3a0838f1f039ee))
+* **one-ui-migration:** enhance checklist with quick-fix patterns ([b177090](https://github.com/Michael0520/milo-claudekit/commit/b1770907a62ab15eeb74cd8c90a2a1e790c9bec0))
+
+
+### Bug Fixes
+
+* **one-ui-migration:** convert Chinese text to English in checklist ([830371c](https://github.com/Michael0520/milo-claudekit/commit/830371ccb03c85cee6f09be4608f81bc16059ed1))
+
 ## [0.7.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.6.0...claudekit-v0.7.0) (2026-01-17)
 
 
