@@ -1,6 +1,6 @@
 {
   "name": "legacy-analyzer",
-  "description": "Analyze legacy codebase scope to produce migration specification",
+  "description": "Analyze legacy codebase and generate migration plan",
   "version": "1.0.0",
   "author": {
     "name": "Michael0520"
