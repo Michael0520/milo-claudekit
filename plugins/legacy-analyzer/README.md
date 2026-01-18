@@ -1,13 +1,13 @@
 # Legacy Analyzer
 
-Analyze legacy codebase scope to produce migration specification documents.
+Analyze legacy codebase and generate migration plan.
 
 ## Purpose
 
-Analyzes Angular legacy codebases and produces comprehensive migration specification documents that serve as a "must-implement checklist" for migration, ensuring 100% behavior parity.
+Analyzes Angular legacy codebases and produces migration-ready specification with implementation plan, ensuring 100% behavior parity.
 
 ## Agents
 
 | Agent | Description |
 |-------|-------------|
-| `legacy-scope-analyzer` | Analyzes Angular codebase and produces specification document. Trigger: `analyze legacy scope for {path}` |
+| `legacy-scope-analyzer` | Analyze legacy scope and generate migration plan. Trigger: `migrate legacy scope for {path}` |
