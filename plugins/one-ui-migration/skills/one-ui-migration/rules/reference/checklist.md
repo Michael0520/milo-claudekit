@@ -504,6 +504,33 @@ this.#dialog.open(FeatureDialogComponent, {
 - [ ] Page component has NO padding (`:host { display: block; }`)
 - [ ] Layout padding handled by shell/app layout
 
+---
+
+## Routing (4 items)
+
+📖 詳細: [routing.md](../tools/routing.md)
+
+- [ ] Use `ROUTES_ALIASES` for route paths (not hardcoded strings)
+- [ ] Include `createBreadcrumbResolver` in route resolve
+- [ ] Feature routes use `createRoutes()` pattern
+- [ ] Route providers include Store and ApiService
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `path: 'my-feature'` | `path: ROUTES_ALIASES['myFeature'].route` |
+| Missing breadcrumb resolver | `resolve: { breadcrumb: createBreadcrumbResolver(...) }` |
+
+```typescript
+// ✅ Correct route configuration
+{
+  path: ROUTES_ALIASES['myFeature'].route,
+  loadChildren: () => import('@one-ui/mx-ros/my-feature/shell').then((m) => m.createRoutes()),
+  resolve: {
+    breadcrumb: createBreadcrumbResolver(ROUTES_ALIASES['myFeature'].id)
+  }
+}
+```
+
 ```html
 <!-- ✅ Correct page structure -->
 <div *transloco="let t" class="gl-page-content">

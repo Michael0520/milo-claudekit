@@ -26,6 +26,7 @@ MIGRATE, DON'T INNOVATE
 | Create a dialog | [tools/dialog.md](./tools/dialog.md) |
 | Use MX components | [tools/mx-components.md](./tools/mx-components.md) |
 | Page structure | [tools/page-layout.md](./tools/page-layout.md) |
+| Configure routes | [tools/routing.md](./tools/routing.md) |
 | Translate text | [tools/transloco.md](./tools/transloco.md) |
 | Handle authentication | [tools/auth.md](./tools/auth.md) |
 
@@ -73,4 +74,7 @@ import { MxStatusComponent } from '@moxa/formoxa/mx-status';
 // UI - Page Layout
 import { BreadcrumbComponent } from '@one-ui/shared/ui';
 import { MxPageTitleComponent } from '@moxa/formoxa/mx-page-title';
+
+// Routing - Breadcrumb
+import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/domain';
 ```
