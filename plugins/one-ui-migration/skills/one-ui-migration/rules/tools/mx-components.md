@@ -136,15 +136,25 @@ import { MxLoadingButtonDirective } from '@moxa/formoxa/mx-button';
 
 ---
 
-## oneUiFormError
+## Form Validation Directives
+
+> 📖 For validator definitions, see [one-validators.md](./one-validators.md)
+
+### Quick Reference
+
+| Directive | Purpose | Example |
+|-----------|---------|---------|
+| `oneUiFormError` | Auto-display validation errors | `<mat-error oneUiFormError="name">` |
+| `oneUiFormHint` | Auto-display hints (char count / range) | `<mat-hint oneUiFormHint="name">` |
+| `oneUiNumberOnly` | Restrict input to numbers only | `<input type="text" oneUiNumberOnly>` |
+
+### oneUiFormError
 
 Automatically displays form validation error messages. Reads i18n error messages from Enhanced Validators (`validatorFnWithMessage` / `validatorWithMessage`).
 
 ```typescript
 import { OneUiFormErrorDirective } from '@one-ui/shared/ui/form';
 ```
-
-### Basic Usage
 
 ```html
 <mat-form-field>
@@ -154,32 +164,12 @@ import { OneUiFormErrorDirective } from '@one-ui/shared/ui/form';
 </mat-form-field>
 ```
 
-### How It Works
-
+**How It Works:**
 1. Directive reads the `__renderErrorMessage__` property from the validator
 2. If validator was created with `validatorFnWithMessage`, error message is automatically resolved
 3. Supports both i18n keys and dynamic message functions
 
-```typescript
-// In form definition - validator has embedded error message
-form = this.#fb.group({
-  name: ['', [
-    validatorFnWithMessage(
-      (c) => !c.value ? { required: true } : null,
-      'validators.required'  // This i18n key is auto-displayed by oneUiFormError
-    )
-  ]]
-});
-```
-
-```html
-<!-- No manual error message needed -->
-<mat-error oneUiFormError="name"></mat-error>
-```
-
----
-
-## oneUiFormHint
+### oneUiFormHint
 
 Automatically displays hints from Enhanced Validators. Supports character count, range hints, and custom hint messages.
 
@@ -187,30 +177,18 @@ Automatically displays hints from Enhanced Validators. Supports character count,
 import { OneUiFormHintDirective } from '@one-ui/shared/ui/form';
 ```
 
-### Basic Usage
-
 ```html
 <mat-form-field>
   <mat-label>{{ t('field.port') }}</mat-label>
-  <input matInput type="number" formControlName="port" />
+  <input matInput type="text" oneUiNumberOnly formControlName="port" />
   <mat-hint oneUiFormHint="port"></mat-hint>  <!-- Shows "1 ~ 65535" -->
   <mat-error oneUiFormError="port"></mat-error>
 </mat-form-field>
 ```
 
-### Multiple Hints (hintIndex)
+**Multiple Hints (hintIndex):**
 
 When a form control has multiple validators with hints, use `[hintIndex]` to select which hint to display:
-
-```typescript
-// Form with multiple validators that have hints
-form = this.#fb.group({
-  password: ['', [
-    validatorFnWithMessage(fn1, 'error1', 'Minimum 8 characters'),   // hintIndex=0
-    validatorFnWithMessage(fn2, 'error2', 'Must include number'),    // hintIndex=1
-  ]]
-});
-```
 
 ```html
 <!-- Display first hint (default, hintIndex=0) -->
@@ -220,73 +198,13 @@ form = this.#fb.group({
 <mat-hint oneUiFormHint="password" [hintIndex]="1"></mat-hint>
 ```
 
-### Character Count Example
-
-```typescript
-// Validator with dynamic character count hint
-const maxLengthValidator = validatorFnWithMessage(
-  (c) => c.value?.length > 32 ? { maxLength: true } : null,
-  'validators.maxLength',
-  (c) => `${c.value?.length ?? 0} / 32`  // Dynamic hint
-);
-
-form = this.#fb.group({
-  name: ['', [maxLengthValidator]]
-});
-```
-
-```html
-<mat-form-field>
-  <mat-label>{{ t('field.name') }}</mat-label>
-  <input matInput formControlName="name" />
-  <mat-hint oneUiFormHint="name"></mat-hint>  <!-- Shows "0 / 32", updates as user types -->
-  <mat-error oneUiFormError="name"></mat-error>
-</mat-form-field>
-```
-
-### When NOT to Use hintIndex
-
-- If you only have one validator with a hint, omit `[hintIndex]` (defaults to 0)
-- Only add `[hintIndex]` when you specifically need to show a non-first hint
-
----
-
-## Form Directives Import
-
-```typescript
-import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/ui/form';
-
-@Component({
-  imports: [
-    // ... other imports
-    OneUiFormErrorDirective,
-    OneUiFormHintDirective
-  ]
-})
-```
-
----
-
-## Common Form Mistakes
-
-| ❌ Wrong | ✅ Correct |
-|----------|-----------|
-| `{{ form.get('name')?.value?.length }} / 32` | `<mat-hint oneUiFormHint="name">` |
-| `*ngIf="form.get('x')?.hasError('required')"` | `<mat-error oneUiFormError="x">` |
-| `[maxlength]="32"` + manual char count | `OneValidators.maxLength(32)` + `oneUiFormHint` |
-| Hardcoded error messages | i18n keys in `validatorFnWithMessage` |
-
----
-
-## oneUiNumberOnly
+### oneUiNumberOnly
 
 Restricts input to numbers only, replacing native HTML `type="number"`.
 
 ```typescript
 import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
 ```
-
-### Basic Usage
 
 ```html
 <!-- ✅ Correct: Use type="text" with oneUiNumberOnly -->
@@ -296,8 +214,6 @@ import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
 <input matInput type="number" formControlName="port" />
 ```
 
-### Why Not type="number"?
-
 | `type="number"` Problems | `oneUiNumberOnly` Solution |
 |--------------------------|---------------------------|
 | Scroll wheel accidentally changes value | No such issue |
@@ -305,28 +221,89 @@ import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
 | Scientific notation input (e.g., `1e5`) | Not allowed |
 | Inconsistent behavior across browsers | Unified behavior |
 
-### Range Validation
-
-Use Reactive Forms validators, NOT HTML attributes:
+### Complete Form Example
 
 ```typescript
-// ✅ Correct - Use OneValidators.range
+// ===== Component =====
+import { OneValidators, validatorFnWithMessage } from '@one-ui/shared/domain';
+import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/ui/form';
+import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
+
+// Custom validator with character count hint
+const descriptionValidator = validatorFnWithMessage(
+  (c) => (c.value?.length ?? 0) > 255 ? { maxLength: true } : null,
+  'validators.maxLength',
+  (c) => `${c.value?.length ?? 0} / 255`
+);
+
 form = this.#fb.group({
-  port: [514, [OneValidators.required, OneValidators.range(1, 65535)]]
+  name: ['', [OneValidators.required, OneValidators.maxLength(32)]],
+  port: [514, [OneValidators.required, OneValidators.range(1, 65535)]],
+  description: ['', [descriptionValidator]]
 });
 ```
 
 ```html
-<!-- ❌ Wrong: type="text" doesn't support min/max attributes -->
-<input type="text" min="1" max="65535" oneUiNumberOnly />
+<!-- ===== Template ===== -->
+<form [formGroup]="form">
+  <!-- Name field -->
+  <mat-form-field>
+    <mat-label mxLabel [mxLabelTooltip]="t('field.name.hint')">{{ t('field.name') }}</mat-label>
+    <input matInput formControlName="name" />
+    <mat-error oneUiFormError="name"></mat-error>
+  </mat-form-field>
 
-<!-- ✅ Correct: Use validators + hint -->
-<mat-form-field>
-  <mat-label>{{ t('field.port') }}</mat-label>
-  <input matInput type="text" oneUiNumberOnly formControlName="port" />
-  <mat-hint oneUiFormHint="port"></mat-hint>  <!-- Shows "1 ~ 65535" -->
-  <mat-error oneUiFormError="port"></mat-error>
-</mat-form-field>
+  <!-- Port field with number-only input -->
+  <mat-form-field>
+    <mat-label>{{ t('field.port') }}</mat-label>
+    <input matInput type="text" oneUiNumberOnly formControlName="port" />
+    <mat-hint oneUiFormHint="port"></mat-hint>  <!-- Shows "1 ~ 65535" -->
+    <mat-error oneUiFormError="port"></mat-error>
+  </mat-form-field>
+
+  <!-- Description with character count -->
+  <mat-form-field>
+    <mat-label mxLabel mxLabelOptional [mxLabelOptionalText]="t('general.common.optional')">
+      {{ t('field.description') }}
+    </mat-label>
+    <textarea matInput formControlName="description"></textarea>
+    <mat-hint oneUiFormHint="description"></mat-hint>  <!-- Shows "0 / 255" -->
+    <mat-error oneUiFormError="description"></mat-error>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary"
+    [mxButtonIsLoading]="loading()"
+    [disabled]="form.invalid || loading()">
+    {{ t('general.button.submit') }}
+  </button>
+</form>
+```
+
+### Common Mistakes
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `{{ form.get('name')?.value?.length }} / 32` | `<mat-hint oneUiFormHint="name">` |
+| `*ngIf="form.get('x')?.hasError('required')"` | `<mat-error oneUiFormError="x">` |
+| `[maxlength]="32"` + manual char count | `OneValidators.maxLength(32)` + `oneUiFormHint` |
+| Hardcoded error messages | i18n keys in `validatorFnWithMessage` |
+| `<input type="number">` | `<input type="text" oneUiNumberOnly>` |
+| `min="1" max="65535"` HTML attributes | `OneValidators.range(1, 65535)` |
+
+### Form Directives Import
+
+```typescript
+import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/ui/form';
+import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
+
+@Component({
+  imports: [
+    // ... other imports
+    OneUiFormErrorDirective,
+    OneUiFormHintDirective,
+    NumberOnlyDirective
+  ]
+})
 ```
 
 ---
