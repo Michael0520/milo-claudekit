@@ -138,11 +138,13 @@ import { MxLoadingButtonDirective } from '@moxa/formoxa/mx-button';
 
 ## oneUiFormError
 
-Automatically displays form validation error messages.
+Automatically displays form validation error messages. Reads i18n error messages from Enhanced Validators (`validatorFnWithMessage` / `validatorWithMessage`).
 
 ```typescript
 import { OneUiFormErrorDirective } from '@one-ui/shared/ui/form';
 ```
+
+### Basic Usage
 
 ```html
 <mat-form-field>
@@ -152,11 +154,40 @@ import { OneUiFormErrorDirective } from '@one-ui/shared/ui/form';
 </mat-form-field>
 ```
 
+### How It Works
+
+1. Directive reads the `__renderErrorMessage__` property from the validator
+2. If validator was created with `validatorFnWithMessage`, error message is automatically resolved
+3. Supports both i18n keys and dynamic message functions
+
+```typescript
+// In form definition - validator has embedded error message
+form = this.#fb.group({
+  name: ['', [
+    validatorFnWithMessage(
+      (c) => !c.value ? { required: true } : null,
+      'validators.required'  // This i18n key is auto-displayed by oneUiFormError
+    )
+  ]]
+});
+```
+
+```html
+<!-- No manual error message needed -->
+<mat-error oneUiFormError="name"></mat-error>
+```
+
 ---
 
 ## oneUiFormHint
 
-Automatically displays range hints (reads from range validator).
+Automatically displays hints from Enhanced Validators. Supports character count, range hints, and custom hint messages.
+
+```typescript
+import { OneUiFormHintDirective } from '@one-ui/shared/ui/form';
+```
+
+### Basic Usage
 
 ```html
 <mat-form-field>
@@ -166,6 +197,84 @@ Automatically displays range hints (reads from range validator).
   <mat-error oneUiFormError="port"></mat-error>
 </mat-form-field>
 ```
+
+### Multiple Hints (hintIndex)
+
+When a form control has multiple validators with hints, use `[hintIndex]` to select which hint to display:
+
+```typescript
+// Form with multiple validators that have hints
+form = this.#fb.group({
+  password: ['', [
+    validatorFnWithMessage(fn1, 'error1', 'Minimum 8 characters'),   // hintIndex=0
+    validatorFnWithMessage(fn2, 'error2', 'Must include number'),    // hintIndex=1
+  ]]
+});
+```
+
+```html
+<!-- Display first hint (default, hintIndex=0) -->
+<mat-hint oneUiFormHint="password"></mat-hint>
+
+<!-- Display second hint (hintIndex=1) -->
+<mat-hint oneUiFormHint="password" [hintIndex]="1"></mat-hint>
+```
+
+### Character Count Example
+
+```typescript
+// Validator with dynamic character count hint
+const maxLengthValidator = validatorFnWithMessage(
+  (c) => c.value?.length > 32 ? { maxLength: true } : null,
+  'validators.maxLength',
+  (c) => `${c.value?.length ?? 0} / 32`  // Dynamic hint
+);
+
+form = this.#fb.group({
+  name: ['', [maxLengthValidator]]
+});
+```
+
+```html
+<mat-form-field>
+  <mat-label>{{ t('field.name') }}</mat-label>
+  <input matInput formControlName="name" />
+  <mat-hint oneUiFormHint="name"></mat-hint>  <!-- Shows "0 / 32", updates as user types -->
+  <mat-error oneUiFormError="name"></mat-error>
+</mat-form-field>
+```
+
+### When NOT to Use hintIndex
+
+- If you only have one validator with a hint, omit `[hintIndex]` (defaults to 0)
+- Only add `[hintIndex]` when you specifically need to show a non-first hint
+
+---
+
+## Form Directives Import
+
+```typescript
+import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/ui/form';
+
+@Component({
+  imports: [
+    // ... other imports
+    OneUiFormErrorDirective,
+    OneUiFormHintDirective
+  ]
+})
+```
+
+---
+
+## Common Form Mistakes
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `{{ form.get('name')?.value?.length }} / 32` | `<mat-hint oneUiFormHint="name">` |
+| `*ngIf="form.get('x')?.hasError('required')"` | `<mat-error oneUiFormError="x">` |
+| `[maxlength]="32"` + manual char count | `OneValidators.maxLength(32)` + `oneUiFormHint` |
+| Hardcoded error messages | i18n keys in `validatorFnWithMessage` |
 
 ---
 
@@ -310,8 +419,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MxLabelDirective } from '@moxa/formoxa/mx-label';
 import { MxLoadingButtonDirective } from '@moxa/formoxa/mx-button';
 import { MxStatusComponent } from '@moxa/formoxa/mx-status';
-import { OneUiFormErrorDirective } from '@one-ui/shared/ui/form';
-import { OneValidators } from '@one-ui/shared/domain';
+
+// Form Validation & Hints
+import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/ui/form';
+import { OneValidators, validatorFnWithMessage, validatorWithMessage } from '@one-ui/shared/domain';
 ```
 
 ---

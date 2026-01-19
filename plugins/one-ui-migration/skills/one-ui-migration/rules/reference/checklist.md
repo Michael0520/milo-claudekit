@@ -291,7 +291,7 @@ export class UserTableComponent {
 
 ---
 
-## Form Validation (9 items)
+## Form Validation (15 items)
 
 📖 Details: [one-validators.md](../tools/one-validators.md) | [form-builder.md](../tools/form-builder.md)
 
@@ -320,16 +320,51 @@ form = this.#fb.group({
 });
 ```
 
+### Enhanced Validators
+
+- [ ] Custom validators use `validatorFnWithMessage` (ensures `__renderErrorMessage__` property)
+- [ ] Validators with parameters use `validatorWithMessage`
+- [ ] Error messages use i18n keys (not hardcoded strings)
+
+```typescript
+// ✅ Correct: Enhanced validator with i18n
+import { validatorFnWithMessage } from '@one-ui/shared/domain';
+
+const customValidator = validatorFnWithMessage(
+  (c) => c.value?.length > 32 ? { maxLength: true } : null,
+  'validators.maxLength',                    // i18n error message
+  (c) => `${c.value?.length ?? 0} / 32`     // hint renderer
+);
+```
+
 ### Form Error Display
 
 - [ ] Add `oneUiFormError` directive to `<mat-error>`
-- [ ] Add `oneUiFormHint` directive to `<mat-hint>` for range fields
+- [ ] Add `oneUiFormHint` directive to `<mat-hint>` for range/length fields
 - [ ] Remove manual error message handling
+- [ ] Remove manual character count (`{{ form.get('x')?.value?.length }}`)
+- [ ] Do NOT add `[hintIndex]` unless multiple hints needed (default is 0)
 
 | ❌ Wrong | ✅ Correct |
 |----------|-----------|
 | `<mat-error *ngIf="...">Required</mat-error>` | `<mat-error oneUiFormError="fieldName"></mat-error>` |
 | Manual hint text | `<mat-hint oneUiFormHint="port"></mat-hint>` |
+| `{{ form.get('name')?.value?.length }} / 32` | `<mat-hint oneUiFormHint="name"></mat-hint>` |
+| `[maxlength]="32"` + manual char count | `OneValidators.maxLength(32)` + `oneUiFormHint` |
+| Plain `ValidatorFn` | `validatorFnWithMessage(fn, errorMsg, hintMsg?)` |
+
+### Form Directive Imports
+
+- [ ] Import `OneUiFormErrorDirective` from `@one-ui/shared/ui/form`
+- [ ] Import `OneUiFormHintDirective` from `@one-ui/shared/ui/form`
+
+```typescript
+import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/ui/form';
+
+@Component({
+  imports: [OneUiFormErrorDirective, OneUiFormHintDirective, ...]
+})
+```
 
 ---
 
