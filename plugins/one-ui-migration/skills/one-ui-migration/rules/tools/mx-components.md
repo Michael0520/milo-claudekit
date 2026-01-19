@@ -278,6 +278,59 @@ import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/
 
 ---
 
+## oneUiNumberOnly
+
+Restricts input to numbers only, replacing native HTML `type="number"`.
+
+```typescript
+import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
+```
+
+### Basic Usage
+
+```html
+<!-- ✅ Correct: Use type="text" with oneUiNumberOnly -->
+<input matInput type="text" formControlName="port" oneUiNumberOnly />
+
+<!-- ❌ Wrong: Don't use type="number" -->
+<input matInput type="number" formControlName="port" />
+```
+
+### Why Not type="number"?
+
+| `type="number"` Problems | `oneUiNumberOnly` Solution |
+|--------------------------|---------------------------|
+| Scroll wheel accidentally changes value | No such issue |
+| Allows `e`, `+`, `-` characters | Only allows 0-9 |
+| Scientific notation input (e.g., `1e5`) | Not allowed |
+| Inconsistent behavior across browsers | Unified behavior |
+
+### Range Validation
+
+Use Reactive Forms validators, NOT HTML attributes:
+
+```typescript
+// ✅ Correct - Use OneValidators.range
+form = this.#fb.group({
+  port: [514, [OneValidators.required, OneValidators.range(1, 65535)]]
+});
+```
+
+```html
+<!-- ❌ Wrong: type="text" doesn't support min/max attributes -->
+<input type="text" min="1" max="65535" oneUiNumberOnly />
+
+<!-- ✅ Correct: Use validators + hint -->
+<mat-form-field>
+  <mat-label>{{ t('field.port') }}</mat-label>
+  <input matInput type="text" oneUiNumberOnly formControlName="port" />
+  <mat-hint oneUiFormHint="port"></mat-hint>  <!-- Shows "1 ~ 65535" -->
+  <mat-error oneUiFormError="port"></mat-error>
+</mat-form-field>
+```
+
+---
+
 ## MxFileUploader
 
 File upload component.
@@ -423,6 +476,9 @@ import { MxStatusComponent } from '@moxa/formoxa/mx-status';
 // Form Validation & Hints
 import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/ui/form';
 import { OneValidators, validatorFnWithMessage, validatorWithMessage } from '@one-ui/shared/domain';
+
+// Number Input
+import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
 ```
 
 ---

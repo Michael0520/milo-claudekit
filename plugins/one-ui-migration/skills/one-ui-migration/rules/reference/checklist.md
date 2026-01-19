@@ -291,7 +291,7 @@ export class UserTableComponent {
 
 ---
 
-## Form Validation (15 items)
+## Form Validation (18 items)
 
 📖 Details: [one-validators.md](../tools/one-validators.md) | [form-builder.md](../tools/form-builder.md)
 
@@ -352,6 +352,17 @@ const customValidator = validatorFnWithMessage(
 | `{{ form.get('name')?.value?.length }} / 32` | `<mat-hint oneUiFormHint="name"></mat-hint>` |
 | `[maxlength]="32"` + manual char count | `OneValidators.maxLength(32)` + `oneUiFormHint` |
 | Plain `ValidatorFn` | `validatorFnWithMessage(fn, errorMsg, hintMsg?)` |
+
+### Number Input
+
+- [ ] Use `oneUiNumberOnly` directive instead of `type="number"`
+- [ ] Use `type="text"` with `oneUiNumberOnly`
+- [ ] Use `OneValidators.range()` for min/max validation (NOT HTML `min`/`max` attributes)
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `<input type="number" formControlName="port">` | `<input type="text" oneUiNumberOnly formControlName="port">` |
+| `<input type="text" min="1" max="65535">` | `OneValidators.range(1, 65535)` + `oneUiFormHint` |
 
 ### Form Directive Imports
 
