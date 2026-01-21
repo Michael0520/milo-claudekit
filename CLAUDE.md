@@ -110,9 +110,35 @@ Each plugin follows a consistent structure:
 
 1. **Plugin manifest** (`.claude-plugin/plugin.json`): Contains plugin metadata (name, description, version, author)
 2. **Command definitions** (`commands/*.md`): Markdown files with procedural instructions
-3. **Skills** (`skills/*/SKILL.md`): Knowledge and workflow definitions
+3. **Skills** (`skills/*/SKILL.md`): Knowledge and workflow definitions (Agent Skills compliant)
 4. **Hooks** (`hooks/hooks.json` + `src/*.ts`): Intercept Claude Code operations
 5. **Documentation** (`README.md`): User-facing documentation
+
+### Agent Skills Compliance
+
+ClaudeKit skills follow the [Agent Skills Open Standard](https://github.com/agentskills/agentskills) with extensions:
+
+**SKILL.md Frontmatter Fields**:
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Lowercase, hyphens allowed, must match directory name |
+| `description` | Yes | What the skill does and when to use it |
+| `license` | No | License identifier (e.g., MIT, Apache-2.0) |
+| `compatibility` | No | Environment requirements (tools, dependencies) |
+| `allowed-tools` | No | Tools the skill can use (supports glob patterns) |
+
+**Example**:
+```yaml
+---
+name: my-skill
+description: Brief description of what this skill does.
+license: MIT
+compatibility: Requires Node.js 18+ and git
+allowed-tools: Read, Bash, Edit, Write
+---
+```
+
+See `docs/agent-skills-comparison.md` for detailed comparison with the Agent Skills standard.
 
 ## Plugins Overview
 

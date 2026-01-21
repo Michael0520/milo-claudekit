@@ -1,6 +1,9 @@
 ---
 name: worktree-manager
 description: Managing git worktrees for parallel development with Claude Code agents. Use when creating worktrees, spinning up parallel branches, checking worktree status, or cleaning up merged branches.
+license: MIT
+compatibility: Requires git, jq, and a terminal emulator (Ghostty, iTerm2, or tmux)
+allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 ---
 
 # Global Worktree Manager

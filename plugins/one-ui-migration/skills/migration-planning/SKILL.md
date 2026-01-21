@@ -1,6 +1,8 @@
 ---
 name: migration-planning
 description: Planning One-UI migrations with superpowers workflow integration. Ensures tool references are included in brainstorming and plan writing.
+license: MIT
+compatibility: Requires superpowers plugin and one-ui-migration skill
 allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 ---
 

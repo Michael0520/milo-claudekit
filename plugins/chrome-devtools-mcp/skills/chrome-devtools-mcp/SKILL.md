@@ -1,6 +1,8 @@
 ---
 name: chrome-devtools-mcp
 description: Testing UI and automating browsers via Chrome DevTools MCP. Use when taking screenshots, checking console errors, testing UI interactions, or verifying visual changes.
+license: MIT
+compatibility: Requires Chrome DevTools MCP server configured via 'claude mcp add chrome-devtools'
 allowed-tools: mcp__chrome-devtools__*
 ---
 

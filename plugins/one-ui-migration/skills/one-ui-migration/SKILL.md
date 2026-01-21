@@ -1,6 +1,8 @@
 ---
 name: one-ui-migration
 description: Migrating Angular 16 to 20 with DDD architecture and SignalStore patterns. Use when converting components, structuring features, or following One-UI migration standards.
+license: MIT
+compatibility: Requires Angular 20+ project with @ngrx/signals, @one-ui/shared dependencies
 allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 ---
 

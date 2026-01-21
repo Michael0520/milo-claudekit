@@ -1,6 +1,8 @@
 ---
-name: Create Claude Plugin
+name: create-plugin
 description: Create an empty Claude plugin with basic structure and files.
+license: MIT
+compatibility: Requires bun package manager and ClaudeKit monorepo structure
 allowed-tools: Read, Grep, Glob, Write, Edit, WebFetch(domain:docs.claude.com)
 ---
 
