@@ -8,6 +8,18 @@ allowed-tools: Read, Grep, Glob, Write, Edit, WebFetch(domain:docs.claude.com)
 
 # Create Claude Plugin
 
+## When to Use This Skill
+
+Use this skill when:
+- Creating a new Claude Code plugin from scratch
+- Setting up the standard plugin directory structure
+- Adding a new plugin to the ClaudeKit marketplace
+
+**Trigger phrases:**
+- "create a new plugin"
+- "scaffold a plugin for X"
+- "add a plugin called X"
+
 ## Instruction
 
 1. Use the `Glob` tool to check if plugin is existing
