@@ -1,6 +1,8 @@
 ---
 name: angular-code-review
 description: Review Angular code quality. Trigger: review code for {path}
+license: MIT
+compatibility: Requires Angular 14+ project with TypeScript
 tools: Read, Grep, Glob
 model: sonnet
 ---

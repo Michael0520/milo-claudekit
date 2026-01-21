@@ -1,6 +1,8 @@
 ---
 name: code-analyzer
 description: Analyze the given path, module, or package and identity the pattern, conventions, and best practices used in the codebase.
+license: MIT
+compatibility: Works with any codebase, no special dependencies required
 tools: Glob, Grep, LS, Read, TodoWrite, BashOutput
 model: sonnet
 color: green

@@ -1,6 +1,8 @@
 ---
 name: legacy-scope-analyzer
 description: Analyze legacy scope and generate migration plan. Trigger: migrate legacy scope for {path}
+license: MIT
+compatibility: Requires Angular legacy codebase with routing and i18n
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

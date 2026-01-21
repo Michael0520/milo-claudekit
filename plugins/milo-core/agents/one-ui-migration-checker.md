@@ -1,6 +1,8 @@
 ---
 name: one-ui-migration-checker
 description: Checking One-UI migration compliance against 29 rules. Trigger: check migration for {path}
+license: MIT
+compatibility: Requires Angular 20+ project with @ngrx/signals and one-ui-migration skill rules
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
