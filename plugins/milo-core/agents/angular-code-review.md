@@ -11,6 +11,19 @@ model: sonnet
 
 Review code for general Angular best practices. Suggestions only, not strict rules.
 
+## Trigger
+
+`review code for {path}`
+
+## When to Use This Agent
+
+Use this agent when:
+- Reviewing Angular code for best practices
+- Checking code quality before PR review
+- Finding common Angular anti-patterns
+
+---
+
 ## Rules Reference
 
 **Full rules with examples**: `global/rules/angular-code-quality.md`

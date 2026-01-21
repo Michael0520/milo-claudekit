@@ -11,6 +11,19 @@ model: sonnet
 
 Check code against one-ui migration rules. Violations = PR rejected.
 
+## Trigger
+
+`check migration for {path}`
+
+## When to Use This Agent
+
+Use this agent when:
+- Validating migration work before creating a PR
+- Checking if code follows all 29 One-UI migration rules
+- Auditing migrated components for compliance
+
+---
+
 ## Rules Reference
 
 **Rules location**: `projects/one-ui/skills/one-ui-migration/rules/`
