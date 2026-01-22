@@ -4,18 +4,16 @@ import {
   useCurrentFrame,
   spring,
   useVideoConfig,
-  Img,
-  staticFile,
-  OffthreadVideo,
 } from "remotion";
 import { Highlight } from "../components/Highlight";
+import { Terminal } from "../components/Terminal";
+import { pluginTerminalContent } from "../data/terminalContent";
 
 interface PluginDemoProps {
   pluginName: string;
   annotation: string;
   icon: string;
   accentColor?: string;
-  videoSrc?: string;
 }
 
 export const PluginDemo: React.FC<PluginDemoProps> = ({
@@ -23,7 +21,6 @@ export const PluginDemo: React.FC<PluginDemoProps> = ({
   annotation,
   icon,
   accentColor = "#3b82f6",
-  videoSrc,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -55,6 +52,9 @@ export const PluginDemo: React.FC<PluginDemoProps> = ({
     fps,
     config: { damping: 10, stiffness: 150 },
   });
+
+  // Get terminal content for this plugin
+  const terminalLines = pluginTerminalContent[pluginName] || [];
 
   return (
     <AbsoluteFill
@@ -128,7 +128,7 @@ export const PluginDemo: React.FC<PluginDemoProps> = ({
         </div>
       </div>
 
-      {/* Right side - Demo area (placeholder for video/screenshot) */}
+      {/* Right side - Terminal demo */}
       <div
         style={{
           position: "absolute",
@@ -139,37 +139,16 @@ export const PluginDemo: React.FC<PluginDemoProps> = ({
           width: 1000,
           height: 600,
           borderRadius: 16,
-          backgroundColor: "#1e293b",
           border: `2px solid ${accentColor}44`,
           overflow: "hidden",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
-        {videoSrc ? (
-          <OffthreadVideo
-            src={staticFile(videoSrc)}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-        ) : (
-          <div
-            style={{
-              color: "#475569",
-              fontSize: 24,
-              textAlign: "center",
-            }}
-          >
-            <p style={{ margin: 0 }}>Screen Recording</p>
-            <p style={{ margin: "10px 0 0", fontSize: 18 }}>
-              recordings/{pluginName.toLowerCase()}.mp4
-            </p>
-          </div>
-        )}
+        <Terminal
+          lines={terminalLines}
+          title={`${pluginName} — Claude Code`}
+          typingSpeed={1.5}
+          startFrame={20}
+        />
       </div>
     </AbsoluteFill>
   );
