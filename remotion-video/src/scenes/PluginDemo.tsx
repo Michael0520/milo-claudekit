@@ -5,7 +5,6 @@ import {
   spring,
   useVideoConfig,
 } from "remotion";
-import { Highlight } from "../components/Highlight";
 import { Terminal } from "../components/Terminal";
 import { pluginTerminalContent } from "../data/terminalContent";
 

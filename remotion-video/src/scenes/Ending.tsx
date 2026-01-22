@@ -47,7 +47,7 @@ export const Ending: React.FC = () => {
     const speed = 2 + (i % 3);
     const y = 1100 - ((frame * speed + i * 50) % 1200);
     const size = 3 + (i % 3);
-    const opacity = interpolate(y, [1080, 800, 200, 0], [0, 0.6, 0.6, 0], {
+    const opacity = interpolate(y, [0, 200, 800, 1080], [0, 0.6, 0.6, 0], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
