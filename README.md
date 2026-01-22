@@ -3,6 +3,8 @@ Milo ClaudeKit
 
 A collection of plugins for Claude Code.
 
+![ClaudeKit Introduction](./assets/claudekit-intro.gif)
+
 ## Installation
 
 In `claude` run:
