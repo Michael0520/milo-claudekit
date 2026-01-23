@@ -7,10 +7,15 @@ import {
   getChangedLinesCount,
   getUntrackedLinesCount,
   isGitAvailable,
+  detectDebugStatements,
+  type DebugStatementMatch,
 } from "./git.js";
 
 const DEFAULT_BLOCK_REASON =
   "There are too many changes {changedFiles}/{maxChangedFiles} changed files and {totalChangedLines}/{maxChangedLines} changed lines in the working directory. Please review and commit your changes before proceeding.";
+
+const DEFAULT_DEBUG_WARN_MESSAGE =
+  "⚠️ Debug statements detected in modified files:\n{matches}\n\nPlease remove debug statements before committing.";
 
 const config = await loadConfig();
 
@@ -48,18 +53,50 @@ const isBlocked =
     ? isExceededFiles && isExceededLines
     : isExceededFiles || isExceededLines;
 
-console.log(
-  stop(
-    !isBlocked,
-    stopReasonTemplate
-      .replace("{changedFiles}", changedFiles.toString())
-      .replace("{maxChangedFiles}", maxFilesChanged.toString())
-      .replace("{changedLines}", changedLines.toString())
-      .replace("{untrackedLines}", untrackedLines.toString())
-      .replace(
-        "{totalChangedLines}",
-        (changedLines + untrackedLines).toString(),
-      )
-      .replace("{maxChangedLines}", maxLinesChanged.toString()),
-  ),
-);
+// Debug detection check
+const debugConfig = config.commit?.debugDetection;
+const isDebugDetectionEnabled = debugConfig?.enabled ?? false;
+let debugMatches: DebugStatementMatch[] = [];
+let debugWarning = "";
+
+if (isDebugDetectionEnabled) {
+  const patterns = debugConfig?.patterns ?? [
+    "console\\.log",
+    "console\\.debug",
+    "console\\.warn",
+    "console\\.info",
+    "debugger",
+  ];
+  const extensions = debugConfig?.extensions ?? ["ts", "tsx", "js", "jsx"];
+
+  debugMatches = await detectDebugStatements(patterns, extensions);
+
+  if (debugMatches.length > 0) {
+    const matchesStr = debugMatches
+      .map((m) => `  • ${m.file}:${m.line} - ${m.pattern}`)
+      .join("\n");
+    const warnTemplate = debugConfig?.warnMessage ?? DEFAULT_DEBUG_WARN_MESSAGE;
+    debugWarning = warnTemplate.replace("{matches}", matchesStr);
+  }
+}
+
+const isDebugBlocked = debugConfig?.enforce && debugMatches.length > 0;
+const finalBlocked = isBlocked || isDebugBlocked;
+
+// Build final reason
+let finalReason = "";
+if (isBlocked) {
+  finalReason = stopReasonTemplate
+    .replace("{changedFiles}", changedFiles.toString())
+    .replace("{maxChangedFiles}", maxFilesChanged.toString())
+    .replace("{changedLines}", changedLines.toString())
+    .replace("{untrackedLines}", untrackedLines.toString())
+    .replace("{totalChangedLines}", (changedLines + untrackedLines).toString())
+    .replace("{maxChangedLines}", maxLinesChanged.toString());
+}
+
+if (debugWarning) {
+  finalReason = finalReason ? `${finalReason}\n\n${debugWarning}` : debugWarning;
+}
+
+console.log(stop(!finalBlocked, finalReason || undefined));
