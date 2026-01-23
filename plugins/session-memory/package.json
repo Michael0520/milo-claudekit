@@ -1,0 +1,29 @@
+{
+  "name": "@claudekit/session-memory",
+  "version": "0.1.0",
+  "description": "Persist and restore session context across Claude Code sessions",
+  "type": "module",
+  "bin": {
+    "session-save": "./dist/save.js",
+    "session-load": "./dist/load.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && rolldown -c",
+    "tsc": "tsc"
+  },
+  "keywords": [],
+  "author": "Michael0520",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "rolldown": "catalog:",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "@claudekit/config": "workspace:*",
+    "@claudekit/hook": "workspace:*"
+  }
+}
