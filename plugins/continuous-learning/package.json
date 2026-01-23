@@ -1,0 +1,28 @@
+{
+  "name": "@claudekit/continuous-learning",
+  "version": "0.1.0",
+  "description": "Extract and save reusable patterns from Claude Code sessions",
+  "type": "module",
+  "bin": {
+    "learn": "./dist/learn.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && rolldown -c",
+    "tsc": "tsc"
+  },
+  "keywords": [],
+  "author": "Michael0520",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "rolldown": "catalog:",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "@claudekit/config": "workspace:*",
+    "@claudekit/hook": "workspace:*"
+  }
+}
