@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/Michael0520/milo-claudekit/compare/one-ui-migration-v1.3.0...one-ui-migration-v1.4.0) (2026-01-23)
+
+
+### Features
+
+* **one-ui-migration:** add pitfalls and shared helpers documentation ([82e59ee](https://github.com/Michael0520/milo-claudekit/commit/82e59ee86d72a826dc89fe76e86a5df3b78b1231))
+* **one-ui-migration:** enhance form validation and builder docs ([358a99f](https://github.com/Michael0520/milo-claudekit/commit/358a99fcb0821067aa024573705dec0720bcb23f))
+* **one-ui-migration:** update architecture, checklist and navigation ([616f28c](https://github.com/Michael0520/milo-claudekit/commit/616f28c1aaf65363c0cf479034bbfd264432ec77))
+
 ## [1.3.0](https://github.com/Michael0520/milo-claudekit/compare/one-ui-migration-v1.2.0...one-ui-migration-v1.3.0) (2026-01-18)
 
 
