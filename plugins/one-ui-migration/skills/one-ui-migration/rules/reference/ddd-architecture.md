@@ -45,10 +45,12 @@ libs/{scope}/{feature}/domain/src/lib/
 | File | Contains | When to Modify |
 |------|----------|----------------|
 | `*.api-model.ts` | Types from backend API (OpenAPI) | When backend API changes |
-| `*.model.ts` | UI view models, constants, type unions | When UI requirements change |
+| `*.model.ts` | UI view models, constants, type unions, enums | When UI requirements change |
 | `*.api.ts` | HTTP calls using MxRestService | When endpoints change |
 | `*.store.ts` | SignalStore with queryMethod/mutationMethod | When state logic changes |
-| `*.helper.ts` | Pure functions for data transformation | When transformation logic needed |
+| `*.helper.ts` | Pure functions for data transformation, serialization | When transformation logic needed |
+
+> **Note**: Constants and enums can go in `*.model.ts` (no need for separate `*.def.ts`)
 
 ---
 
@@ -84,7 +86,7 @@ export interface UsersResponse { data: User[]; }
 
 ## model.ts (Frontend Types)
 
-UI view models, constants, and type unions:
+UI view models, constants, type unions, and translation key mappings:
 
 ```typescript
 /**
@@ -92,7 +94,7 @@ UI view models, constants, and type unions:
  * Frontend-defined types for UI layer
  */
 
-// Constants
+// Constants - feature-specific defaults
 export const FEATURE_DEFAULTS = {
   TABLE_MAX_SIZE: 10,
   PASSWORD_MIN_LENGTH: 4,
@@ -101,6 +103,20 @@ export const FEATURE_DEFAULTS = {
 
 // Type union (preferred over enum)
 export type UserRole = 'admin' | 'user' | 'supervisor';
+
+// Type union with const object for runtime values
+export const USER_STATUS = {
+  Active: 'active',
+  Inactive: 'inactive'
+} as const;
+export type UserStatus = typeof USER_STATUS[keyof typeof USER_STATUS];
+
+// Translation key mappings for feature-specific values
+export const ROLE_TRANSLATION_KEYS: Record<UserRole, string> = {
+  admin: 'features.user_management.role.admin',
+  user: 'features.user_management.role.user',
+  supervisor: 'features.user_management.role.supervisor'
+};
 
 // View model for table display (flattened from API type)
 export interface UserTableItem {
@@ -116,6 +132,103 @@ export interface UserDialogData {
   item?: UserTableItem;
 }
 ```
+
+> **Important**: Put feature-specific constants, enums, and translation mappings in `*.model.ts`. Only use shared domain patterns for validators (e.g., `VAILD_REGEX_NOT_SPACE` from `@one-ui/shared/domain`).
+
+---
+
+## helper.ts (Pure Functions)
+
+**Purpose**: Extract pure functions for data transformations and serialization to keep store files focused on state management.
+
+**When to use `*.helper.ts`**:
+- Transform API responses to table/UI data models
+- Serialize form data to API payloads
+- Complex data parsing or formatting
+- Any pure function with no side effects
+
+**Example - Data Transformation**:
+
+```typescript
+// user-management.helper.ts
+import type { User } from './user-management.api-model';
+import type { UserTableItem, ROLE_TRANSLATION_KEYS } from './user-management.model';
+
+/**
+ * Transform API user to table display item
+ */
+export function toTableItem(apiUser: User, index: number): UserTableItem {
+  return {
+    key: index,
+    username: apiUser.username ?? '',
+    roleName: getRoleTranslationKey(apiUser.role),
+    roleRaw: apiUser.role ?? 'user'
+  };
+}
+
+/**
+ * Get translation key for role
+ */
+function getRoleTranslationKey(role: string): string {
+  return ROLE_TRANSLATION_KEYS[role as UserRole] ?? ROLE_TRANSLATION_KEYS.user;
+}
+
+/**
+ * Transform multiple users to table data
+ */
+export function transformToTableData(users: User[]): UserTableItem[] {
+  return users.map((user, index) => toTableItem(user, index));
+}
+```
+
+**Example - Serialization**:
+
+```typescript
+// config.helper.ts
+import type { ConfigFormValue, ConfigPayload } from './config.model';
+
+/**
+ * Serialize form value to API payload format
+ */
+export function serializeConfigPayload(formValue: ConfigFormValue): ConfigPayload {
+  return {
+    entries: formValue.entries.map(entry => ({
+      id: entry.id,
+      name: entry.name.trim(),
+      enabled: entry.enabled ? 1 : 0,  // Boolean to number
+      raw: `${entry.interface}+${entry.port}+${entry.protocol}+`
+    }))
+  };
+}
+```
+
+**Usage in Store**:
+
+```typescript
+// user-management.store.ts
+import { transformToTableData } from './user-management.helper';
+
+export const UserManagementStore = signalStore(
+  withState({ users: [], tableData: [] }),
+  withComputed((store) => ({
+    // Use helper to transform data
+    tableData: computed(() => transformToTableData(store.users()))
+  })),
+  withMethods((store, api = inject(UserManagementApiService)) => ({
+    loadUsers: queryMethod<void, User[]>({
+      store,
+      observe: () => api.getUsers(),
+      next: (users) => patchState(store, { users })
+    })
+  }))
+);
+```
+
+**Benefits**:
+- Keeps store files focused on state management only
+- Makes pure functions testable in isolation
+- Improves code reusability across components
+- Clear separation between state logic and data transformation
 
 ---
 
@@ -133,14 +246,14 @@ import type { UserTableItem } from './{feature}.model';
 
 // In helper.ts - transform API to UI
 import type { User } from './{feature}.api-model';
-import type { UserTableItem } from './{feature}.model';
+import type { UserTableItem, ROLE_TRANSLATION_KEYS } from './{feature}.model';
 
 export function toTableItem(apiUser: User, index: number): UserTableItem {
   return {
     key: index,
     username: apiUser.username ?? '',
-    roleName: apiUser.role?.name ?? '',
-    roleRaw: mapToUserRole(apiUser.role?.id)
+    roleName: ROLE_TRANSLATION_KEYS[apiUser.role] ?? '',
+    roleRaw: apiUser.role
   };
 }
 ```

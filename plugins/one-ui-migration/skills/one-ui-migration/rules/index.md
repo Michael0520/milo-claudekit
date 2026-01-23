@@ -18,8 +18,9 @@ MIGRATE, DON'T INNOVATE
 
 | I need to... | Check this tool |
 |--------------|-----------------|
-| Add form validation | [tools/one-validators.md](./tools/one-validators.md) |
-| Create a form | [tools/form-builder.md](./tools/form-builder.md) |
+| Add form validation | [tools/one-validators.md](./tools/one-validators.md) ⭐ |
+| Create a form | [tools/form-builder.md](./tools/form-builder.md) ⭐ |
+| Use shared helpers | [tools/shared-helpers.md](./tools/shared-helpers.md) 🆕 |
 | Manage state | [tools/signal-store.md](./tools/signal-store.md) |
 | Handle loading states | [tools/loading-states.md](./tools/loading-states.md) |
 | Create a table | [tools/common-table.md](./tools/common-table.md) |
@@ -29,6 +30,8 @@ MIGRATE, DON'T INNOVATE
 | Configure routes | [tools/routing.md](./tools/routing.md) |
 | Translate text | [tools/transloco.md](./tools/transloco.md) |
 | Handle authentication | [tools/auth.md](./tools/auth.md) |
+
+⭐ = Enhanced with new patterns | 🆕 = New documentation
 
 ### Integration Guides
 
@@ -42,9 +45,12 @@ MIGRATE, DON'T INNOVATE
 
 | I need to... | Check this |
 |--------------|------------|
-| DDD layer rules | [reference/ddd-architecture.md](./reference/ddd-architecture.md) |
+| DDD layer rules | [reference/ddd-architecture.md](./reference/ddd-architecture.md) ⭐ |
+| Common migration mistakes | [reference/pitfalls.md](./reference/pitfalls.md) 🆕 |
 | Angular 20 syntax transforms | [reference/angular-20-syntax.md](./reference/angular-20-syntax.md) |
-| Pre-PR checklist | [reference/checklist.md](./reference/checklist.md) |
+| Pre-PR checklist | [reference/checklist.md](./reference/checklist.md) ⭐ |
+
+⭐ = Enhanced with new patterns | 🆕 = New documentation
 
 ---
 

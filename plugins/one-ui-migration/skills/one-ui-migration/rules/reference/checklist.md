@@ -18,6 +18,11 @@ rg -n 'localStorage' --type ts --glob '!*.spec.ts' {path}
 rg -n '\| async' --type html {path}
 rg -n '<mat-icon>[a-z_]+</mat-icon>' --type html {path}  # Text icons (should use svgIcon)
 
+# Check for new pattern violations
+rg -n 'from "@angular/forms".*Validators' --type ts {path}  # Should use OneValidators
+rg -n '\.get\(["\']' --type html {path}  # Should use .controls.xxx
+rg -n '<form.*formGroup.*mat-form-field' features/ --type html  # Forms in features layer
+
 # Lint & Test
 nx lint {scope}-{feature}-domain
 nx test {scope}-{feature}-domain --coverage
@@ -337,21 +342,26 @@ const customValidator = validatorFnWithMessage(
 );
 ```
 
-### Form Error Display
+### Form Error Display (NEW: Error Display Strategy)
 
-- [ ] Add `oneUiFormError` directive to `<mat-error>`
+- [ ] **Basic validators** (required, minLength, maxLength, range, rangeLength, email) → Use `oneUiFormError` directive
+- [ ] **Pattern validators** → Use `@if/@else` with custom error messages
+- [ ] **Custom validators** → Use `@if/@else` with custom error messages
 - [ ] Add `oneUiFormHint` directive to `<mat-hint>` for range/length fields
-- [ ] Remove manual error message handling
+- [ ] Remove manual error message handling for basic validators
 - [ ] Remove manual character count (`{{ form.get('x')?.value?.length }}`)
 - [ ] Do NOT add `[hintIndex]` unless multiple hints needed (default is 0)
 
 | ❌ Wrong | ✅ Correct |
 |----------|-----------|
-| `<mat-error *ngIf="...">Required</mat-error>` | `<mat-error oneUiFormError="fieldName"></mat-error>` |
+| `<mat-error *ngIf="...">Required</mat-error>` | `<mat-error oneUiFormError="fieldName"></mat-error>` (basic validators) |
+| Pattern validator with directive only | `@if (form.controls.x.hasError('pattern')) { <mat-error>{{ t('validators.invalid_format') }}</mat-error> } @else { <mat-error oneUiFormError="x"></mat-error> }` |
 | Manual hint text | `<mat-hint oneUiFormHint="port"></mat-hint>` |
 | `{{ form.get('name')?.value?.length }} / 32` | `<mat-hint oneUiFormHint="name"></mat-hint>` |
 | `[maxlength]="32"` + manual char count | `OneValidators.maxLength(32)` + `oneUiFormHint` |
 | Plain `ValidatorFn` | `validatorFnWithMessage(fn, errorMsg, hintMsg?)` |
+
+📖 Details: [one-validators.md#error-display-strategy](../tools/one-validators.md#error-display-strategy)
 
 ### Number Input
 
@@ -647,7 +657,25 @@ import { MxTabGroupDirective } from '@moxa/formoxa/mx-tabs';
 
 ---
 
-## Code Quality (8 items)
+## Code Quality (12 items)
+
+### DDD Violations
+
+📖 Details: [pitfalls.md](./pitfalls.md)
+
+- [ ] **Violation 0**: Page form templates are extracted to UI layer (NOT in features page component)
+- [ ] **Violation 1**: UI components do NOT inject stores (use input/output only)
+- [ ] **Violation 2**: Dialogs are in features/ (NOT in ui/)
+- [ ] **Violation 3**: Business logic is in domain/ (NOT in features/)
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `features/{page}/{page}.html` contains `<form>` | `ui/{feature}-form/` component with input/output |
+| UI component `inject(Store)` | UI component uses `input()` and `output()` |
+| Dialog in `ui/` | Dialog in `features/` |
+| Features component makes HTTP calls | Features calls store methods |
+
+### General Quality
 
 - [ ] No `any` types (use proper TypeScript types)
 - [ ] No magic numbers (use config constants)

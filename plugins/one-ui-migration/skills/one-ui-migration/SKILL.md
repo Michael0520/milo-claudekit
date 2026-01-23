@@ -16,8 +16,9 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 
 | I need to... | Check this |
 |--------------|------------|
-| **Add form validation** | `rules/tools/one-validators.md` |
-| **Create a form** | `rules/tools/form-builder.md` |
+| **Add form validation** | `rules/tools/one-validators.md` ⭐ |
+| **Create a form** | `rules/tools/form-builder.md` ⭐ |
+| **Use shared helpers** | `rules/tools/shared-helpers.md` 🆕 |
 | **Manage state (Store)** | `rules/tools/signal-store.md` |
 | **Handle loading states** | `rules/tools/loading-states.md` |
 | **Create a table** | `rules/tools/common-table.md` |
@@ -27,6 +28,8 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 | **Configure routes** | `rules/tools/routing.md` |
 | **Translate text** | `rules/tools/transloco.md` |
 | **Handle authentication** | `rules/tools/auth.md` |
+
+⭐ Enhanced | 🆕 New
 
 ### What do I need to build?
 
@@ -40,9 +43,12 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 
 | I need to... | Check this |
 |--------------|------------|
-| **DDD layer rules** | `rules/reference/ddd-architecture.md` |
+| **DDD layer rules** | `rules/reference/ddd-architecture.md` ⭐ |
+| **Common migration mistakes** | `rules/reference/pitfalls.md` 🆕 |
 | **Angular 20 syntax transforms** | `rules/reference/angular-20-syntax.md` |
-| **Pre-PR checklist** | `rules/reference/checklist.md` |
+| **Pre-PR checklist** | `rules/reference/checklist.md` ⭐ |
+
+⭐ Enhanced | 🆕 New
 
 ---
 
@@ -68,6 +74,24 @@ HTTP/Business logic?  → domain/
 Injects Store?        → features/
 Pure I/O?             → ui/
 Route definitions?    → shell/
+```
+
+### Critical Migration Rules (NEW)
+
+**Form Validation Error Display**:
+```
+✅ Basic validators (required, maxLength, range) → Use oneUiFormError directive
+❌ Pattern validators → MUST use @if/@else with custom messages
+❌ Custom validators → MUST use @if/@else with custom messages
+```
+
+**DDD Violations to Avoid** (see `rules/reference/pitfalls.md`):
+```
+❌ Violation 0: Page form template in features/ (MOST COMMON!)
+❌ Violation 1: UI component injecting Store
+❌ Violation 2: Dialog in ui/ layer
+❌ Violation 3: Business logic in features/
+❌ Violation 4: UI form making HTTP calls
 ```
 
 ### Forbidden Patterns
