@@ -1,0 +1,8 @@
+{
+  "name": "guard",
+  "description": "PreToolUse guards for safer Claude Code operations",
+  "version": "0.1.0",
+  "author": {
+    "name": "Michael0520"
+  }
+}

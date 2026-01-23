@@ -1,0 +1,16 @@
+{
+  "description": "PreToolUse guards for safer operations",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/dist/guard.js"
+          }
+        ]
+      }
+    ]
+  }
+}
