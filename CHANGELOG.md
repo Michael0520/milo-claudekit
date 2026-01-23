@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.9.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.8.0...claudekit-v0.9.0) (2026-01-23)
+
+
+### Features
+
+* add Remotion video project for ClaudeKit intro ([972fcee](https://github.com/Michael0520/milo-claudekit/commit/972fceed2c0b6f10c5bcb5ff2e0f41f1ea80e7b1))
+* **one-ui-migration:** add pitfalls and shared helpers documentation ([82e59ee](https://github.com/Michael0520/milo-claudekit/commit/82e59ee86d72a826dc89fe76e86a5df3b78b1231))
+* **one-ui-migration:** enhance form validation and builder docs ([358a99f](https://github.com/Michael0520/milo-claudekit/commit/358a99fcb0821067aa024573705dec0720bcb23f))
+* **one-ui-migration:** update architecture, checklist and navigation ([616f28c](https://github.com/Michael0520/milo-claudekit/commit/616f28c1aaf65363c0cf479034bbfd264432ec77))
+* **remotion:** add spectacular visual effects to all scenes ([62a0a0e](https://github.com/Michael0520/milo-claudekit/commit/62a0a0efdda7bddc8da547768bbc83dc9b5e3110))
+* **remotion:** add Terminal component with typing animation ([f49767f](https://github.com/Michael0520/milo-claudekit/commit/f49767fd1a72dbdc6354c87b7fb488995fc7f43d))
+* **remotion:** enhance opening and ending animations ([b727c16](https://github.com/Michael0520/milo-claudekit/commit/b727c16e52ef79470160c3608bfe60c13ff8cb01))
+
+
+### Bug Fixes
+
+* **remotion:** fix interpolate range and remove unused import ([7a6d23a](https://github.com/Michael0520/milo-claudekit/commit/7a6d23a3a350fe6ec74db76fedb6d9e2a3ca3f29))
+
 ## [0.8.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.7.0...claudekit-v0.8.0) (2026-01-18)
 
 
