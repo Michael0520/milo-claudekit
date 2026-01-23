@@ -4,9 +4,44 @@
       "enabled": true,
       "maxFilesChanged": 5,
       "maxLinesChanged": 100
+    },
+    "debugDetection": {
+      "enabled": true,
+      "patterns": ["console\\.log", "console\\.debug", "debugger"],
+      "extensions": ["ts", "tsx", "js", "jsx"],
+      "enforce": false
     }
   },
   "rubric": {
     "rules": []
+  },
+  "format": {
+    "enabled": false,
+    "prettier": true,
+    "tsc": true,
+    "enforce": false
+  },
+  "guard": {
+    "enabled": false,
+    "builtIn": {
+      "gitPushConfirm": true,
+      "tmuxReminder": true,
+      "dangerousRm": true
+    }
+  },
+  "learning": {
+    "enabled": false,
+    "minSessionLength": 10,
+    "categories": ["error-resolution", "debugging", "convention"]
+  },
+  "sessionMemory": {
+    "enabled": false,
+    "retentionDays": 7,
+    "maxSessions": 50,
+    "include": {
+      "cwd": true,
+      "gitBranch": true,
+      "recentFiles": true
+    }
   }
 }

@@ -53,6 +53,21 @@
       "description": "Analyze legacy codebase and generate migration plan"
     },
     {
+      "name": "continuous-learning",
+      "source": "./plugins/continuous-learning",
+      "description": "Extract and save reusable patterns from Claude Code sessions"
+    },
+    {
+      "name": "guard",
+      "source": "./plugins/guard",
+      "description": "PreToolUse guards for safer Claude Code operations"
+    },
+    {
+      "name": "session-memory",
+      "source": "./plugins/session-memory",
+      "description": "Persist and restore session context across Claude Code sessions"
+    },
+    {
       "name": "superpowers",
       "source": {
         "source": "github",

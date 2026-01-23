@@ -25,9 +25,25 @@
         "typescript": "catalog:",
       },
     },
+    "plugins/continuous-learning": {
+      "name": "@claudekit/continuous-learning",
+      "version": "0.1.0",
+      "bin": {
+        "learn": "./dist/learn.js",
+      },
+      "dependencies": {
+        "@claudekit/config": "workspace:*",
+        "@claudekit/hook": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:",
+        "rolldown": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
     "plugins/git": {
       "name": "@aotoki/claudekit-git",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "bin": {
         "commit": "./dist/commit.js",
       },
@@ -42,9 +58,25 @@
         "typescript": "catalog:",
       },
     },
+    "plugins/guard": {
+      "name": "@claudekit/guard",
+      "version": "0.1.0",
+      "bin": {
+        "guard": "./dist/guard.js",
+      },
+      "dependencies": {
+        "@claudekit/config": "workspace:*",
+        "@claudekit/hook": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:",
+        "rolldown": "catalog:",
+        "typescript": "catalog:",
+      },
+    },
     "plugins/rubric": {
       "name": "@aotoki/claudekit-rubric",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "bin": {
         "review": "./dist/review.js",
       },
@@ -58,6 +90,23 @@
         "rolldown": "catalog:",
         "typescript": "catalog:",
         "vitest": "catalog:",
+      },
+    },
+    "plugins/session-memory": {
+      "name": "@claudekit/session-memory",
+      "version": "0.1.0",
+      "bin": {
+        "session-save": "./dist/save.js",
+        "session-load": "./dist/load.js",
+      },
+      "dependencies": {
+        "@claudekit/config": "workspace:*",
+        "@claudekit/hook": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:",
+        "rolldown": "catalog:",
+        "typescript": "catalog:",
       },
     },
   },
@@ -75,7 +124,13 @@
 
     "@claudekit/config": ["@claudekit/config@workspace:packages/config"],
 
+    "@claudekit/continuous-learning": ["@claudekit/continuous-learning@workspace:plugins/continuous-learning"],
+
+    "@claudekit/guard": ["@claudekit/guard@workspace:plugins/guard"],
+
     "@claudekit/hook": ["@claudekit/hook@workspace:packages/hook"],
+
+    "@claudekit/session-memory": ["@claudekit/session-memory@workspace:plugins/session-memory"],
 
     "@emnapi/core": ["@emnapi/core@1.8.1", "", { "dependencies": { "@emnapi/wasi-threads": "1.1.0", "tslib": "^2.4.0" } }, "sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg=="],
 
