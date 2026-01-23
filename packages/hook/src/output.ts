@@ -15,6 +15,11 @@ export type StopOutput = SharedOutput & {
   reason?: string;
 };
 
+export type PreToolUseOutput = SharedOutput & {
+  decision: Decision;
+  reason?: string;
+};
+
 export type PostToolUseOutput = SharedOutput & {
   decision: Decision;
   reason?: string;

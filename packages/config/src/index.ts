@@ -7,6 +7,11 @@ export type {
   CommitConfig,
   Rubric,
   RubricConfig,
+  FormatConfig,
+  LearningConfig,
+  GuardConfig,
+  GuardRule,
+  SessionMemoryConfig,
 } from "./schema.js";
 export { CommitLogic } from "./schema.js";
 

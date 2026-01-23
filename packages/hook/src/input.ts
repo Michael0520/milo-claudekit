@@ -1,6 +1,8 @@
 export enum HookEventName {
   Stop = "Stop",
+  PreToolUse = "PreToolUse",
   PostToolUse = "PostToolUse",
+  SessionStart = "SessionStart",
 }
 
 type SharedInput = {
@@ -10,6 +12,14 @@ type SharedInput = {
 export type StopInput = SharedInput & {
   hookEventName: HookEventName.Stop;
   stopHookActive: boolean;
+};
+
+export type PreToolUseInput = SharedInput & {
+  hookEventName: HookEventName.PreToolUse;
+  toolName: string;
+  toolInput: {
+    [key: string]: any;
+  };
 };
 
 export type PostToolUseInput = SharedInput & {
@@ -23,4 +33,8 @@ export type PostToolUseInput = SharedInput & {
   };
 };
 
-export type HookInput = StopInput | PostToolUseInput;
+export type SessionStartInput = SharedInput & {
+  hookEventName: HookEventName.SessionStart;
+};
+
+export type HookInput = StopInput | PreToolUseInput | PostToolUseInput | SessionStartInput;

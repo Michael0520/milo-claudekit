@@ -3,7 +3,7 @@ export * from "./output.js";
 
 import type { HookInput } from "./input.js";
 import { HookEventName } from "./input.js";
-import { BlockDecision, type PostToolUseOutput } from "./output.js";
+import { BlockDecision, type PreToolUseOutput, type PostToolUseOutput } from "./output.js";
 
 /**
  * Convert snake_case keys to camelCase keys in a deeply nested object or array.
@@ -60,6 +60,16 @@ export function stop(isPass: boolean = true, reason?: string): string {
     decision: isPass ? undefined : BlockDecision,
     reason,
   });
+}
+
+export function preToolUse(isPass: boolean = true, reason?: string): string {
+  const output: PreToolUseOutput = {
+    decision: isPass ? undefined : BlockDecision,
+  };
+  if (reason !== undefined) {
+    output.reason = reason;
+  }
+  return JSON.stringify(output);
 }
 
 export function postToolUse(
