@@ -57,7 +57,9 @@ async function loadConfig() {
 //#region ../../packages/hook/src/input.ts
 let HookEventName = /* @__PURE__ */ function(HookEventName$1) {
 	HookEventName$1["Stop"] = "Stop";
+	HookEventName$1["PreToolUse"] = "PreToolUse";
 	HookEventName$1["PostToolUse"] = "PostToolUse";
+	HookEventName$1["SessionStart"] = "SessionStart";
 	return HookEventName$1;
 }({});
 

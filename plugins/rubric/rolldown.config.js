@@ -9,4 +9,12 @@ export default defineConfig([
     platform: "node",
     tsconfig: "tsconfig.json",
   },
+  {
+    input: "src/format.ts",
+    output: {
+      file: "dist/format.js",
+    },
+    platform: "node",
+    tsconfig: "tsconfig.json",
+  },
 ]);

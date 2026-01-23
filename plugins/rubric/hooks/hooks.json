@@ -1,5 +1,5 @@
 {
-  "description": "Automatic code review after Edit or Write operations",
+  "description": "Automatic code review and formatting after Edit or Write operations",
   "hooks": {
     "PostToolUse": [
       {
@@ -8,6 +8,10 @@
           {
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/dist/review.js"
+          },
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/dist/format.js"
           }
         ]
       }
