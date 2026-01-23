@@ -15,7 +15,8 @@ When forms need validation (required, length, range, pattern, etc.).
 | Basic validation | `OneValidators.required` / `.maxLength(n)` / `.range(min, max)` |
 | Custom error message | `OneValidators.maxLength(8).error('i18n.key')` |
 | Custom validator + message | `validatorFnWithMessage(fn, errorMsg, hintMsg?)` |
-| Display error message | `<mat-error oneUiFormError="field">` → see [mx-components.md](./mx-components.md#form-validation-directives) |
+| Display error (basic validators) | `<mat-error oneUiFormError="field">` → see [Error Display Strategy](#error-display-strategy) |
+| Display error (pattern/custom) | `@if/@else` with custom messages → see [Error Display Strategy](#error-display-strategy) |
 | Display hint | `<mat-hint oneUiFormHint="field">` → see [mx-components.md](./mx-components.md#form-validation-directives) |
 
 ## Validation Flow
@@ -27,6 +28,187 @@ When forms need validation (required, length, range, pattern, etc.).
 **Step 2: Display in Template (HTML)**
 - `<mat-error oneUiFormError="fieldName">` — auto-displays error message
 - `<mat-hint oneUiFormHint="fieldName">` — auto-displays hint (character count / range)
+
+---
+
+## Error Display Strategy
+
+**CRITICAL**: The way you display error messages depends on the validator type.
+
+### Strategy Decision Table
+
+| Validator Type | Display Method | Reason |
+|---------------|----------------|--------|
+| **Basic 6** (`required`, `minLength`, `maxLength`, `range`, `rangeLength`, `email`) | ✅ Use `oneUiFormError` directive | Built-in i18n messages |
+| **pattern** | ❌ MUST use `@if/@else` | Needs specific message per pattern type |
+| **duplicate** | ❌ MUST use `@if/@else` | Needs context-specific message |
+| **Custom validators** | ❌ MUST use `@if/@else` | No built-in messages |
+| **All other validators** | ❌ MUST use `@if/@else` | Not in basic 6 |
+
+### Pattern 1: Basic Validators (Use Directive)
+
+For the **6 basic validators** with built-in i18n support:
+
+```html
+<mat-form-field>
+  <mat-label>{{ t('label') }}</mat-label>
+  <input matInput formControlName="name" />
+  <mat-error oneUiFormError="name"></mat-error>
+</mat-form-field>
+```
+
+**Built-in i18n messages:**
+- `required` → `validators.required`
+- `minLength` → `validators.require_min_length`
+- `maxLength` → `validators.invalid_max_length`
+- `range` → `validators.invalid_range`
+- `rangeLength` → `validators.invalid_range`
+- `email` → `validators.invalid_email`
+
+### Pattern 2: Pattern/Custom Validators (Use @if/@else)
+
+For **pattern validators** and **custom validators**, you MUST use `@if/@else`:
+
+```html
+<mat-form-field>
+  <mat-label>{{ t('general.common_account.account') }}</mat-label>
+  <input matInput formControlName="account" />
+  @if (form.controls.account.hasError('pattern')) {
+    <mat-error>{{ t('validators.invalid_format_not_space') }}</mat-error>
+  } @else if (form.controls.account.hasError('duplicate')) {
+    <mat-error>{{ t('validators.duplicate_account') }}</mat-error>
+  } @else {
+    <mat-error oneUiFormError="account"></mat-error>
+  }
+</mat-form-field>
+```
+
+### Why This Strategy?
+
+1. **`oneUiFormError` directive** handles the 6 basic validators with built-in i18n
+2. **Pattern validation** errors are too generic (`validators.invalid`) without context
+3. **Custom validators** need specific messages that only you know
+4. **Legacy consistency** - this matches the pattern used in the original codebase
+
+### Common Pattern Error Messages
+
+When using `OneValidators.pattern()` with shared constants from `@one-ui/shared/domain`:
+
+| Pattern Constant | Error Message i18n Key |
+|------------------|----------------------|
+| `VAILD_REGEX_NOT_SPACE` | `validators.invalid_format_not_space` |
+| `VAILD_REGEX_LEVEL_1` | `validators.invalid_regex_level_1` |
+| `IPADDR_REGEX` | `validators.invalid_ip_address` |
+| `VAILD_MAC` | `validators.invalid_mac_address` |
+| `VALID_REGEX_VIRGINIA_GUIDELINE` | `validators.notMeetPolicy` |
+
+### Complete Examples
+
+#### Example 1: Mix of Basic and Pattern Validators
+
+```typescript
+// Component
+import { OneValidators } from '@one-ui/shared/domain';
+
+form = this.#fb.group({
+  name: ['', [OneValidators.required, OneValidators.maxLength(32)]],  // Basic only
+  account: ['', [
+    OneValidators.required,     // Basic
+    OneValidators.maxLength(31), // Basic
+    OneValidators.pattern(VAILD_REGEX_NOT_SPACE)  // Pattern - needs custom message!
+  ]]
+});
+```
+
+```html
+<!-- Template -->
+<!-- Name: Basic validators only - use directive -->
+<mat-form-field>
+  <mat-label>{{ t('general.common.name') }}</mat-label>
+  <input matInput formControlName="name" />
+  <mat-error oneUiFormError="name"></mat-error>
+</mat-form-field>
+
+<!-- Account: Has pattern validator - use @if/@else -->
+<mat-form-field>
+  <mat-label>{{ t('general.common_account.account') }}</mat-label>
+  <input matInput maxlength="31" formControlName="account" />
+  <mat-hint align="end">{{ form.controls.account.value.length }} / 31</mat-hint>
+  @if (form.controls.account.hasError('pattern')) {
+    <mat-error>{{ t('validators.invalid_format_not_space') }}</mat-error>
+  } @else {
+    <mat-error oneUiFormError="account"></mat-error>
+  }
+</mat-form-field>
+```
+
+#### Example 2: IP Address with Pattern Validation
+
+```typescript
+form = this.#fb.group({
+  ipAddress: ['', [
+    OneValidators.required,
+    OneValidators.pattern(IPADDR_REGEX)
+  ]]
+});
+```
+
+```html
+<mat-form-field>
+  <mat-label>{{ t('general.common.server_ip_address') }}</mat-label>
+  <input matInput formControlName="ipAddress" />
+  @if (form.controls.ipAddress.hasError('pattern')) {
+    <mat-error>{{ t('validators.invalid_ip_address') }}</mat-error>
+  } @else {
+    <mat-error oneUiFormError="ipAddress"></mat-error>
+  }
+</mat-form-field>
+```
+
+#### Example 3: Configuration Name with Multiple Patterns
+
+```typescript
+form = this.#fb.group({
+  configurationName: ['', [
+    OneValidators.required,
+    OneValidators.maxLength(32),
+    OneValidators.pattern(VAILD_REGEX_LEVEL_1)
+  ]]
+});
+```
+
+```html
+<mat-form-field>
+  <mat-label>{{ t('features.config_bk_res.configuration_name') }}</mat-label>
+  <input matInput maxlength="32" formControlName="configurationName" />
+  <mat-hint align="end">{{ form.controls.configurationName.value.length }} / 32</mat-hint>
+  @if (form.controls.configurationName.hasError('pattern')) {
+    <mat-error>{{ t('validators.invalid_regex_level_1') }}</mat-error>
+  } @else {
+    <mat-error oneUiFormError="configurationName"></mat-error>
+  }
+</mat-form-field>
+```
+
+### ❌ Common Mistakes
+
+```html
+<!-- ❌ WRONG: Using directive for pattern validator -->
+<mat-form-field>
+  <input matInput formControlName="account" />
+  <mat-error oneUiFormError="account"></mat-error>  <!-- Will show generic "invalid" message -->
+</mat-form-field>
+
+<!-- ✅ CORRECT: Using @if/@else for pattern validator -->
+<mat-form-field>
+  <input matInput formControlName="account" />
+  @if (form.controls.account.hasError('pattern')) {
+    <mat-error>{{ t('validators.invalid_format_not_space') }}</mat-error>
+  } @else {
+    <mat-error oneUiFormError="account"></mat-error>
+  }
+</mat-form-field>
+```
 
 ---
 
@@ -54,17 +236,19 @@ form = this.#fb.group({
 
 ### Basic Validators
 
-| Method | Description |
-|--------|-------------|
-| `OneValidators.required` | Required field |
-| `OneValidators.minLength(n)` | Minimum length |
-| `OneValidators.maxLength(n)` | Maximum length |
-| `OneValidators.min(n)` | Minimum value |
-| `OneValidators.max(n)` | Maximum value |
-| `OneValidators.range(min, max)` | Numeric range |
-| `OneValidators.rangeLength(min, max, fieldName)` | Length range |
-| `OneValidators.email` | Email format |
-| `OneValidators.pattern(regex)` | Regex pattern |
+| Method | Description | Has Built-in i18n? |
+|--------|-------------|-------------------|
+| `OneValidators.required` | Required field | ✅ Yes - use directive |
+| `OneValidators.minLength(n)` | Minimum length | ✅ Yes - use directive |
+| `OneValidators.maxLength(n)` | Maximum length | ✅ Yes - use directive |
+| `OneValidators.min(n)` | Minimum value | ⚠️ Use `range()` instead |
+| `OneValidators.max(n)` | Maximum value | ⚠️ Use `range()` instead |
+| `OneValidators.range(min, max)` | Numeric range | ✅ Yes - use directive |
+| `OneValidators.rangeLength(min, max, fieldName)` | Length range | ✅ Yes - use directive |
+| `OneValidators.email` | Email format | ✅ Yes - use directive |
+| `OneValidators.pattern(regex)` | Regex pattern | ❌ No - use @if/@else |
+
+> **Note**: For numeric range validation, always use `OneValidators.range(min, max)` instead of separate `min()` and `max()` validators.
 
 ### Custom Validators
 
