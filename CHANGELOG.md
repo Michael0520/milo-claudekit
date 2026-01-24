@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.10.1](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.10.0...claudekit-v0.10.1) (2026-01-24)
+
+
+### Bug Fixes
+
+* **one-ui-migration:** correct inline rule paths in migrate-page skills ([49db5ed](https://github.com/Michael0520/milo-claudekit/commit/49db5edd6b82ed5018d31dbd53b82f7b834bb2c5))
+* **one-ui-migration:** correct rule paths in agent and skills ([ac202e5](https://github.com/Michael0520/milo-claudekit/commit/ac202e5cb99547a399946de3e990d9a4549894e5))
+* **one-ui-migration:** standardize all rule paths across skills ([0ee201f](https://github.com/Michael0520/milo-claudekit/commit/0ee201f74011fe0e51a529378dd7b973bad520c5))
+
 ## [0.10.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.9.0...claudekit-v0.10.0) (2026-01-24)
 
 
