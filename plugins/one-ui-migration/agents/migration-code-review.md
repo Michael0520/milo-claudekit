@@ -10,6 +10,23 @@ Invoke after completing migration work, before creating PR.
 
 - Read, Grep, Glob, Bash
 
+## Required References
+
+Before starting review, read these rule files from the `one-ui-migration` skill:
+
+| Category | Rule File | Purpose |
+|----------|-----------|---------|
+| DDD | `rules/reference/ddd-architecture.md` | Layer responsibilities |
+| Syntax | `rules/reference/angular-20-syntax.md` | Angular 20 patterns |
+| Forms | `rules/tools/forms/validators.md` | OneValidators usage |
+| Forms | `rules/tools/forms/error-handling.md` | Error display patterns |
+| UI | `rules/tools/ui/page-layout.md` | Page structure |
+| UI | `rules/tools/ui/dialogs.md` | Dialog patterns |
+| UI | `rules/tools/ui/buttons.md` | Button patterns |
+| Tables | `rules/tools/tables/basics.md` | Table patterns |
+| Pitfalls | `rules/reference/pitfalls/` | Common mistakes |
+| Checklist | `rules/reference/checklist.md` | Full compliance checklist |
+
 ## Workflow
 
 ### Phase 1: Identify Changes
@@ -36,7 +53,7 @@ npx tsc --noEmit -p apps/mxsecurity/mxsecurity/tsconfig.app.json
 
 ### Phase 3: Migration Compliance Check
 
-Read `.claude/skills/one-ui-migration/SKILL.md` and verify:
+Verify against the rules in `one-ui-migration` skill:
 
 #### DDD Architecture
 

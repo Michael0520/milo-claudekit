@@ -79,20 +79,30 @@ Analyze the fetched source and create a migration analysis document in `{target}
 
 ### Phase 2: DDD Structure Migration
 
-Reference documents (see `.claude/skills/one-ui-migration/SKILL.md` for core principles):
+Reference documents from `one-ui-migration` skill's `rules/` directory:
 
-- `references/ddd-architecture.md` - DDD layers, helper files
-- `references/forms/validators.md` - OneValidators usage, pattern constants
-- `references/forms/error-handling.md` - Template errors, custom errors, long error messages
-- `references/ui/page-layout.md` - Page layout, breadcrumb
-- `references/ui/forms.md` - Form layout, validation, error messages
-- `references/ui/buttons.md` - Button types, loading states
-- `references/ui/components.md` - File upload, form component pattern
-- `references/ui/dialogs.md` - Dialog config, loading state, viewContainerRef
-- `references/tables/basics.md` - CommonTableComponent, migration pattern
-- `references/tables/columns.md` - Column API, custom templates
-- `references/tables/advanced.md` - Paginator config, footer styling
-- `references/api-types.md` - API types, def files
+**Reference Docs** (`rules/reference/`):
+- `ddd-architecture.md` - DDD layers, helper files
+- `api-types.md` - API types, def files
+- `checklist.md` - Full compliance checklist
+- `pitfalls/` - Common migration mistakes
+
+**Tool Docs** (`rules/tools/`):
+- `forms/validators.md` - OneValidators usage, pattern constants
+- `forms/error-handling.md` - Template errors, custom errors
+- `ui/page-layout.md` - Page layout, breadcrumb
+- `ui/forms.md` - Form layout, validation
+- `ui/buttons.md` - Button types, loading states
+- `ui/components.md` - File upload, form patterns
+- `ui/dialogs.md` - Dialog config, viewContainerRef
+- `tables/basics.md` - CommonTableComponent
+- `tables/columns.md` - Column API, custom templates
+- `tables/advanced.md` - Paginator config
+
+**Guides** (`rules/guides/`):
+- `create-page.md` - Page creation guide
+- `create-dialog.md` - Dialog creation guide
+- `create-table.md` - Table creation guide
 
 Generate libraries using the Nx plugin:
 
