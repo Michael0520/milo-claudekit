@@ -8,7 +8,7 @@ Create a form dialog for creating or editing data.
 
 | Tool | Purpose |
 |------|---------|
-| [dialog](../tools/dialog.md) | Dialog basics |
+| [dialog](../tools/ui/dialogs.md) | Dialog basics |
 | [form-builder](../tools/form-builder.md) | Form creation |
 | [one-validators](../tools/one-validators.md) | Form validation |
 | [mx-components](../tools/mx-components.md) | mxLabel, mxButtonIsLoading |

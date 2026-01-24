@@ -164,7 +164,7 @@ Apply Angular 20 syntax updates (see `.claude/skills/one-ui-migration/references
   - Form tooltips: Use `mxLabelTooltip` instead of `mat-icon` with `matTooltip`
   - Loading states: Use `MxLoadingButtonDirective` with `[mxButtonIsLoading]="loading()"`
 
-- Page Layout (see `page-layout.md`):
+- Page Layout (see `ui/page-layout.md`):
   - `mat-card` → `<div class="content-wrapper">`
 
 - Dialogs (see `dialogs.md`):

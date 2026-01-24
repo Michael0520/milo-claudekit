@@ -131,4 +131,4 @@ grep -r "'features.user" ~/moxa/f2e-networking/apps/*/src/app/
 ## Related Tools
 
 - [common-table.md](./common-table.md) - Table header translation
-- [dialog.md](./dialog.md) - Dialog title translation
+- [dialogs.md](./ui/dialogs.md) - Dialog title translation

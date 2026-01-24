@@ -26,10 +26,10 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 |------------------|----------------------|
 | Forms | `rules/tools/form-builder.md` + `rules/tools/one-validators.md` |
 | Tables | `rules/tools/common-table.md` + `rules/tools/transloco.md` |
-| Dialogs | `rules/tools/dialog.md` + `rules/tools/form-builder.md` |
+| Dialogs | `rules/tools/ui/dialogs.md` + `rules/tools/form-builder.md` |
 | State management | `rules/tools/signal-store.md` + `rules/tools/loading-states.md` |
 | Status display | `rules/tools/mx-components.md` |
-| Page layout | `rules/tools/page-layout.md` + `rules/tools/transloco.md` |
+| Page layout | `rules/tools/ui/page-layout.md` + `rules/tools/transloco.md` |
 | Authentication | `rules/tools/auth.md` |
 | Translation | `rules/tools/transloco.md` |
 | Route configuration | `rules/tools/routing.md` |
@@ -48,7 +48,7 @@ Before proposing any design, identify which tools are needed:
 Legacy component uses:
 - [ ] Forms → Reference `form-builder.md`, `one-validators.md`
 - [ ] Tables → Reference `common-table.md`
-- [ ] Dialogs → Reference `dialog.md`
+- [ ] Dialogs → Reference `ui/dialogs.md`
 - [ ] State → Reference `signal-store.md`, `loading-states.md`
 - [ ] MX Components → Reference `mx-components.md`
 - [ ] Routes → Reference `routing.md`
@@ -114,7 +114,7 @@ Every task MUST include a Tool References section:
 - [ ] Text cells use `gl-ellipsis-text` + `mxAutoTooltip`
 - [ ] Toolbar order: Refresh -> Create -> Delete
 
-### dialog.md Checklist
+### ui/dialogs.md Checklist
 
 - [ ] Pass `viewContainerRef` when opening dialog
 - [ ] Cancel button uses `mat-dialog-close` (not `(click)="cancel()"`)
@@ -128,7 +128,7 @@ Every task MUST include a Tool References section:
 - [ ] `mat-tab-group` has `mxTabGroup` and `animationDuration="0ms"`
 - [ ] Status display uses `mx-status` component
 
-### page-layout.md Checklist
+### ui/page-layout.md Checklist
 
 - [ ] Use `gl-page-content` (not `mat-card`)
 - [ ] Content inside `<div class="content-wrapper">`
@@ -228,7 +228,7 @@ Legacy `user-management` uses:
 1. `signal-store.md` - Store pattern
 2. `loading-states.md` - Loading state management
 3. `common-table.md` - Table component
-4. `dialog.md` - Dialog pattern
+4. `ui/dialogs.md` - Dialog pattern
 5. `form-builder.md` - Form in dialog
 6. `one-validators.md` - Form validation
 7. `mx-components.md` - MxStatus, mxButtonIsLoading

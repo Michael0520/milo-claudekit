@@ -22,9 +22,9 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 | **Manage state (Store)** | `rules/tools/signal-store.md` |
 | **Handle loading states** | `rules/tools/loading-states.md` |
 | **Create a table** | `rules/tools/common-table.md` |
-| **Create a dialog** | `rules/tools/dialog.md` |
+| **Create a dialog** | `rules/tools/ui/dialogs.md` |
 | **Use MX components** | `rules/tools/mx-components.md` |
-| **Page structure** | `rules/tools/page-layout.md` |
+| **Page structure** | `rules/tools/ui/page-layout.md` |
 | **Configure routes** | `rules/tools/routing.md` |
 | **Translate text** | `rules/tools/transloco.md` |
 | **Handle authentication** | `rules/tools/auth.md` |
@@ -127,18 +127,19 @@ Route definitions?    → shell/
 ```
 rules/
 ├── index.md                    # Router entry
-├── tools/                      # Tool reference (11 files)
+├── tools/                      # Tool reference (9 files + 3 subdirs)
 │   ├── one-validators.md
 │   ├── form-builder.md
 │   ├── signal-store.md
 │   ├── loading-states.md
 │   ├── common-table.md
-│   ├── dialog.md
 │   ├── mx-components.md
-│   ├── page-layout.md
 │   ├── routing.md
 │   ├── transloco.md
-│   └── auth.md
+│   ├── auth.md
+│   ├── forms/                  # Form patterns
+│   ├── tables/                 # Table patterns
+│   └── ui/                     # UI patterns (dialogs, page-layout, buttons)
 ├── guides/                     # Integration guides (3 files)
 │   ├── create-page.md
 │   ├── create-dialog.md

@@ -304,4 +304,4 @@ Add a helper to shared domain when:
 ## Related Tools
 
 - [ddd-architecture.md](../reference/ddd-architecture.md#helper-ts-pure-functions) - Helper file patterns
-- [dialog.md](./dialog.md) - Dialog patterns
+- [dialogs.md](./ui/dialogs.md) - Dialog patterns

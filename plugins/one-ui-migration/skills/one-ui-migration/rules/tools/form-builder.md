@@ -366,4 +366,4 @@ onCancel() {
 
 - [one-validators.md](./one-validators.md) - Form validation
 - [mx-components.md](./mx-components.md) - oneUiFormError, mxLabel
-- [dialog.md](./dialog.md) - Dialog patterns
+- [dialogs.md](./ui/dialogs.md) - Dialog patterns

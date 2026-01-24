@@ -391,7 +391,7 @@ import { OneUiFormErrorDirective, OneUiFormHintDirective } from '@one-ui/shared/
 
 ## UI Components (12 items)
 
-📖 Details: [mx-components.md](../tools/mx-components.md) | [dialog.md](../tools/dialog.md)
+📖 Details: [mx-components.md](../tools/mx-components.md) | [dialog.md](../tools/ui/dialogs.md)
 
 ### Buttons
 
@@ -553,7 +553,7 @@ this.#dialog.open(FeatureDialogComponent, {
 
 ## Page Layout (4 items)
 
-📖 Details: [page-layout.md](../tools/page-layout.md)
+📖 Details: [page-layout.md](../tools/ui/page-layout.md)
 
 - [ ] Use `gl-page-content` wrapper class
 - [ ] Use `content-wrapper` (not mat-card)

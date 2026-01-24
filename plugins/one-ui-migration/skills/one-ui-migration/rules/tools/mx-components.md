@@ -464,4 +464,4 @@ import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
 
 - [form-builder.md](./form-builder.md) - Form creation
 - [one-validators.md](./one-validators.md) - Form validation
-- [dialog.md](./dialog.md) - Forms in dialogs
+- [dialogs.md](./ui/dialogs.md) - Forms in dialogs

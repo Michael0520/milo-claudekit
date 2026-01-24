@@ -148,5 +148,5 @@ The `<one-ui-breadcrumb />` component automatically reads the resolved breadcrum
 
 ## Related Tools
 
-- [page-layout.md](./page-layout.md) - Page structure with breadcrumb
+- [page-layout.md](./ui/page-layout.md) - Page structure with breadcrumb
 - [signal-store.md](./signal-store.md) - Store used in resolvers

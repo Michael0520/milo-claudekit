@@ -192,7 +192,7 @@ Read all `.ts`, `.html`, and `.scss` files in the target path:
 
 ### Category 4: UI Patterns (ui/)
 
-#### page-layout.md
+#### ui/page-layout.md
 - [ ] Root wrapper has `class="gl-page-content"`
 - [ ] Uses `<one-ui-breadcrumb />` at top
 - [ ] Uses `<mx-page-title [title]="t('...')">` for page title

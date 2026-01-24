@@ -8,9 +8,9 @@ Create a complete CRUD page with table, create/edit dialog.
 
 | Tool | Purpose |
 |------|---------|
-| [page-layout](../tools/page-layout.md) | Page structure |
+| [page-layout](../tools/ui/page-layout.md) | Page structure |
 | [common-table](../tools/common-table.md) | Data table |
-| [dialog](../tools/dialog.md) | Create/edit dialog |
+| [dialog](../tools/ui/dialogs.md) | Create/edit dialog |
 | [signal-store](../tools/signal-store.md) | State management |
 | [transloco](../tools/transloco.md) | Translation |
 

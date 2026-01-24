@@ -142,5 +142,5 @@ loadData: queryMethod<void, Data[]>({
 
 ## Related Tools
 
-- [dialog.md](./dialog.md) - Using Store in Dialog
+- [dialogs.md](./ui/dialogs.md) - Using Store in Dialog
 - [../reference/ddd-architecture.md](../reference/ddd-architecture.md) - Store belongs in Domain layer

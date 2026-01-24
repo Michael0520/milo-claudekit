@@ -256,5 +256,5 @@ onRefresh(): void {
 ## Related Tools
 
 - [signal-store.md](./signal-store.md) - SignalStore pattern
-- [dialog.md](./dialog.md) - Dialog with loading
+- [dialogs.md](./ui/dialogs.md) - Dialog with loading
 - [mx-components.md](./mx-components.md) - MxLoadingButtonDirective

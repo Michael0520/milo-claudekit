@@ -24,9 +24,9 @@ MIGRATE, DON'T INNOVATE
 | Manage state | [tools/signal-store.md](./tools/signal-store.md) |
 | Handle loading states | [tools/loading-states.md](./tools/loading-states.md) |
 | Create a table | [tools/common-table.md](./tools/common-table.md) |
-| Create a dialog | [tools/dialog.md](./tools/dialog.md) |
+| Create a dialog | [tools/ui/dialogs.md](./tools/ui/dialogs.md) |
 | Use MX components | [tools/mx-components.md](./tools/mx-components.md) |
-| Page structure | [tools/page-layout.md](./tools/page-layout.md) |
+| Page structure | [tools/ui/page-layout.md](./tools/ui/page-layout.md) |
 | Configure routes | [tools/routing.md](./tools/routing.md) |
 | Translate text | [tools/transloco.md](./tools/transloco.md) |
 | Handle authentication | [tools/auth.md](./tools/auth.md) |
