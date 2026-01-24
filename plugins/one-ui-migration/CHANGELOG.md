@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.5.0](https://github.com/Michael0520/milo-claudekit/compare/one-ui-migration-v1.4.0...one-ui-migration-v1.5.0) (2026-01-24)
+
+
+### Features
+
+* **one-ui-migration:** add 3 missing migration skills ([ebf6a0d](https://github.com/Michael0520/milo-claudekit/commit/ebf6a0d2f608f468046e6fafa9715a4a7acc4a76))
+* **one-ui-migration:** integrate MX-ROS migration resources ([73b26c5](https://github.com/Michael0520/milo-claudekit/commit/73b26c5d0ce4368d45ed5cda31f97a69b21e9764))
+
+
+### Bug Fixes
+
+* **one-ui-migration:** change MX-ROS to One-UI in icon-replacement ([a26730a](https://github.com/Michael0520/milo-claudekit/commit/a26730a344e1abf75fbe4d658c490574622b2fd3))
+* **one-ui-migration:** fix skill descriptions and add missing frontmatter ([25623b1](https://github.com/Michael0520/milo-claudekit/commit/25623b144eda728c57b1c2893e9b36c0eb02bd8b))
+
 ## [1.4.0](https://github.com/Michael0520/milo-claudekit/compare/one-ui-migration-v1.3.0...one-ui-migration-v1.4.0) (2026-01-23)
 
 
