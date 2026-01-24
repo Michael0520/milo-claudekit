@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/Michael0520/milo-claudekit/compare/@claudekit/config-v0.3.0...@claudekit/config-v0.4.0) (2026-01-24)
+
+
+### Features
+
+* **packages:** add new hook types and config schemas ([501ae9e](https://github.com/Michael0520/milo-claudekit/commit/501ae9e8b28ebb998c57ed5c576d88d87d4fcf62))
+
 ## [0.3.0](https://github.com/elct9620/claudekit/compare/@claudekit/config-v0.2.0...@claudekit/config-v0.3.0) (2025-12-11)
 
 
