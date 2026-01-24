@@ -28,7 +28,7 @@ Query Angular migration patterns and examples. This skill loads the migration do
 
 ### Step 1: Load Relevant Documentation
 
-Based on the query, read the appropriate documentation files from `.claude/skills/one-ui-migration/references/`:
+Based on the query, read the appropriate documentation files from `rules/`:
 
 | Query | Files to Read |
 |-------|---------------|

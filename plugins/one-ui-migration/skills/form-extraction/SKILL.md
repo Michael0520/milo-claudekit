@@ -108,4 +108,4 @@ These validators have i18n messages built-in, use simple pattern:
 
 ## References
 
-- Detailed patterns: `references/patterns.md`
+- Detailed patterns: `rules/tools/forms/patterns.md`

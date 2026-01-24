@@ -84,7 +84,7 @@
 
 ## Form Label Patterns (mxLabel, mxLabelOptional, mxLabelTooltip)
 
-See `.claude/skills/form-extraction/references/patterns.md` → "Form Label Patterns" section.
+See `rules/tools/forms/patterns.md` → "Form Label Patterns" section.
 
 ---
 

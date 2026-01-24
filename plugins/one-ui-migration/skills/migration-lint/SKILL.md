@@ -15,37 +15,36 @@ Review and fix migrated Angular code for compliance. This command reads ALL migr
 
 ### Step 1: Load ALL Migration Guidelines
 
-**IMPORTANT:** Read the core SKILL.md first, then reference documents as needed from `.claude/skills/one-ui-migration/`.
+**IMPORTANT:** Read the core SKILL.md first, then reference documents as needed from ``.
 
-**Core:** `.claude/skills/one-ui-migration/SKILL.md`
+**Core:** `one-ui-migration skill`
 
 | # | Topic | File | Category |
 |---|-------|------|----------|
-| 1 | Migration Context | references/migration-context.md | Foundation |
-| 2 | Angular 20 Syntax | references/angular-syntax.md | Foundation |
-| 3 | DDD Architecture | references/ddd-architecture.md | Architecture |
-| 4 | State Management | references/state-management.md | Architecture |
-| 5 | Authentication | references/authentication.md | Architecture |
-| 6 | Migration Checklist | references/migration-checklist.md | Foundation |
-| 7 | Context7 Usage | references/context7-usage.md | Tools |
-| 8 | Pitfalls Index | references/pitfalls/index.md | Pitfalls |
-| 8a | Pitfalls: Translation & Layout | references/pitfalls/translation-layout.md | Pitfalls |
-| 8b | Pitfalls: DDD Violations | references/pitfalls/ddd-violations.md | Pitfalls |
-| 8c | Pitfalls: Angular Syntax | references/pitfalls/angular-syntax.md | Pitfalls |
-| 8d | Pitfalls: Forms & Services | references/pitfalls/forms-services.md | Pitfalls |
-| 9 | Validators | references/forms/validators.md | Forms |
-| 10 | Error Handling | references/forms/error-handling.md | Forms |
-| 11 | Form Patterns | references/forms/patterns.md | Forms |
-| 12 | Page Layout | references/ui/page-layout.md | UI Patterns |
-| 13a | Forms | references/ui/forms.md | UI Patterns |
-| 13b | Buttons | references/ui/buttons.md | UI Patterns |
-| 13c | Components | references/ui/components.md | UI Patterns |
-| 14 | Dialogs | references/ui/dialogs.md | UI Patterns |
-| 15 | Table Basics | references/tables/basics.md | Tables |
-| 16 | Table Columns | references/tables/columns.md | Tables |
-| 17 | Table Advanced | references/tables/advanced.md | Tables |
-| 18 | API Type Definitions | references/api-types.md | API |
-| 19 | Shared Stores | references/shared-stores.md | State |
+| 1 | Migration Context | rules/reference/migration-context.md | Foundation |
+| 2 | Angular 20 Syntax | rules/reference/angular-20-syntax.md | Foundation |
+| 3 | DDD Architecture | rules/reference/ddd-architecture.md | Architecture |
+| 4 | State Management | rules/reference/state-management.md | Architecture |
+| 5 | Authentication | rules/tools/auth.md | Architecture |
+| 6 | Migration Checklist | rules/reference/migration-checklist.md | Foundation |
+| 7 | Pitfalls Index | rules/reference/pitfalls/index.md | Pitfalls |
+| 7a | Pitfalls: Translation & Layout | rules/reference/pitfalls/translation-layout.md | Pitfalls |
+| 7b | Pitfalls: DDD Violations | rules/reference/pitfalls/ddd-violations.md | Pitfalls |
+| 7c | Pitfalls: Angular Syntax | rules/reference/pitfalls/angular-syntax.md | Pitfalls |
+| 7d | Pitfalls: Forms & Services | rules/reference/pitfalls/forms-services.md | Pitfalls |
+| 8 | Validators | rules/tools/forms/validators.md | Forms |
+| 9 | Error Handling | rules/tools/forms/error-handling.md | Forms |
+| 10 | Form Patterns | rules/tools/forms/patterns.md | Forms |
+| 11 | Page Layout | rules/tools/ui/page-layout.md | UI Patterns |
+| 12a | Forms | rules/tools/ui/forms.md | UI Patterns |
+| 12b | Buttons | rules/tools/ui/buttons.md | UI Patterns |
+| 12c | Components | rules/tools/ui/components.md | UI Patterns |
+| 13 | Dialogs | rules/tools/ui/dialogs.md | UI Patterns |
+| 14 | Table Basics | rules/tools/tables/basics.md | Tables |
+| 15 | Table Columns | rules/tools/tables/columns.md | Tables |
+| 16 | Table Advanced | rules/tools/tables/advanced.md | Tables |
+| 17 | API Type Definitions | rules/reference/api-types.md | API |
+| 18 | Shared Stores | rules/reference/shared-stores.md | State |
 
 ### Step 2: Read Target Files
 

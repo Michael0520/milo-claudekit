@@ -31,7 +31,7 @@ Read all `.ts` and `.html` files from both `--from` and `--to` directories.
 
 ### Step 2: Extract and Compare Form Controls
 
-**Reference:** `.claude/skills/form-extraction/SKILL.md`
+**Reference:** `form-extraction skill`
 
 Use the form-extraction skill to extract form controls from both source and target:
 
@@ -48,7 +48,7 @@ grep -E '(this\.fb\.group|this\.#fb\.group|new FormGroup|new UntypedFormGroup)' 
 
 ### Step 3: Extract and Compare Form Validators
 
-**Reference:** `.claude/skills/form-extraction/SKILL.md`
+**Reference:** `form-extraction skill`
 
 Use the form-extraction skill to extract validators:
 
@@ -76,7 +76,7 @@ grep -oE '#?[a-zA-Z]+Validator\b' {path}/**/*.ts | sort -u
 | `Validators.min(n)` + `Validators.max(m)` | `OneValidators.range(n, m)` |
 | `Validators.pattern(x)` | `OneValidators.pattern(x)` |
 
-**For detailed patterns, see:** `.claude/skills/form-extraction/references/patterns.md`
+**For detailed patterns, see:** `rules/tools/forms/patterns.md`
 
 ### Step 4: Extract and Compare HTML Keys
 
@@ -134,7 +134,7 @@ grep -oE '#?[a-zA-Z]+Validator\b' {path}/**/*.ts | sort -u
    - Should use `transloco` (not `translate` pipe)
    - Should use `*transloco="let t"` pattern
 
-6. **Form Error Display** (Reference: `.claude/skills/form-extraction/SKILL.md`)
+6. **Form Error Display** (Reference: `form-extraction skill`)
    - `required`, `minLength`, `maxLength`, `range`, `rangeLength`, `email` → **MUST** use `<mat-error oneUiFormError="field">`
    - **All other validators** (`pattern`, `duplicate`, custom, etc.) → **MUST** use `@if/@else` with custom message
 
