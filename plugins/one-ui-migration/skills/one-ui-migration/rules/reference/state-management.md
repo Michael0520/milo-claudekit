@@ -6,7 +6,7 @@
 
 ```typescript
 import { signalStore, withState, withMethods, withComputed } from '@ngrx/signals';
-import { queryMethod, mutationMethod, type LoadingState } from '@one-ui/mx-ros/shared/domain';
+import { queryMethod, mutationMethod, type LoadingState } from '@one-ui/mxsecurity/shared/domain';
 
 interface State extends LoadingState {
   data: MyData | null;
@@ -93,7 +93,7 @@ updateData: mutationMethod<MyData, BroadcastForwardingSettingsResponse>({
 
 ## Loading State Pattern
 
-Use `queryMethod` and `mutationMethod` from `@one-ui/mx-ros/shared/domain`:
+Use `queryMethod` and `mutationMethod` from `@one-ui/mxsecurity/shared/domain`:
 
 - **`queryMethod`**: For fetching data (GET requests)
   - Automatically manages `fetching`, `loading` states
@@ -199,8 +199,8 @@ Place data loading in route resolvers, not component constructors:
 // login-page.routes.ts
 import { inject } from '@angular/core';
 import { Route } from '@angular/router';
-import { LoginPageStore, LoginPageApiService } from '@one-ui/mx-ros/login-page/domain';
-import { LoginPageComponent } from '@one-ui/mx-ros/login-page/features';
+import { LoginPageStore, LoginPageApiService } from '@one-ui/mxsecurity/login-page/domain';
+import { LoginPageComponent } from '@one-ui/mxsecurity/login-page/features';
 
 const loadStaticDataResolverFn = (store = inject(LoginPageStore)) => {
   store.loadStaticData();
@@ -265,12 +265,12 @@ constructor() {
 
 ### FileDownloadService
 
-Location: `libs/mx-ros/shared/domain/src/lib/services/file-download.service.ts`
+Location: `libs/mxsecurity/shared/domain/src/lib/services/file-download.service.ts`
 
 Use this service for downloading files from the server:
 
 ```typescript
-import { FileDownloadService } from '@one-ui/mx-ros/shared/domain';
+import { FileDownloadService } from '@one-ui/mxsecurity/shared/domain';
 
 // In store
 withMethods((store, fileDownload = inject(FileDownloadService)) => ({

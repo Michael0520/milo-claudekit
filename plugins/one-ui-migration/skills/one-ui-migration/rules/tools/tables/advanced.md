@@ -1,4 +1,4 @@
-# MX-ROS Table Migration - Advanced Features
+# MXsecurity Table Migration - Advanced Features
 
 ## Table Footer Styling
 
@@ -7,7 +7,7 @@ When using `#tableFooterTemplate` with table max size display, you **MUST** impo
 **Component TypeScript:**
 
 ```typescript
-import { oneUiTableMaxSizeDirective } from '@one-ui/mx-ros/shared/domain';
+import { oneUiTableMaxSizeDirective } from '@one-ui/mxsecurity/shared/domain';
 
 @Component({
   imports: [

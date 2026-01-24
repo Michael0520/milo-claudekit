@@ -8,7 +8,7 @@ Page setting forms **MUST** be extracted to the UI layer, NOT embedded directly 
 
 ```
 ❌ WRONG STRUCTURE:
-libs/mx-ros/dosPolicy-page/
+libs/mxsecurity/dosPolicy-page/
 ├── features/
 │   └── dosPolicy-page/
 │       ├── dosPolicy-page.component.ts
@@ -17,7 +17,7 @@ libs/mx-ros/dosPolicy-page/
     └── (empty or missing)                  # ❌ No form component!
 
 ✅ CORRECT STRUCTURE:
-libs/mx-ros/dosPolicy-page/
+libs/mxsecurity/dosPolicy-page/
 ├── features/
 │   └── dosPolicy-page/
 │       ├── dosPolicy-page.component.ts     # Smart component - orchestrates
@@ -168,12 +168,12 @@ export class UserManagementPageComponent {
 
 ```typescript
 // ❌ WRONG - Dialog in ui/
-libs/mx-ros/user-management/ui/create-user-dialog/  // ❌ NO!
+libs/mxsecurity/user-management/ui/create-user-dialog/  // ❌ NO!
 ```
 
 ```typescript
 // ✅ CORRECT - Dialog in features/
-libs/mx-ros/user-management/features/create-user-dialog/  // ✅ YES!
+libs/mxsecurity/user-management/features/create-user-dialog/  // ✅ YES!
 
 // Dialog can use UI components inside
 @Component({
@@ -310,16 +310,16 @@ export class UserManagementPageComponent {
 
 ```typescript
 // ❌ WRONG - Generic table in features (not reusable)
-libs/mx-ros/user-management/features/user-table/  // ❌ NO!
+libs/mxsecurity/user-management/features/user-table/  // ❌ NO!
 
 // ❌ WRONG - Feature-specific component in ui (not generic)
-libs/mx-ros/shared/ui/user-management-page/      // ❌ NO!
+libs/mxsecurity/shared/ui/user-management-page/      // ❌ NO!
 ```
 
 ```typescript
 // ✅ CORRECT - Generic components in ui, specific in features
-libs/mx-ros/user-management/ui/user-table/        // ✅ Generic table in ui
-libs/mx-ros/user-management/features/user-management-page/  // ✅ Specific page in features
+libs/mxsecurity/user-management/ui/user-table/        // ✅ Generic table in ui
+libs/mxsecurity/user-management/features/user-management-page/  // ✅ Specific page in features
 ```
 
 ---

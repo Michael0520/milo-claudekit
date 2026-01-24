@@ -7,7 +7,7 @@ Use the shared dialog config instead of custom CSS for dialog sizing:
 **Import from shared domain:**
 
 ```typescript
-import { smallDialogConfig, mediumDialogConfig, largeDialogConfig } from '@one-ui/mx-ros/shared/domain';
+import { smallDialogConfig, mediumDialogConfig, largeDialogConfig } from '@one-ui/mxsecurity/shared/domain';
 ```
 
 **Available Configs:**

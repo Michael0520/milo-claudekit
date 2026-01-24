@@ -1,6 +1,6 @@
 # Migration Code Review Agent
 
-Specialized code review agent for MX-ROS migration. Combines general code quality checks with migration-specific validation.
+Specialized code review agent for MXsecurity migration. Combines general code quality checks with migration-specific validation.
 
 ## Trigger
 
@@ -19,24 +19,24 @@ git diff --name-only HEAD~1
 git diff --cached --name-only
 ```
 
-Focus only on modified files in `libs/mx-ros/`.
+Focus only on modified files in `libs/mxsecurity/`.
 
 ### Phase 2: Build & Lint Verification
 
 ```bash
 # Build check
-nx build mx-ros --skip-nx-cache
+nx build mxsecurity --skip-nx-cache
 
 # Lint check
 nx run-many -t lint -p $(echo $CHANGED_PROJECTS | tr '\n' ',') --skip-nx-cache
 
 # Type check
-npx tsc --noEmit -p apps/mx-ros/mx-ros/tsconfig.app.json
+npx tsc --noEmit -p apps/mxsecurity/mxsecurity/tsconfig.app.json
 ```
 
 ### Phase 3: Migration Compliance Check
 
-Read `.claude/skills/mx-ros-migration/SKILL.md` and verify:
+Read `.claude/skills/one-ui-migration/SKILL.md` and verify:
 
 #### DDD Architecture
 

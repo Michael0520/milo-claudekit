@@ -26,7 +26,7 @@ sessionStorage.removeItem('mx_token')
 ## JWT Parsing
 
 ```typescript
-import { parseJwt, type LoginData } from '@one-ui/mx-ros/shared/domain';
+import { parseJwt, type LoginData } from '@one-ui/mxsecurity/shared/domain';
 
 const jwtData: LoginData = parseJwt(token);
 
@@ -45,7 +45,7 @@ interface LoginData {
 ## AuthStore
 
 ```typescript
-import { AuthStore } from '@one-ui/mx-ros/shared/domain';
+import { AuthStore } from '@one-ui/mxsecurity/shared/domain';
 
 @Component({...})
 export class MyComponent {

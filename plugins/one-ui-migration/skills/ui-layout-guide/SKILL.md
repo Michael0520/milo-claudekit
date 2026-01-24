@@ -19,7 +19,7 @@ UI layout optimization guide for Angular pages. This skill provides guidance on 
 
 ## Shared Styles Location
 
-All shared styles are in `libs/mx-ros/shared/styles/`:
+All shared styles are in `libs/mxsecurity/shared/styles/`:
 
 | File | Purpose |
 |------|---------|

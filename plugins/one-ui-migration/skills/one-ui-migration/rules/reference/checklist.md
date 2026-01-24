@@ -580,7 +580,7 @@ this.#dialog.open(FeatureDialogComponent, {
 // ✅ Correct route configuration
 {
   path: ROUTES_ALIASES['myFeature'].route,
-  loadChildren: () => import('@one-ui/mx-ros/my-feature/shell').then((m) => m.createRoutes()),
+  loadChildren: () => import('@one-ui/mxsecurity/my-feature/shell').then((m) => m.createRoutes()),
   resolve: {
     breadcrumb: createBreadcrumbResolver(ROUTES_ALIASES['myFeature'].id)
   }
@@ -646,7 +646,7 @@ import { MxTabGroupDirective } from '@moxa/formoxa/mx-tabs';
 
 - [ ] Token uses `sessionStorage` (not `localStorage`)
 - [ ] Token key is `'mx_token'`
-- [ ] Use `parseJwt` from `@one-ui/mx-ros/shared/domain`
+- [ ] Use `parseJwt` from `@one-ui/mxsecurity/shared/domain`
 
 | ❌ Wrong | ✅ Correct |
 |----------|-----------|
@@ -680,7 +680,7 @@ import { MxTabGroupDirective } from '@moxa/formoxa/mx-tabs';
 - [ ] No `any` types (use proper TypeScript types)
 - [ ] No magic numbers (use config constants)
 - [ ] API endpoints centralized in `api.ts`
-- [ ] Update imports to `@one-ui/mx-ros/*` paths
+- [ ] Update imports to `@one-ui/mxsecurity/*` paths
 - [ ] Prefer type union over enum
 - [ ] Use `readonly #` prefix for private injected services
 - [ ] Lint passes

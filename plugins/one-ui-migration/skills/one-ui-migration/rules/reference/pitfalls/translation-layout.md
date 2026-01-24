@@ -42,7 +42,7 @@ header: this.#transloco.translate('features.trusted_ca_cert.subject')
 
 Example - Check source file:
 ```html
-<!-- Source: /Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/xxx/xxx.component.html -->
+<!-- Source: /Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/xxx/xxx.component.html -->
 {{ 'features.cert_signing_request.title_create_csr_dialog_title' | translate }}
 {{ 'general.common.name' | translate }}
 {{ 'features.trusted_ca_cert.subject' | translate }}
@@ -56,7 +56,7 @@ Use these **exact same keys** in the migrated code:
 {{ t('features.trusted_ca_cert.subject') }}
 ```
 
-### Common Translation Key Patterns in MX-ROS
+### Common Translation Key Patterns in MXsecurity
 
 | Type | Pattern | Example |
 |------|---------|---------|
@@ -106,7 +106,7 @@ Use these **exact same keys** in the migrated code:
 ### How to Preserve Form Layout
 
 1. **Analyze source template** - Look for `fxLayout="row"` or similar row groupings
-2. **Use `.form-row` class** - Available in `libs/mx-ros/shared/styles/_form.scss`
+2. **Use `.form-row` class** - Available in `libs/mxsecurity/shared/styles/_form.scss`
 3. **Group fields exactly as source** - Same fields on same row
 
 ---

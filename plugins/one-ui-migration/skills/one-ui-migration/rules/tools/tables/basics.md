@@ -1,10 +1,10 @@
-# MX-ROS Table Migration - Basics
+# MXsecurity Table Migration - Basics
 
 ## Comparison Analysis
 
-### Old MX-ROS Account Table (Angular 16)
+### Old MXsecurity Account Table (Angular 16)
 
-**Location**: `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`
+**Location**: `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/account`
 
 **Features**:
 
@@ -49,7 +49,7 @@
 
 ## Conclusion: Can Use Shared TableComponent
 
-The shared `CommonTableComponent` in `libs/shared/ui/src/lib/table` **CAN** be directly used for MX-ROS migration. It provides all required features.
+The shared `CommonTableComponent` in `libs/shared/ui/src/lib/table` **CAN** be directly used for MXsecurity migration. It provides all required features.
 
 ---
 

@@ -28,7 +28,7 @@ Query Angular migration patterns and examples. This skill loads the migration do
 
 ### Step 1: Load Relevant Documentation
 
-Based on the query, read the appropriate documentation files from `.claude/skills/mx-ros-migration/references/`:
+Based on the query, read the appropriate documentation files from `.claude/skills/one-ui-migration/references/`:
 
 | Query | Files to Read |
 |-------|---------------|
@@ -78,7 +78,7 @@ import { MatTableModule } from '@angular/material/table';
 ### Form Validation
 
 ```typescript
-import { OneValidators } from '@one-ui/mx-ros/shared/domain';
+import { OneValidators } from '@one-ui/mxsecurity/shared/domain';
 
 // Correct
 this.#fb.group({
@@ -175,7 +175,7 @@ The `content-wrapper` class provides:
 ### Dialog Config
 
 ```typescript
-import { mediumDialogConfig } from '@one-ui/mx-ros/shared/domain';
+import { mediumDialogConfig } from '@one-ui/mxsecurity/shared/domain';
 
 this.#dialog.open(MyDialog, {
   ...mediumDialogConfig,

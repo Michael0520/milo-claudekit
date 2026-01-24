@@ -40,7 +40,7 @@ When migrating a component/feature from old project:
 
 **Example Structure:**
 ```
-libs/mx-ros/ddns-page/
+libs/mxsecurity/ddns-page/
 ├── features/
 │   └── ddns-page/
 │       └── ddns-page.component.ts  # Smart component - imports form, handles events
@@ -76,7 +76,7 @@ libs/mx-ros/ddns-page/
 
 ## Code Quality
 
-- [ ] Update imports to use `@one-ui/mx-ros/*` path aliases
+- [ ] Update imports to use `@one-ui/mxsecurity/*` path aliases
 - [ ] Add proper TypeScript types (no `any`)
 - [ ] Use `OnPush` change detection
 - [ ] Add `track` expression in `@for` loops
@@ -189,7 +189,7 @@ libs/mx-ros/ddns-page/
 
 - [ ] **Replace `appNumberOnly` with `oneUiNumberOnly`**
 - [ ] Search old project for `appNumberOnly` usage
-- [ ] Import `NumberOnlyDirective` from `@one-ui/mx-ros/shared/domain`
+- [ ] Import `NumberOnlyDirective` from `@one-ui/mxsecurity/shared/domain`
 - [ ] Add `NumberOnlyDirective` to component's `imports` array
 
 **❌ Old project:**
@@ -199,7 +199,7 @@ libs/mx-ros/ddns-page/
 
 **✅ New project:**
 ```typescript
-import { NumberOnlyDirective } from '@one-ui/mx-ros/shared/domain';
+import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
 
 @Component({
   imports: [NumberOnlyDirective, ...]
@@ -209,4 +209,4 @@ import { NumberOnlyDirective } from '@one-ui/mx-ros/shared/domain';
 <input matInput formControlName="port" oneUiNumberOnly />
 ```
 
-**Location:** `libs/mx-ros/shared/domain/src/lib/directives/number-only.directive.ts`
+**Location:** `libs/mxsecurity/shared/domain/src/lib/directives/number-only.directive.ts`

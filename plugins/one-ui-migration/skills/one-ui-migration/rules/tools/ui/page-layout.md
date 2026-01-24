@@ -135,10 +135,10 @@ All page components must use the standard page layout wrapper classes:
 
 ## Route Configuration (Breadcrumb)
 
-When adding a new page route in `apps/mx-ros/mx-ros/src/app/app.routes.ts`, you **MUST** add the breadcrumb resolver:
+When adding a new page route in `apps/mxsecurity/mxsecurity/src/app/app.routes.ts`, you **MUST** add the breadcrumb resolver:
 
 ```typescript
-import { authGuard, createBreadcrumbResolver, menuTreeResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/domain';
+import { authGuard, createBreadcrumbResolver, menuTreeResolver, ROUTES_ALIASES } from '@one-ui/mxsecurity/shared/domain';
 
 export const appRoutes: Route[] = [
   {
@@ -153,7 +153,7 @@ export const appRoutes: Route[] = [
       {
         path: ROUTES_ALIASES['broadcastForwarding'].route,
         loadChildren: () =>
-          import('@one-ui/mx-ros/broadcast-forwarding-page/shell').then((m) => m.createRoutes()),
+          import('@one-ui/mxsecurity/broadcast-forwarding-page/shell').then((m) => m.createRoutes()),
         // ✅ Required: Add breadcrumb resolver
         resolve: {
           breadcrumb: createBreadcrumbResolver(ROUTES_ALIASES['broadcastForwarding'].id)
@@ -166,6 +166,6 @@ export const appRoutes: Route[] = [
 
 **Key Points:**
 
-- Import `createBreadcrumbResolver` from `@one-ui/mx-ros/shared/domain`
+- Import `createBreadcrumbResolver` from `@one-ui/mxsecurity/shared/domain`
 - Use `ROUTES_ALIASES['routeKey'].id` as the parameter
 - This enables the `<one-ui-breadcrumb />` component to display correct navigation

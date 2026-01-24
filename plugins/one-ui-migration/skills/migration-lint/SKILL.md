@@ -9,15 +9,15 @@ Review and fix migrated Angular code for compliance. This command reads ALL migr
 
 ## Arguments
 
-- `$ARGUMENTS` - Target path to review (e.g., `libs/mx-ros/connection-management-page`)
+- `$ARGUMENTS` - Target path to review (e.g., `libs/mxsecurity/connection-management-page`)
 
 ## Workflow
 
 ### Step 1: Load ALL Migration Guidelines
 
-**IMPORTANT:** Read the core SKILL.md first, then reference documents as needed from `.claude/skills/mx-ros-migration/`.
+**IMPORTANT:** Read the core SKILL.md first, then reference documents as needed from `.claude/skills/one-ui-migration/`.
 
-**Core:** `.claude/skills/mx-ros-migration/SKILL.md`
+**Core:** `.claude/skills/one-ui-migration/SKILL.md`
 
 | # | Topic | File | Category |
 |---|-------|------|----------|
@@ -71,7 +71,7 @@ Read all `.ts`, `.html`, and `.scss` files in the target path:
 
 #### migration-context.md
 - [ ] Project follows one-ui monorepo structure
-- [ ] Uses correct scope tags (`scope:mx-ros`)
+- [ ] Uses correct scope tags (`scope:mxsecurity`)
 - [ ] Library types match DDD pattern (`domain`, `features`, `ui`, `shell`)
 
 #### angular-syntax.md
@@ -116,7 +116,7 @@ Read all `.ts`, `.html`, and `.scss` files in the target path:
 - [ ] Uses `inject()` instead of constructor injection
 
 #### pitfalls/forms-services.md
-- [ ] `mutationMethod`/`queryMethod` imported from `@one-ui/mx-ros/shared/domain` (NOT `shared/util`)
+- [ ] `mutationMethod`/`queryMethod` imported from `@one-ui/mxsecurity/shared/domain` (NOT `shared/util`)
 - [ ] No unnecessary `.def.ts` files for constants
 - [ ] Uses `MxSnackbarService` (not `MatSnackBar`)
 - [ ] Uses `controls.xxx` (not `.get('xxx')`)
@@ -171,7 +171,7 @@ Read all `.ts`, `.html`, and `.scss` files in the target path:
 - [ ] Uses `OneValidators.pattern(x)` (not `Validators.pattern`)
 - [ ] Custom validators follow correct patterns
 - [ ] Cross-field validators implemented correctly
-- [ ] Import from `@one-ui/mx-ros/shared/domain`
+- [ ] Import from `@one-ui/mxsecurity/shared/domain`
 
 #### error-handling.md
 - [ ] Form errors displayed using `<mat-error>`
@@ -282,7 +282,7 @@ Read all `.ts`, `.html`, and `.scss` files in the target path:
 - [ ] Snackbar: `snackBar.open(msg)` (not `snackBar.open(msg, '', { duration: 3000 })`)
 
 #### Constants
-- [ ] `EMPTY_DASH` from `@one-ui/mx-ros/shared/domain` (not `utils.emptyDash`)
+- [ ] `EMPTY_DASH` from `@one-ui/mxsecurity/shared/domain` (not `utils.emptyDash`)
 
 #### Imports
 - [ ] No circular imports
@@ -315,7 +315,7 @@ Read all `.ts`, `.html`, and `.scss` files in the target path:
 | `appNumberOnly` | → `oneUiNumberOnly` |
 | `this.utils.emptyDash` | → `EMPTY_DASH` |
 | `readonly #ENDPOINTS = {` | → Remove constant, inline URLs directly in each method |
-| `from '@one-ui/mx-ros/shared/util'` (for mutationMethod/queryMethod) | → `from '@one-ui/mx-ros/shared/domain'` |
+| `from '@one-ui/mxsecurity/shared/util'` (for mutationMethod/queryMethod) | → `from '@one-ui/mxsecurity/shared/domain'` |
 
 ### Step 5: Generate Report
 
@@ -421,7 +421,7 @@ Output a compliance report:
 ### Dialog Config
 
 ```typescript
-import { mediumDialogConfig } from '@one-ui/mx-ros/shared/domain';
+import { mediumDialogConfig } from '@one-ui/mxsecurity/shared/domain';
 
 this.#dialog.open(MyDialog, {
   ...mediumDialogConfig,
@@ -433,7 +433,7 @@ this.#dialog.open(MyDialog, {
 ### Validators
 
 ```typescript
-import { OneValidators } from '@one-ui/mx-ros/shared/domain';
+import { OneValidators } from '@one-ui/mxsecurity/shared/domain';
 
 this.#fb.group({
   name: ['', [OneValidators.required, OneValidators.maxLength(32)]],

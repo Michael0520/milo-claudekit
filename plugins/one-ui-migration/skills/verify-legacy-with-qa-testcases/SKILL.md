@@ -11,12 +11,12 @@ Use the new project's QA test cases to verify that the old (legacy) project's co
 
 ## Arguments
 
-- `$ARGUMENTS` - Path to the old project's source code to verify (e.g., `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`)
+- `$ARGUMENTS` - Path to the old project's source code to verify (e.g., `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/account`)
 
 ## Inputs
 
 - **QA Test Cases**: Located in the new project's domain docs folder. Infer the path from the old project path structure.
-  - Example: If old path is `.../pages/alg`, look for `libs/mx-ros/alg-page/domain/src/lib/docs/QA-TEST-CASES.md`
+  - Example: If old path is `.../pages/alg`, look for `libs/mxsecurity/alg-page/domain/src/lib/docs/QA-TEST-CASES.md`
 - **Old Project Code**: `$ARGUMENTS`
 
 ## Verification Process
@@ -230,8 +230,8 @@ Save the verification report to the **new project's docs folder** (same location
 ```
 
 For example, if analyzing ALG page:
-- QA Test Cases: `libs/mx-ros/alg-page/domain/src/lib/docs/QA-TEST-CASES.md`
-- Verification Report: `libs/mx-ros/alg-page/domain/src/lib/docs/LEGACY-VERIFICATION-REPORT.md`
+- QA Test Cases: `libs/mxsecurity/alg-page/domain/src/lib/docs/QA-TEST-CASES.md`
+- Verification Report: `libs/mxsecurity/alg-page/domain/src/lib/docs/LEGACY-VERIFICATION-REPORT.md`
 
 This keeps all documentation for a feature together in the new project repository.
 
@@ -241,10 +241,10 @@ This keeps all documentation for a feature together in the new project repositor
 
 ```bash
 # Verify legacy ALG page implementation against new QA test cases
-/verify-legacy-with-qa-testcases /Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/alg
+/verify-legacy-with-qa-testcases /Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/alg
 
 # Verify legacy account page implementation
-/verify-legacy-with-qa-testcases /Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account
+/verify-legacy-with-qa-testcases /Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/account
 ```
 
 ## Notes

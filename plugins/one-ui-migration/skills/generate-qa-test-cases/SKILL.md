@@ -11,7 +11,7 @@ Analyze project code and generate comprehensive test cases for QA testing.
 
 ## Arguments
 
-- `$ARGUMENTS` - Target path to analyze (e.g., `libs/mx-ros/account-page`)
+- `$ARGUMENTS` - Target path to analyze (e.g., `libs/mxsecurity/account-page`)
 
 ## Analysis Process
 

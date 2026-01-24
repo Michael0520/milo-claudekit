@@ -10,8 +10,8 @@ Migrate a page from legacy Angular project (Angular 16) to new one-ui monorepo (
 ## Arguments
 
 - `$ARGUMENTS` - Format: `--from <source_path> --to <target_path>`
-  - `--from`: Source path in old project (e.g., `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`)
-  - `--to`: Target path in new project (e.g., `libs/mx-ros/account-page`)
+  - `--from`: Source path in old project (e.g., `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/account`)
+  - `--to`: Target path in new project (e.g., `libs/mxsecurity/account-page`)
 
 > **Note: No page ID required**
 >
@@ -78,7 +78,7 @@ Analyze the source path and create a migration analysis document in `{target}/do
 
 ### Phase 2: DDD Structure Migration
 
-Reference documents (see `.claude/skills/mx-ros-migration/SKILL.md` for core principles):
+Reference documents (see `.claude/skills/one-ui-migration/SKILL.md` for core principles):
 
 - `references/ddd-architecture.md` - DDD layers, helper files
 - `references/forms/validators.md` - OneValidators usage, pattern constants
@@ -97,13 +97,13 @@ Generate libraries using the Nx plugin:
 
 ```bash
 # Generate all library types at once
-nx g @one-ui/one-plugin:library mx-ros {page-name} all
+nx g @one-ui/one-plugin:library mxsecurity {page-name} all
 
 # Or generate individually if needed
-nx g @one-ui/one-plugin:library mx-ros {page-name} domain
-nx g @one-ui/one-plugin:library mx-ros {page-name} features
-nx g @one-ui/one-plugin:library mx-ros {page-name} ui
-nx g @one-ui/one-plugin:library mx-ros {page-name} shell
+nx g @one-ui/one-plugin:library mxsecurity {page-name} domain
+nx g @one-ui/one-plugin:library mxsecurity {page-name} features
+nx g @one-ui/one-plugin:library mxsecurity {page-name} ui
+nx g @one-ui/one-plugin:library mxsecurity {page-name} shell
 ```
 
 ### Chunked Migration Strategy (Reducing Omission Risk)
@@ -126,9 +126,9 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} shell
 
 ### Phase 3: Layer-by-Layer Migration
 
-1. **Domain Layer** (`domain/`) - see `.claude/skills/mx-ros-migration/references/ddd-architecture.md`
-   - API response types → use existing types from `@one-ui/mx-ros/shared/domain` (e.g., `SRV_USER_ACCOUNT`)
-   - If API type missing → create in `libs/mx-ros/shared/domain/src/lib/models/api/`
+1. **Domain Layer** (`domain/`) - see `.claude/skills/one-ui-migration/references/ddd-architecture.md`
+   - API response types → use existing types from `@one-ui/mxsecurity/shared/domain` (e.g., `SRV_USER_ACCOUNT`)
+   - If API type missing → create in `libs/mxsecurity/shared/domain/src/lib/models/api/`
    - Page-specific models (view models, form models) → `*.model.ts`
    - Migrate API service → `*.api.ts`
    - Create SignalStore → `*.store.ts`
@@ -136,13 +136,13 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} shell
    - Extract pure functions → `*.helper.ts` (data transformations, serialization)
    - Keep `MIGRATION-ANALYSIS.md` in `domain/src/lib/docs/` folder
 
-2. **UI Layer** (`ui/`) - see `.claude/skills/mx-ros-migration/references/tables/basics.md`
+2. **UI Layer** (`ui/`) - see `.claude/skills/one-ui-migration/references/tables/basics.md`
    - Migrate tables → use `CommonTableComponent` pattern
    - Migrate forms → use `input()`, `output()` pattern
    - Table toolbar → use `mat-stroked-button` with `general.button.create`/`delete`
    - Keep components dumb (no store injection, no HTTP)
 
-3. **Features Layer** (`features/`) - see `.claude/skills/mx-ros-migration/references/ui/forms.md`, `buttons.md` and `dialogs.md`
+3. **Features Layer** (`features/`) - see `.claude/skills/one-ui-migration/references/ui/forms.md`, `buttons.md` and `dialogs.md`
    - Migrate page component → smart component pattern
    - Migrate dialogs → use `smallDialogConfig`, `mediumDialogConfig`, `largeDialogConfig`
    - Form tooltips → use `mxLabelTooltip` instead of `mat-icon` with `matTooltip`
@@ -152,17 +152,17 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} shell
    - Create routes with resolver pattern
    - Provide store and services
 
-5. **App Routes Registration** (see `.claude/skills/mx-ros-migration/references/ui/page-layout.md`)
-   - Add route to `apps/mx-ros/mx-ros/src/app/app.routes.ts`
+5. **App Routes Registration** (see `.claude/skills/one-ui-migration/references/ui/page-layout.md`)
+   - Add route to `apps/mxsecurity/mxsecurity/src/app/app.routes.ts`
    - Register in `appRoutes` children array with breadcrumb resolver:
 
    ```typescript
-   import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/domain';
+   import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mxsecurity/shared/domain';
 
    {
      path: ROUTES_ALIASES['{pageAlias}'].route,
      loadChildren: () =>
-       import('@one-ui/mx-ros/{page-name}/shell').then((m) => m.createRoutes()),
+       import('@one-ui/mxsecurity/{page-name}/shell').then((m) => m.createRoutes()),
      resolve: {
        breadcrumb: createBreadcrumbResolver(ROUTES_ALIASES['{pageAlias}'].id)
      }
@@ -171,7 +171,7 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} shell
 
 ### Phase 4: Syntax Modernization
 
-Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references/angular-syntax.md`):
+Apply Angular 20 syntax updates (see `.claude/skills/one-ui-migration/references/angular-syntax.md`):
 
 - `*ngIf` → `@if`
 - `*ngFor` → `@for (item of items; track item.id)`
@@ -180,12 +180,12 @@ Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references
 - `@Output()` → `output()`
 - `BehaviorSubject` → `signal()`
 
-**Form Validation** (see `.claude/skills/mx-ros-migration/references/forms/validators.md`):
+**Form Validation** (see `.claude/skills/one-ui-migration/references/forms/validators.md`):
 
 - `Validators.required` → `OneValidators.required` (no parentheses)
 - `Validators.email` → `OneValidators.email` (no parentheses)
 - `Validators.minLength(n)` → `OneValidators.minLength(n)`
-- Import from `@one-ui/mx-ros/shared/domain`
+- Import from `@one-ui/mxsecurity/shared/domain`
 
 **UI Patterns**:
 
@@ -205,39 +205,39 @@ Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references
 - Tables (see `basics.md`):
   - Table toolbar buttons: Use `mat-stroked-button` with `general.button.create`/`general.button.delete`
 
-**Helper Files** (see `.claude/skills/mx-ros-migration/references/ddd-architecture.md`):
+**Helper Files** (see `.claude/skills/one-ui-migration/references/ddd-architecture.md`):
 
 - Extract pure functions to `*.helper.ts` files in domain layer
 - Keep store files focused on state management
 
-**Translation Keys** (see `.claude/skills/mx-ros-migration/references/pitfalls/translation-layout.md`):
+**Translation Keys** (see `.claude/skills/one-ui-migration/references/pitfalls/translation-layout.md`):
 
 - **MUST use exact same translation keys as source**
 - Read source HTML templates to find correct keys
 - DO NOT create new keys or modify existing ones
 - Example: `{{ 'general.common.name' | translate }}` → `{{ t('general.common.name') }}`
 
-**Number-Only Input Directive** (see `.claude/skills/mx-ros-migration/references/pitfalls/forms-services.md`):
+**Number-Only Input Directive** (see `.claude/skills/one-ui-migration/references/pitfalls/forms-services.md`):
 
 - **MUST replace `appNumberOnly` with `oneUiNumberOnly`**
 - Search source for `appNumberOnly` usage: `grep -r "appNumberOnly" {source_path}`
-- Import `NumberOnlyDirective` from `@one-ui/mx-ros/shared/domain`
-- Location: `libs/mx-ros/shared/domain/src/lib/directives/number-only.directive.ts`
+- Import `NumberOnlyDirective` from `@one-ui/mxsecurity/shared/domain`
+- Location: `libs/mxsecurity/shared/domain/src/lib/directives/number-only.directive.ts`
 
 ### Phase 5: Verification
 
 ```bash
 # Type check
-npx tsc --noEmit --project libs/mx-ros/{page-name}/domain/tsconfig.lib.json
+npx tsc --noEmit --project libs/mxsecurity/{page-name}/domain/tsconfig.lib.json
 
 # Lint
-nx lint mx-ros-{page-name}-domain
-nx lint mx-ros-{page-name}-features
-nx lint mx-ros-{page-name}-ui
-nx lint mx-ros-{page-name}-shell
+nx lint mxsecurity-{page-name}-domain
+nx lint mxsecurity-{page-name}-features
+nx lint mxsecurity-{page-name}-ui
+nx lint mxsecurity-{page-name}-shell
 
 # Build
-nx build mx-ros-web
+nx build mxsecurity-web
 ```
 
 ## Output Format
@@ -258,4 +258,4 @@ The document should contain:
 
 - MAF Account Settings: `libs/maf/act-account/`
 - Switch L3 Interface: `libs/switch/l3-interface/`
-- MX-ROS Login: `libs/mx-ros/login-page/`
+- MXsecurity Login: `libs/mxsecurity/login-page/`

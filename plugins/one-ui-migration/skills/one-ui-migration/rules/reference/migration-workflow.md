@@ -203,14 +203,14 @@ sequenceDiagram
 
 ```bash
 # One-click complete migration workflow (recommended)
-/full-migration-pipeline --from=/path/to/old --to=libs/mx-ros/xxx-page
+/full-migration-pipeline --from=/path/to/old --to=libs/mxsecurity/xxx-page
 /full-migration-pipeline --page=xxx  # From GitLab
 
 # Manual execution of each phase
-/migrate-page --from=/path/to/old --to=libs/mx-ros/xxx-page
-/migration-lint libs/mx-ros/xxx-page
-/migration-review --from=/path/to/old --to=libs/mx-ros/xxx-page
-/generate-qa-test-cases libs/mx-ros/xxx-page
+/migrate-page --from=/path/to/old --to=libs/mxsecurity/xxx-page
+/migration-lint libs/mxsecurity/xxx-page
+/migration-review --from=/path/to/old --to=libs/mxsecurity/xxx-page
+/generate-qa-test-cases libs/mxsecurity/xxx-page
 /verify-legacy-with-qa-testcases /path/to/old
 
 # Query patterns
@@ -221,5 +221,5 @@ sequenceDiagram
 # Auxiliary tools
 /icon-replacement settings
 /ui-layout-guide card
-/check-barrel-files libs/mx-ros/xxx-page
+/check-barrel-files libs/mxsecurity/xxx-page
 ```

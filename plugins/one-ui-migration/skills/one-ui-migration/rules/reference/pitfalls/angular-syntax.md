@@ -132,7 +132,7 @@ export class MyComponent {
 }
 ```
 
-Reference: `libs/mx-ros/account-page/ui/src/lib/account-table/account-table.component.ts`
+Reference: `libs/mxsecurity/account-page/ui/src/lib/account-table/account-table.component.ts`
 
 ---
 

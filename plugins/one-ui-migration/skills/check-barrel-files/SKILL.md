@@ -9,7 +9,7 @@ Check for redundant barrel files (index.ts) that only re-export a single item.
 
 ## Arguments
 
-- `$ARGUMENTS` - The library path to check (e.g., `libs/mx-ros/account-page`)
+- `$ARGUMENTS` - The library path to check (e.g., `libs/mxsecurity/account-page`)
 
 ## Problem Description
 

@@ -2,20 +2,20 @@
 
 ## ⚠️ Store Methods Import Path - Use shared/domain NOT shared/util
 
-**CRITICAL**: `mutationMethod` and `queryMethod` must be imported from `@one-ui/mx-ros/shared/domain`, NOT from `@one-ui/mx-ros/shared/util`.
+**CRITICAL**: `mutationMethod` and `queryMethod` must be imported from `@one-ui/mxsecurity/shared/domain`, NOT from `@one-ui/mxsecurity/shared/util`.
 
 ### ❌ **WRONG - Importing from shared/util**
 
 ```typescript
 // ❌ WRONG - This path does not exist
-import { mutationMethod, queryMethod } from '@one-ui/mx-ros/shared/util';
+import { mutationMethod, queryMethod } from '@one-ui/mxsecurity/shared/util';
 ```
 
 ### ✅ **CORRECT - Importing from shared/domain**
 
 ```typescript
 // ✅ CORRECT - Import from shared/domain
-import { loadingInitialState, mutationMethod, queryMethod } from '@one-ui/mx-ros/shared/domain';
+import { loadingInitialState, mutationMethod, queryMethod } from '@one-ui/mxsecurity/shared/domain';
 ```
 
 ### Full Store Example
@@ -23,8 +23,8 @@ import { loadingInitialState, mutationMethod, queryMethod } from '@one-ui/mx-ros
 ```typescript
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import type { LoadingState } from '@one-ui/mx-ros/shared/domain';
-import { loadingInitialState, mutationMethod, queryMethod } from '@one-ui/mx-ros/shared/domain';
+import type { LoadingState } from '@one-ui/mxsecurity/shared/domain';
+import { loadingInitialState, mutationMethod, queryMethod } from '@one-ui/mxsecurity/shared/domain';
 import { MyApiService } from './my-page.api';
 
 export const MyStore = signalStore(
@@ -52,7 +52,7 @@ export const MyStore = signalStore(
 ### ❌ **WRONG - Creating Unnecessary Definition Files**
 
 ```typescript
-// ❌ WRONG - libs/mx-ros/8021x-page/domain/src/lib/8021x-page.def.ts
+// ❌ WRONG - libs/mxsecurity/8021x-page/domain/src/lib/8021x-page.def.ts
 export enum AuthMode {
   RADIUS = 0,
   LOCAL = 1,
@@ -67,7 +67,7 @@ export const PORT_AUTH_ENABLE = { ... };
 
 ```typescript
 // ✅ CORRECT - Define enum directly in the component that uses it
-// libs/mx-ros/8021x-page/ui/src/lib/general-settings-form/general-settings-form.component.ts
+// libs/mxsecurity/8021x-page/ui/src/lib/general-settings-form/general-settings-form.component.ts
 enum AuthMode {
   RADIUS = 0,
   LOCAL = 1,
@@ -86,7 +86,7 @@ export class GeneralSettingsFormComponent {
 
 ```typescript
 // ✅ CORRECT - Define constant directly in the component
-// libs/mx-ros/8021x-page/ui/src/lib/local-database-table/local-database-table.component.ts
+// libs/mxsecurity/8021x-page/ui/src/lib/local-database-table/local-database-table.component.ts
 @Component({ ... })
 export class LocalDatabaseTableComponent {
   readonly tableMaxSize = 32;  // Not imported from .def.ts
@@ -96,7 +96,7 @@ export class LocalDatabaseTableComponent {
 ### Guidelines
 
 - **Only extract to shared domain** when genuinely reused across multiple files
-- **Use API types directly** from `@one-ui/mx-ros/shared/domain` instead of creating local type aliases
+- **Use API types directly** from `@one-ui/mxsecurity/shared/domain` instead of creating local type aliases
 - **Delete unused exports** - if a constant is no longer used, remove it completely
 
 ---
@@ -271,7 +271,7 @@ this.utils.emptyData    // returns '--' or '---'
 ### ✅ **New System - Use EMPTY_DASH**
 
 ```typescript
-import { EMPTY_DASH } from '@one-ui/mx-ros/shared/domain';
+import { EMPTY_DASH } from '@one-ui/mxsecurity/shared/domain';
 
 // Use EMPTY_DASH constant
 const display = value ? value : EMPTY_DASH;
@@ -284,7 +284,7 @@ dport: row.dport ? `${row.dport}` : EMPTY_DASH,
 ### Location
 
 ```
-libs/mx-ros/shared/domain/src/lib/helpers/text.helper.ts
+libs/mxsecurity/shared/domain/src/lib/helpers/text.helper.ts
 ```
 
 ### Exception
@@ -314,7 +314,7 @@ If the old code uses `emptyDash`/`emptyData` with special conditional logic (e.g
 ### Import and Setup
 
 ```typescript
-import { NumberOnlyDirective } from '@one-ui/mx-ros/shared/domain';
+import { NumberOnlyDirective } from '@one-ui/mxsecurity/shared/domain';
 
 @Component({
   imports: [
@@ -327,7 +327,7 @@ export class MyComponent {}
 
 ### What It Does
 
-The `NumberOnlyDirective` (`libs/mx-ros/shared/domain/src/lib/directives/number-only.directive.ts`):
+The `NumberOnlyDirective` (`libs/mxsecurity/shared/domain/src/lib/directives/number-only.directive.ts`):
 
 - Restricts input to numeric characters only (0-9)
 - Automatically strips non-numeric characters on input
@@ -392,7 +392,7 @@ export class MyComponent {}
 
 ## ⚠️ TRANSLOCO_SCOPE - DO NOT USE
 
-**CRITICAL**: Do NOT use `TRANSLOCO_SCOPE` provider in components. The mx-ros project uses global translation keys, not scoped translations.
+**CRITICAL**: Do NOT use `TRANSLOCO_SCOPE` provider in components. The mxsecurity project uses global translation keys, not scoped translations.
 
 ### ❌ **WRONG - Using TRANSLOCO_SCOPE**
 

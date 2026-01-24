@@ -2,13 +2,13 @@
 
 ## CRITICAL: Use OneValidators Instead of Angular Validators
 
-**ALWAYS** use `OneValidators` from `@one-ui/mx-ros/shared/domain` instead of Angular's built-in `Validators`.
+**ALWAYS** use `OneValidators` from `@one-ui/mxsecurity/shared/domain` instead of Angular's built-in `Validators`.
 
 ### ❌ Old Pattern (Angular 16)
 
 ```typescript
 import { Validators } from '@angular/forms';
-import { ValidatorPattern } from '@mx-ros-web/shared/validator/validators';
+import { ValidatorPattern } from '@mxsecurity-web/shared/validator/validators';
 
 this.form = this.fb.group({
   username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
@@ -20,7 +20,7 @@ this.form = this.fb.group({
 ### ✅ New Pattern (Angular 20)
 
 ```typescript
-import { OneValidators } from '@one-ui/mx-ros/shared/domain';
+import { OneValidators } from '@one-ui/mxsecurity/shared/domain';
 import { OneUiFormErrorDirective } from '@one-ui/shared/ui/form';
 
 @Component({
@@ -69,7 +69,7 @@ OneValidators.email           // Email validation (no parentheses)
 
 > **Note:** `OneValidators` only provides basic, commonly-used validators. For pattern validation, always use `OneValidators.pattern()` with imported pattern constants.
 
-### **MX-ROS Custom Validators**
+### **MXsecurity Custom Validators**
 
 ```typescript
 OneValidators.duplicate(tableData, 'name')  // Check uniqueness in table
@@ -82,7 +82,7 @@ OneValidators.matchFieldsValidator('password', 'confirmPassword')  // Cross-fiel
 
 ## Using Shared Pattern Constants
 
-**IMPORTANT**: When using `OneValidators.pattern()`, always import pattern constants from `@one-ui/mx-ros/shared/domain` instead of defining local regex patterns. The pattern names are preserved from the original `ValidatorPattern` class for easier code review.
+**IMPORTANT**: When using `OneValidators.pattern()`, always import pattern constants from `@one-ui/mxsecurity/shared/domain` instead of defining local regex patterns. The pattern names are preserved from the original `ValidatorPattern` class for easier code review.
 
 ```typescript
 // ❌ BAD: Local pattern definition
@@ -90,7 +90,7 @@ const VALID_REGEX = /^[0-9a-zA-Z_@!#$%^&*()./ -]+$/;
 OneValidators.pattern(VALID_REGEX)
 
 // ✅ GOOD: Import shared pattern constant (same name as ValidatorPattern.VAILD_REGEX)
-import { OneValidators, VAILD_REGEX } from '@one-ui/mx-ros/shared/domain';
+import { OneValidators, VAILD_REGEX } from '@one-ui/mxsecurity/shared/domain';
 OneValidators.pattern(VAILD_REGEX)
 ```
 
@@ -131,7 +131,7 @@ All patterns from `ValidatorPattern` class are available with the **same names**
 ```typescript
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { OneValidators, VAILD_REGEX, VAILD_MAC } from '@one-ui/mx-ros/shared/domain';
+import { OneValidators, VAILD_REGEX, VAILD_MAC } from '@one-ui/mxsecurity/shared/domain';
 
 @Component({
   // ...
@@ -154,7 +154,7 @@ export class MyFormComponent {
 
 ```typescript
 import { NonNullableFormBuilder } from '@angular/forms';
-import { OneValidators } from '@one-ui/mx-ros/shared/domain';
+import { OneValidators } from '@one-ui/mxsecurity/shared/domain';
 
 form = this.fb.group({
   username: ['', [OneValidators.required, OneValidators.rangeLength(4, 32, 'Username')]],
@@ -165,7 +165,7 @@ form = this.fb.group({
 ### Example 2: User Form with Password Confirmation
 
 ```typescript
-import { OneValidators, VALID_REGEX_VIRGINIA_GUIDELINE_WITH_ANGLE } from '@one-ui/mx-ros/shared/domain';
+import { OneValidators, VALID_REGEX_VIRGINIA_GUIDELINE_WITH_ANGLE } from '@one-ui/mxsecurity/shared/domain';
 
 form = this.fb.group(
   {

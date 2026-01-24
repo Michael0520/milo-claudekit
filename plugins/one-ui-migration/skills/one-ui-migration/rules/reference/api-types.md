@@ -8,15 +8,15 @@ API response types should be defined in the shared domain library, not in indivi
 
 | Endpoint Pattern            | Type Location                                          | Example                               |
 | --------------------------- | ------------------------------------------------------ | ------------------------------------- |
-| `/status/xxx`               | `libs/mx-ros/shared/domain/src/lib/models/api/status/` | `/status/gnssStatus`                  |
-| `/setting/data/xxx/SRV_XXX` | `libs/mx-ros/shared/domain/src/lib/models/api/srv/`    | `/setting/data/gnss/SRV_GNSS_GENERAL` |
-| `/auth/xxx`                 | `libs/mx-ros/shared/domain/src/lib/models/api/auth/`   | `/auth/login`                         |
-| `/data/xxx`                 | `libs/mx-ros/shared/domain/src/lib/models/api/data/`   | `/data/menuTree`                      |
+| `/status/xxx`               | `libs/mxsecurity/shared/domain/src/lib/models/api/status/` | `/status/gnssStatus`                  |
+| `/setting/data/xxx/SRV_XXX` | `libs/mxsecurity/shared/domain/src/lib/models/api/srv/`    | `/setting/data/gnss/SRV_GNSS_GENERAL` |
+| `/auth/xxx`                 | `libs/mxsecurity/shared/domain/src/lib/models/api/auth/`   | `/auth/login`                         |
+| `/data/xxx`                 | `libs/mxsecurity/shared/domain/src/lib/models/api/data/`   | `/data/menuTree`                      |
 
 ## Directory Structure
 
 ```text
-libs/mx-ros/shared/domain/src/lib/models/api/
+libs/mxsecurity/shared/domain/src/lib/models/api/
 ├── auth/          # /auth/* endpoints
 │   ├── auth-login.def.ts
 │   └── index.ts
@@ -41,21 +41,21 @@ libs/mx-ros/shared/domain/src/lib/models/api/
 API response types (types returned from REST calls) should be defined in:
 
 ```text
-libs/mx-ros/shared/domain/src/lib/models/api/
+libs/mxsecurity/shared/domain/src/lib/models/api/
 ```
 
 Example:
 
 ```typescript
 // ✅ Correct: Use shared API types
-import { SRV_USER_ACCOUNT } from '@one-ui/mx-ros/shared/domain';
+import { SRV_USER_ACCOUNT } from '@one-ui/mxsecurity/shared/domain';
 
 return this.#rest.get<SRV_USER_ACCOUNT>(this.#ENDPOINTS.USER_ACCOUNT);
 ```
 
 ```typescript
 // ❌ Incorrect: Defining API types in page domain
-// libs/mx-ros/account-page/domain/src/lib/account-page.model.ts
+// libs/mxsecurity/account-page/domain/src/lib/account-page.model.ts
 export interface SrvUserAccount {
   SRV_USER_ACCOUNT_Table: SrvUserAccountEntry[];
 }
@@ -66,7 +66,7 @@ export interface SrvUserAccount {
 Page-specific models (view models, form models, table data models) should be defined in the page's domain library:
 
 ```text
-libs/mx-ros/{page-name}/domain/src/lib/{page-name}.model.ts
+libs/mxsecurity/{page-name}/domain/src/lib/{page-name}.model.ts
 ```
 
 These include:
@@ -79,7 +79,7 @@ These include:
 Example:
 
 ```typescript
-// libs/mx-ros/account-page/domain/src/lib/account-page.model.ts
+// libs/mxsecurity/account-page/domain/src/lib/account-page.model.ts
 
 // ✅ Correct: Page-specific view model
 export interface AccountTableDataItem {
@@ -109,13 +109,13 @@ If the API type doesn't exist in the shared domain, create it:
 
 ```bash
 # Create new API type file
-touch libs/mx-ros/shared/domain/src/lib/models/api/srv/srv-new-endpoint.def.ts
+touch libs/mxsecurity/shared/domain/src/lib/models/api/srv/srv-new-endpoint.def.ts
 ```
 
 Then export it from the shared domain index:
 
 ```typescript
-// libs/mx-ros/shared/domain/src/index.ts
+// libs/mxsecurity/shared/domain/src/index.ts
 export * from './lib/models/api/srv/srv-new-endpoint.def';
 ```
 
@@ -199,7 +199,7 @@ The legacy system often used `void` for POST/update responses. **The new system 
 Use `SettingDataResponse<K, T>` for all update/POST operations:
 
 ```typescript
-// libs/mx-ros/shared/domain/src/lib/models/global/api.model.ts
+// libs/mxsecurity/shared/domain/src/lib/models/global/api.model.ts
 export type SettingDataResponse<K extends string, T> = {
   [P in K]: T;
 } & {
@@ -224,14 +224,14 @@ updateDot1xCfg$(cfg: Dot1xCfg) {
 **Model File - Define Response Type Aliases:**
 
 ```typescript
-// libs/mx-ros/{page}/domain/src/lib/{page}.model.ts
+// libs/mxsecurity/{page}/domain/src/lib/{page}.model.ts
 
 import type {
   SettingDataResponse,
   SRV_DOT1X_CFG,
   SRV_DOT1X_PORT,
   SRV_DOT1X_USER_DB
-} from '@one-ui/mx-ros/shared/domain';
+} from '@one-ui/mxsecurity/shared/domain';
 
 // Define response type aliases for each update operation
 export type UpdateDot1xCfgResponse = SettingDataResponse<'SRV_DOT1X_CFG', SRV_DOT1X_CFG>;
@@ -287,10 +287,10 @@ this.#store.reauthPort(() => ({
 
 | Type Category      | Location                                        | Example                             |
 | ------------------ | ----------------------------------------------- | ----------------------------------- |
-| API Response Types | `libs/mx-ros/shared/domain/src/lib/models/api/` | `SRV_USER_ACCOUNT`, `SRV_PW_POLICY` |
-| Page View Models   | `libs/mx-ros/{page}/domain/src/lib/*.model.ts`  | `AccountTableDataItem`              |
-| Page Form Models   | `libs/mx-ros/{page}/domain/src/lib/*.model.ts`  | `AccountSettingDialogData`          |
-| Page Constants     | `libs/mx-ros/{page}/domain/src/lib/*.def.ts`    | `AuthorityType`, `AccountMode`      |
+| API Response Types | `libs/mxsecurity/shared/domain/src/lib/models/api/` | `SRV_USER_ACCOUNT`, `SRV_PW_POLICY` |
+| Page View Models   | `libs/mxsecurity/{page}/domain/src/lib/*.model.ts`  | `AccountTableDataItem`              |
+| Page Form Models   | `libs/mxsecurity/{page}/domain/src/lib/*.model.ts`  | `AccountSettingDialogData`          |
+| Page Constants     | `libs/mxsecurity/{page}/domain/src/lib/*.def.ts`    | `AuthorityType`, `AccountMode`      |
 
 ---
 
@@ -300,7 +300,7 @@ this.#store.reauthPort(() => ({
 
 ```
 Is it a GET response type?
-├── Yes → Define in shared domain (libs/mx-ros/shared/domain/src/lib/models/api/)
+├── Yes → Define in shared domain (libs/mxsecurity/shared/domain/src/lib/models/api/)
 │         ├── /status/* → api/status/
 │         ├── /setting/data/*/SRV_* → api/srv/
 │         ├── /auth/* → api/auth/
@@ -329,10 +329,10 @@ Is it a GET response type?
 
 ```typescript
 // GET response types - from shared domain
-import type { SRV_GNSS_GENERAL, GnssStatusResponse } from '@one-ui/mx-ros/shared/domain';
+import type { SRV_GNSS_GENERAL, GnssStatusResponse } from '@one-ui/mxsecurity/shared/domain';
 
 // SettingDataResponse helper - from shared domain
-import type { SettingDataResponse } from '@one-ui/mx-ros/shared/domain';
+import type { SettingDataResponse } from '@one-ui/mxsecurity/shared/domain';
 
 // Feature-specific types - from feature domain
 import type { GnssGeneralResponse, GnssTableDataItem } from './gnss-page.model';
@@ -341,9 +341,9 @@ import type { GnssGeneralResponse, GnssTableDataItem } from './gnss-page.model';
 ### Feature model.ts Template
 
 ```typescript
-// libs/mx-ros/{page}/domain/src/lib/{page}.model.ts
+// libs/mxsecurity/{page}/domain/src/lib/{page}.model.ts
 
-import type { SettingDataResponse, SRV_XXX } from '@one-ui/mx-ros/shared/domain';
+import type { SettingDataResponse, SRV_XXX } from '@one-ui/mxsecurity/shared/domain';
 
 // ========== POST Response Types (using SettingDataResponse) ==========
 export type XxxResponse = SettingDataResponse<'SRV_XXX', SRV_XXX>;

@@ -2,11 +2,11 @@
 
 ## Buttons (Material Buttons)
 
-**Button Types in MX-ROS:**
+**Button Types in MXsecurity:**
 
 - **`mat-button`**: Text button - use for secondary actions (Cancel, Close)
 - **`mat-flat-button`**: ✅ **REQUIRED** - Use for primary/secondary actions in dialogs and forms
-- **`mat-raised-button`**: ❌ **DO NOT USE** - deprecated in mx-ros, use `mat-flat-button` instead
+- **`mat-raised-button`**: ❌ **DO NOT USE** - deprecated in mxsecurity, use `mat-flat-button` instead
 - **`mat-stroked-button`**: Outlined button - for tertiary actions
 
 ### Dialog Action Buttons Example

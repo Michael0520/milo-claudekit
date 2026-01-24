@@ -1,15 +1,15 @@
-# MX-ROS Migration Context
+# MXsecurity Migration Context
 
-This guide assists with migrating the MX-ROS project from Angular 16 to Angular 20 in the one-ui monorepo.
+This guide assists with migrating the MXsecurity project from Angular 16 to Angular 20 in the one-ui monorepo.
 
 ## 🎯 Migration Context
 
-**Source Project**: `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web` (Angular 16)
-**Target Project**: `/Users/jayden/one-ui/apps/mx-ros/mx-ros` (Angular 20)
+**Source Project**: `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web` (Angular 16)
+**Target Project**: `/Users/jayden/one-ui/apps/mxsecurity/mxsecurity` (Angular 20)
 
 ## 🎯 Migration Workflow
 
-1. **Analyze old component** in `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web`
+1. **Analyze old component** in `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web`
 2. **Identify domain concepts** - What business logic, API calls, state?
 3. **Create library structure** - domain, features, ui, shell as needed
 4. **Migrate in layers**:
@@ -26,16 +26,16 @@ This guide assists with migrating the MX-ROS project from Angular 16 to Angular 
 
 ```bash
 # Create new library (use script for consistency)
-./scripts/nx-generate-lib.sh --scope mx-ros --domain-name my-feature --type domain
+./scripts/nx-generate-lib.sh --scope mxsecurity --domain-name my-feature --type domain
 
 # Type check
-npx tsc --noEmit --project libs/mx-ros/[feature]/tsconfig.lib.json
+npx tsc --noEmit --project libs/mxsecurity/[feature]/tsconfig.lib.json
 
 # Lint
-nx lint mx-ros-[feature]-[type]
+nx lint mxsecurity-[feature]-[type]
 
 # Build
-nx build mx-ros
+nx build mxsecurity
 ```
 
 ## 📞 Getting Help
@@ -46,7 +46,7 @@ When stuck:
 2. Look at reference projects in `libs/switch/`
 3. Use Context7 to query latest Angular docs
 4. Review `/Users/jayden/one-ui/CLAUDE.md` for general patterns
-5. Check old implementation in `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web`
+5. Check old implementation in `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web`
 
 ---
 

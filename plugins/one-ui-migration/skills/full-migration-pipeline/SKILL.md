@@ -10,8 +10,8 @@ Automated execution of the complete Angular migration workflow, orchestrating al
 ## Arguments
 
 - `$ARGUMENTS` - Format: `--from <source_path> --to <target_path>` or `--page <page_name>`
-  - `--from`: Legacy project path (e.g., `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`)
-  - `--to`: New project path (e.g., `libs/mx-ros/account-page`)
+  - `--from`: Legacy project path (e.g., `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/account`)
+  - `--to`: New project path (e.g., `libs/mxsecurity/account-page`)
   - `--page`: GitLab page name (e.g., `time`, `account`) - When using this parameter, source code is automatically fetched from GitLab
 
 ## Pipeline Workflow
@@ -128,7 +128,7 @@ Display pending implementation checklist (based on MIGRATION-ANALYSIS.md):
 
 **Extraction Criteria:**
 - `<form>` containing `<mat-form-field>` -> Extract to UI
-- Tables -> Prefer `common-table` pattern (reference `libs/mx-ros/shared/ui/src/lib/common-table`)
+- Tables -> Prefer `common-table` pattern (reference `libs/mxsecurity/shared/ui/src/lib/common-table`)
 - Dialogs remain in Features (but forms inside Dialogs can be extracted to UI)
 
 **Table Implementation Approach:**
@@ -204,7 +204,7 @@ Page Structure Analysis:
 
 **Generate Library Structure:**
 ```bash
-nx g @one-ui/one-plugin:library mx-ros {page-name} all
+nx g @one-ui/one-plugin:library mxsecurity {page-name} all
 ```
 
 **Await User Confirmation:**
@@ -339,7 +339,7 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} all
 ### Migration from Local Source
 
 ```bash
-/full-migration-pipeline --from=/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account --to=libs/mx-ros/account-page
+/full-migration-pipeline --from=/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/account --to=libs/mxsecurity/account-page
 ```
 
 ### Migration from GitLab
@@ -354,10 +354,10 @@ If the workflow is interrupted, continue from a specific phase:
 
 ```bash
 # Execute Phase 3 quality assurance only
-/migration-lint libs/mx-ros/account-page
+/migration-lint libs/mxsecurity/account-page
 
 # Execute Phase 4 QA verification only
-/generate-qa-test-cases libs/mx-ros/account-page
+/generate-qa-test-cases libs/mxsecurity/account-page
 /verify-legacy-with-qa-testcases /path/to/legacy
 ```
 

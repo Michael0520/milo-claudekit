@@ -11,7 +11,7 @@ When adding new page routes to the application.
 ## Import
 
 ```typescript
-import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/domain';
+import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mxsecurity/shared/domain';
 ```
 
 ---
@@ -22,12 +22,12 @@ import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/
 
 ```typescript
 // app.routes.ts
-import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/domain';
+import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mxsecurity/shared/domain';
 
 export const routes: Route[] = [
   {
     path: ROUTES_ALIASES['myFeature'].route,
-    loadChildren: () => import('@one-ui/mx-ros/my-feature/shell').then((m) => m.createRoutes()),
+    loadChildren: () => import('@one-ui/mxsecurity/my-feature/shell').then((m) => m.createRoutes()),
     resolve: {
       breadcrumb: createBreadcrumbResolver(ROUTES_ALIASES['myFeature'].id)
     }

@@ -10,8 +10,8 @@ Review migration completeness between source (old codebase) and target (new code
 ## Arguments
 
 - `$ARGUMENTS` - Format: `--from <source_path> --to <target_path>`
-  - `--from`: Source path in old project (e.g., `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`)
-  - `--to`: Target path in new project (e.g., `libs/mx-ros/account-page`)
+  - `--from`: Source path in old project (e.g., `/Users/jayden/f2e-networking-jayden/apps/mxsecurity-web/src/app/pages/account`)
+  - `--to`: Target path in new project (e.g., `libs/mxsecurity/account-page`)
 
 ## Review Process
 
@@ -20,7 +20,7 @@ Review migration completeness between source (old codebase) and target (new code
 Before starting the review, switch to the feature's worktree to ensure you're working in the correct context:
 
 ```bash
-cd /Users/jayden/one-ui-mx-ros
+cd /Users/jayden/one-ui-mxsecurity
 ```
 
 This ensures the `--to` target path is accessible and you're reviewing the latest code in the feature branch.

@@ -6,14 +6,14 @@ This document describes shared stores that are commonly used across multiple pag
 
 Manages port data (allPortMap, normalPortMap) for the entire application.
 
-**Location:** `libs/mx-ros/shared/domain/src/lib/store/port-data/port-data.store.ts`
+**Location:** `libs/mxsecurity/shared/domain/src/lib/store/port-data/port-data.store.ts`
 
-**Legacy Equivalent:** `apps/mx-ros-web/src/app/shared/Service/utils.service.ts`
+**Legacy Equivalent:** `apps/mxsecurity-web/src/app/shared/Service/utils.service.ts`
 
 ### Import
 
 ```typescript
-import { PortDataStore, type PortMapType } from '@one-ui/mx-ros/shared/domain';
+import { PortDataStore, type PortMapType } from '@one-ui/mxsecurity/shared/domain';
 ```
 
 ### PortMapType Interface
@@ -117,7 +117,7 @@ readonly availablePorts = computed(() =>
 
 The underlying API service is `PortDataApiService`:
 
-**Location:** `libs/mx-ros/shared/domain/src/lib/api/port-data.api.ts`
+**Location:** `libs/mxsecurity/shared/domain/src/lib/api/port-data.api.ts`
 
 It fetches data from 4 APIs:
 
@@ -130,14 +130,14 @@ It fetches data from 4 APIs:
 
 Manages authentication state and service permissions for the entire application.
 
-**Location:** `libs/mx-ros/shared/domain/src/lib/store/auth/auth.store.ts`
+**Location:** `libs/mxsecurity/shared/domain/src/lib/store/auth/auth.store.ts`
 
-**Legacy Equivalent:** `apps/mx-ros-web/src/app/shared/Service/auth.service.ts` (the `auth` object)
+**Legacy Equivalent:** `apps/mxsecurity-web/src/app/shared/Service/auth.service.ts` (the `auth` object)
 
 ### Import
 
 ```typescript
-import { AuthStore } from '@one-ui/mx-ros/shared/domain';
+import { AuthStore } from '@one-ui/mxsecurity/shared/domain';
 ```
 
 ### serviceDefine
@@ -165,7 +165,7 @@ The `serviceDefine` property contains boolean flags indicating which services/fe
 ### Usage in Store
 
 ```typescript
-import { AuthStore } from '@one-ui/mx-ros/shared/domain';
+import { AuthStore } from '@one-ui/mxsecurity/shared/domain';
 
 export const MyPageStore = signalStore(
   withMethods((store, authStore = inject(AuthStore)) => {

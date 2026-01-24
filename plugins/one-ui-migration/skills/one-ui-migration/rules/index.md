@@ -82,5 +82,5 @@ import { BreadcrumbComponent } from '@one-ui/shared/ui';
 import { MxPageTitleComponent } from '@moxa/formoxa/mx-page-title';
 
 // Routing - Breadcrumb
-import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/domain';
+import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mxsecurity/shared/domain';
 ```

@@ -14,12 +14,12 @@ Migrate a page from GitLab repository (Angular 16) to new one-ui monorepo (Angul
 
 **Target Path Convention**
 
-Target path is automatically derived as `libs/mx-ros/{page_name}-page`
-Example: `--page time` → `libs/mx-ros/time-page`
+Target path is automatically derived as `libs/mxsecurity/{page_name}-page`
+Example: `--page time` → `libs/mxsecurity/time-page`
 
 **GitLab Source Base URL**
 
-`https://gitlab.com/moxa/sw/f2e/networking/f2e-networking/-/tree/main/apps/mx-ros-web/src/app/pages/{page_name}`
+`https://gitlab.com/moxa/sw/f2e/networking/f2e-networking/-/tree/main/apps/mxsecurity-web/src/app/pages/{page_name}`
 
 **GitLab Access Token**
 
@@ -33,7 +33,7 @@ Set environment variable `GITLAB_TOKEN` or use `private_token=${GITLAB_TOKEN}` f
 
 **GitLab URLs (with token):**
 
-- Tree API: `https://gitlab.com/api/v4/projects/moxa%2Fsw%2Ff2e%2Fnetworking%2Ff2e-networking/repository/tree?path=apps/mx-ros-web/src/app/pages/{page_name}&ref=main&private_token=${GITLAB_TOKEN}`
+- Tree API: `https://gitlab.com/api/v4/projects/moxa%2Fsw%2Ff2e%2Fnetworking%2Ff2e-networking/repository/tree?path=apps/mxsecurity-web/src/app/pages/{page_name}&ref=main&private_token=${GITLAB_TOKEN}`
 - Raw file: `https://gitlab.com/api/v4/projects/moxa%2Fsw%2Ff2e%2Fnetworking%2Ff2e-networking/repository/files/{url_encoded_path}/raw?ref=main&private_token=${GITLAB_TOKEN}`
 
 Use WebFetch to fetch source files (`*.component.ts`, `*.component.html`, `*.component.scss`, `*.service.ts`, `*.model.ts`).
@@ -79,7 +79,7 @@ Analyze the fetched source and create a migration analysis document in `{target}
 
 ### Phase 2: DDD Structure Migration
 
-Reference documents (see `.claude/skills/mx-ros-migration/SKILL.md` for core principles):
+Reference documents (see `.claude/skills/one-ui-migration/SKILL.md` for core principles):
 
 - `references/ddd-architecture.md` - DDD layers, helper files
 - `references/forms/validators.md` - OneValidators usage, pattern constants
@@ -98,20 +98,20 @@ Generate libraries using the Nx plugin:
 
 ```bash
 # Generate all library types at once
-nx g @one-ui/one-plugin:library mx-ros {page-name} all
+nx g @one-ui/one-plugin:library mxsecurity {page-name} all
 
 # Or generate individually if needed
-nx g @one-ui/one-plugin:library mx-ros {page-name} domain
-nx g @one-ui/one-plugin:library mx-ros {page-name} features
-nx g @one-ui/one-plugin:library mx-ros {page-name} ui
-nx g @one-ui/one-plugin:library mx-ros {page-name} shell
+nx g @one-ui/one-plugin:library mxsecurity {page-name} domain
+nx g @one-ui/one-plugin:library mxsecurity {page-name} features
+nx g @one-ui/one-plugin:library mxsecurity {page-name} ui
+nx g @one-ui/one-plugin:library mxsecurity {page-name} shell
 ```
 
 ### Phase 3: Layer-by-Layer Migration
 
-1. **Domain Layer** (`domain/`) - see `.claude/skills/mx-ros-migration/references/ddd-architecture.md`
-   - API response types → use existing types from `@one-ui/mx-ros/shared/domain` (e.g., `SRV_USER_ACCOUNT`)
-   - If API type missing → create in `libs/mx-ros/shared/domain/src/lib/models/api/`
+1. **Domain Layer** (`domain/`) - see `.claude/skills/one-ui-migration/references/ddd-architecture.md`
+   - API response types → use existing types from `@one-ui/mxsecurity/shared/domain` (e.g., `SRV_USER_ACCOUNT`)
+   - If API type missing → create in `libs/mxsecurity/shared/domain/src/lib/models/api/`
    - Page-specific models (view models, form models) → `*.model.ts`
    - Migrate API service → `*.api.ts`
    - Create SignalStore → `*.store.ts`
@@ -119,13 +119,13 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} shell
    - Extract pure functions → `*.helper.ts` (data transformations, serialization)
    - Keep `MIGRATION-ANALYSIS.md` in `domain/src/lib/docs/` folder
 
-2. **UI Layer** (`ui/`) - see `.claude/skills/mx-ros-migration/references/tables/basics.md`
+2. **UI Layer** (`ui/`) - see `.claude/skills/one-ui-migration/references/tables/basics.md`
    - Migrate tables → use `CommonTableComponent` pattern
    - Migrate forms → use `input()`, `output()` pattern
    - Table toolbar → use `mat-stroked-button` with `general.button.create`/`delete`
    - Keep components dumb (no store injection, no HTTP)
 
-3. **Features Layer** (`features/`) - see `.claude/skills/mx-ros-migration/references/ui/forms.md`, `buttons.md` and `dialogs.md`
+3. **Features Layer** (`features/`) - see `.claude/skills/one-ui-migration/references/ui/forms.md`, `buttons.md` and `dialogs.md`
    - Migrate page component → smart component pattern
    - Migrate dialogs → use `smallDialogConfig`, `mediumDialogConfig`, `largeDialogConfig`
    - Form tooltips → use `mxLabelTooltip` instead of `mat-icon` with `matTooltip`
@@ -135,13 +135,13 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} shell
    - Create routes with resolver pattern
    - Provide store and services
 
-5. **App Routes Registration** (see `.claude/skills/mx-ros-migration/references/ui/page-layout.md`)
-   - Add route to `apps/mx-ros/mx-ros/src/app/app.routes.ts`
+5. **App Routes Registration** (see `.claude/skills/one-ui-migration/references/ui/page-layout.md`)
+   - Add route to `apps/mxsecurity/mxsecurity/src/app/app.routes.ts`
    - Register in `appRoutes` children array with breadcrumb resolver
 
 ### Phase 4: Syntax Modernization
 
-Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references/angular-syntax.md`):
+Apply Angular 20 syntax updates (see `.claude/skills/one-ui-migration/references/angular-syntax.md`):
 
 - `*ngIf` → `@if`
 - `*ngFor` → `@for (item of items; track item.id)`
@@ -150,12 +150,12 @@ Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references
 - `@Output()` → `output()`
 - `BehaviorSubject` → `signal()`
 
-**Form Validation** (see `.claude/skills/mx-ros-migration/references/forms/validators.md`):
+**Form Validation** (see `.claude/skills/one-ui-migration/references/forms/validators.md`):
 
 - `Validators.required` → `OneValidators.required` (no parentheses)
 - `Validators.email` → `OneValidators.email` (no parentheses)
 - `Validators.minLength(n)` → `OneValidators.minLength(n)`
-- Import from `@one-ui/mx-ros/shared/domain`
+- Import from `@one-ui/mxsecurity/shared/domain`
 
 **UI Patterns**:
 
@@ -175,32 +175,32 @@ Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references
 - Tables (see `basics.md`):
   - Table toolbar buttons: Use `mat-stroked-button` with `general.button.create`/`general.button.delete`
 
-**Translation Keys** (see `.claude/skills/mx-ros-migration/references/pitfalls/translation-layout.md`):
+**Translation Keys** (see `.claude/skills/one-ui-migration/references/pitfalls/translation-layout.md`):
 
 - **MUST use exact same translation keys as source**
 - Read source HTML templates to find correct keys
 - DO NOT create new keys or modify existing ones
 - Example: `{{ 'general.common.name' | translate }}` → `{{ t('general.common.name') }}`
 
-**Number-Only Input Directive** (see `.claude/skills/mx-ros-migration/references/pitfalls/forms-services.md`):
+**Number-Only Input Directive** (see `.claude/skills/one-ui-migration/references/pitfalls/forms-services.md`):
 
 - **MUST replace `appNumberOnly` with `oneUiNumberOnly`**
-- Import `NumberOnlyDirective` from `@one-ui/mx-ros/shared/domain`
+- Import `NumberOnlyDirective` from `@one-ui/mxsecurity/shared/domain`
 
 ### Phase 5: Verification
 
 ```bash
 # Type check
-npx tsc --noEmit --project libs/mx-ros/{page-name}/domain/tsconfig.lib.json
+npx tsc --noEmit --project libs/mxsecurity/{page-name}/domain/tsconfig.lib.json
 
 # Lint
-nx lint mx-ros-{page-name}-domain
-nx lint mx-ros-{page-name}-features
-nx lint mx-ros-{page-name}-ui
-nx lint mx-ros-{page-name}-shell
+nx lint mxsecurity-{page-name}-domain
+nx lint mxsecurity-{page-name}-features
+nx lint mxsecurity-{page-name}-ui
+nx lint mxsecurity-{page-name}-shell
 
 # Build
-nx build mx-ros-web
+nx build mxsecurity-web
 ```
 
 ## Output Format
@@ -218,12 +218,12 @@ After completing migration analysis (Phase 1), save the analysis to:
 
 These will automatically migrate to:
 
-- `libs/mx-ros/time-page`
-- `libs/mx-ros/account-page`
-- `libs/mx-ros/ddns-page`
+- `libs/mxsecurity/time-page`
+- `libs/mxsecurity/account-page`
+- `libs/mxsecurity/ddns-page`
 
 ## Reference Examples
 
 - MAF Account Settings: `libs/maf/act-account/`
 - Switch L3 Interface: `libs/switch/l3-interface/`
-- MX-ROS Login: `libs/mx-ros/login-page/`
+- MXsecurity Login: `libs/mxsecurity/login-page/`
