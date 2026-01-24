@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.10.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.9.0...claudekit-v0.10.0) (2026-01-24)
+
+
+### Features
+
+* add continuous-learning plugin ([6657bc5](https://github.com/Michael0520/milo-claudekit/commit/6657bc54b72e494c6b5a21977a4bd41bd7607e74))
+* add guard plugin for PreToolUse protection ([0f30cf2](https://github.com/Michael0520/milo-claudekit/commit/0f30cf2f5f2681108a5b9666c91946b6e21e87b5))
+* add session-memory plugin ([7f9629b](https://github.com/Michael0520/milo-claudekit/commit/7f9629b542c660351c08df11179b5c8e46307c12))
+* **git:** add console.log detection in commit hook ([7386a7e](https://github.com/Michael0520/milo-claudekit/commit/7386a7e05deba3593d6f9fc2badb529285586ab9))
+* **milo-core:** add security-reviewer agent ([e99d6c4](https://github.com/Michael0520/milo-claudekit/commit/e99d6c415eb3fc0b39d5d6b5dd0a74a012f16ed3))
+* **one-ui-migration:** add 3 missing migration skills ([ebf6a0d](https://github.com/Michael0520/milo-claudekit/commit/ebf6a0d2f608f468046e6fafa9715a4a7acc4a76))
+* **one-ui-migration:** integrate MX-ROS migration resources ([73b26c5](https://github.com/Michael0520/milo-claudekit/commit/73b26c5d0ce4368d45ed5cda31f97a69b21e9764))
+* **packages:** add new hook types and config schemas ([501ae9e](https://github.com/Michael0520/milo-claudekit/commit/501ae9e8b28ebb998c57ed5c576d88d87d4fcf62))
+* **rubric:** add PostToolUse format hook ([3d3974c](https://github.com/Michael0520/milo-claudekit/commit/3d3974c82183b780b0cf4bcef31bf44abbe38153))
+
+
+### Bug Fixes
+
+* **one-ui-migration:** change MX-ROS to One-UI in icon-replacement ([a26730a](https://github.com/Michael0520/milo-claudekit/commit/a26730a344e1abf75fbe4d658c490574622b2fd3))
+* **one-ui-migration:** fix skill descriptions and add missing frontmatter ([25623b1](https://github.com/Michael0520/milo-claudekit/commit/25623b144eda728c57b1c2893e9b36c0eb02bd8b))
+
 ## [0.9.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.8.0...claudekit-v0.9.0) (2026-01-23)
 
 
