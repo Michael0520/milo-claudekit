@@ -1,7 +1,7 @@
 {
   ".": "0.9.0",
   "packages/config": "0.3.0",
-  "packages/hook": "0.2.0",
+  "packages/hook": "0.3.0",
   "plugins/dependabot": "0.4.1",
   "plugins/git": "0.4.0",
   "plugins/license": "0.2.0",
