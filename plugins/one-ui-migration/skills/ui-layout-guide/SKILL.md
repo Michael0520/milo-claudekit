@@ -1,9 +1,9 @@
 ---
 name: ui-layout-guide
-description: UI layout optimization guide for MX-ROS pages. Use when reviewing or creating page layouts, dashboard cards, info grids, or any UI component that needs consistent styling.
+description: UI layout optimization guide for Angular pages. Use when reviewing or creating page layouts, dashboard cards, info grids, or any UI component that needs consistent styling.
 ---
 
-UI layout optimization guide for MX-ROS pages. This skill provides guidance on using shared styles and creating consistent, clean layouts.
+UI layout optimization guide for Angular pages. This skill provides guidance on using shared styles and creating consistent, clean layouts.
 
 ## Arguments
 

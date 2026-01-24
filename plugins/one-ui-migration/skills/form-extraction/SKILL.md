@@ -1,3 +1,8 @@
+---
+name: form-extraction
+description: Extract and analyze Angular Reactive Forms from source code for migration comparison and validation. Use when comparing forms between legacy and migrated code.
+---
+
 # Form Extraction Skill
 
 Extract and analyze Angular Reactive Forms from source code for migration comparison and validation.
