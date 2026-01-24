@@ -136,7 +136,7 @@ nx g @one-ui/one-plugin:library mxsecurity {page-name} shell
 
 ### Phase 3: Layer-by-Layer Migration
 
-1. **Domain Layer** (`domain/`) - see `.claude/skills/one-ui-migration/references/ddd-architecture.md`
+1. **Domain Layer** (`domain/`) - see `rules/reference/ddd-architecture.md`
    - API response types → use existing types from `@one-ui/mxsecurity/shared/domain` (e.g., `SRV_USER_ACCOUNT`)
    - If API type missing → create in `libs/mxsecurity/shared/domain/src/lib/models/api/`
    - Page-specific models (view models, form models) → `*.model.ts`
@@ -146,13 +146,13 @@ nx g @one-ui/one-plugin:library mxsecurity {page-name} shell
    - Extract pure functions → `*.helper.ts` (data transformations, serialization)
    - Keep `MIGRATION-ANALYSIS.md` in `domain/src/lib/docs/` folder
 
-2. **UI Layer** (`ui/`) - see `.claude/skills/one-ui-migration/references/tables/basics.md`
+2. **UI Layer** (`ui/`) - see `rules/tools/tables/basics.md`
    - Migrate tables → use `CommonTableComponent` pattern
    - Migrate forms → use `input()`, `output()` pattern
    - Table toolbar → use `mat-stroked-button` with `general.button.create`/`delete`
    - Keep components dumb (no store injection, no HTTP)
 
-3. **Features Layer** (`features/`) - see `.claude/skills/one-ui-migration/references/ui/forms.md`, `buttons.md` and `dialogs.md`
+3. **Features Layer** (`features/`) - see `rules/tools/ui/forms.md`, `buttons.md` and `dialogs.md`
    - Migrate page component → smart component pattern
    - Migrate dialogs → use `smallDialogConfig`, `mediumDialogConfig`, `largeDialogConfig`
    - Form tooltips → use `mxLabelTooltip` instead of `mat-icon` with `matTooltip`
@@ -162,7 +162,7 @@ nx g @one-ui/one-plugin:library mxsecurity {page-name} shell
    - Create routes with resolver pattern
    - Provide store and services
 
-5. **App Routes Registration** (see `.claude/skills/one-ui-migration/references/ui/page-layout.md`)
+5. **App Routes Registration** (see `rules/tools/ui/page-layout.md`)
    - Add route to `apps/mxsecurity/mxsecurity/src/app/app.routes.ts`
    - Register in `appRoutes` children array with breadcrumb resolver:
 
@@ -181,7 +181,7 @@ nx g @one-ui/one-plugin:library mxsecurity {page-name} shell
 
 ### Phase 4: Syntax Modernization
 
-Apply Angular 20 syntax updates (see `.claude/skills/one-ui-migration/references/angular-syntax.md`):
+Apply Angular 20 syntax updates (see `rules/reference/angular-20-syntax.md`):
 
 - `*ngIf` → `@if`
 - `*ngFor` → `@for (item of items; track item.id)`
@@ -190,7 +190,7 @@ Apply Angular 20 syntax updates (see `.claude/skills/one-ui-migration/references
 - `@Output()` → `output()`
 - `BehaviorSubject` → `signal()`
 
-**Form Validation** (see `.claude/skills/one-ui-migration/references/forms/validators.md`):
+**Form Validation** (see `rules/tools/forms/validators.md`):
 
 - `Validators.required` → `OneValidators.required` (no parentheses)
 - `Validators.email` → `OneValidators.email` (no parentheses)
@@ -215,19 +215,19 @@ Apply Angular 20 syntax updates (see `.claude/skills/one-ui-migration/references
 - Tables (see `basics.md`):
   - Table toolbar buttons: Use `mat-stroked-button` with `general.button.create`/`general.button.delete`
 
-**Helper Files** (see `.claude/skills/one-ui-migration/references/ddd-architecture.md`):
+**Helper Files** (see `rules/reference/ddd-architecture.md`):
 
 - Extract pure functions to `*.helper.ts` files in domain layer
 - Keep store files focused on state management
 
-**Translation Keys** (see `.claude/skills/one-ui-migration/references/pitfalls/translation-layout.md`):
+**Translation Keys** (see `rules/reference/pitfalls/translation-layout.md`):
 
 - **MUST use exact same translation keys as source**
 - Read source HTML templates to find correct keys
 - DO NOT create new keys or modify existing ones
 - Example: `{{ 'general.common.name' | translate }}` → `{{ t('general.common.name') }}`
 
-**Number-Only Input Directive** (see `.claude/skills/one-ui-migration/references/pitfalls/forms-services.md`):
+**Number-Only Input Directive** (see `rules/reference/pitfalls/forms-services.md`):
 
 - **MUST replace `appNumberOnly` with `oneUiNumberOnly`**
 - Search source for `appNumberOnly` usage: `grep -r "appNumberOnly" {source_path}`
