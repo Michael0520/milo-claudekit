@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/Michael0520/milo-claudekit/compare/rubric-v0.6.0...rubric-v0.7.0) (2026-01-24)
+
+
+### Features
+
+* **rubric:** add PostToolUse format hook ([3d3974c](https://github.com/Michael0520/milo-claudekit/commit/3d3974c82183b780b0cf4bcef31bf44abbe38153))
+
 ## [0.6.0](https://github.com/Michael0520/milo-claudekit/compare/rubric-v0.5.0...rubric-v0.6.0) (2026-01-17)
 
 
