@@ -1,11 +1,11 @@
 ---
-name: mx-ros-lint
-description: Comprehensive MX-ROS migration compliance checker with auto-fix.
+name: migration-lint
+description: Comprehensive Angular migration compliance checker with auto-fix capabilities. Use when reviewing migrated code for DDD architecture, Angular 20 syntax, and UI pattern compliance.
 ---
 
-# MX-ROS Lint Command
+# Migration Lint Command
 
-Review and fix MX-ROS code for migration compliance. This command reads ALL migration guidelines and performs a comprehensive checklist review.
+Review and fix migrated Angular code for compliance. This command reads ALL migration guidelines and performs a comprehensive checklist review.
 
 ## Arguments
 
@@ -322,7 +322,7 @@ Read all `.ts`, `.html`, and `.scss` files in the target path:
 Output a compliance report:
 
 ```markdown
-## MX-ROS Lint Report
+## Migration Lint Report
 
 **Path:** {target_path}
 **Date:** {current_date}

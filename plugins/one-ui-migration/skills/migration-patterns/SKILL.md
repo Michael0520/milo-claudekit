@@ -1,9 +1,9 @@
 ---
-name: mx-ros-patterns
-description: Query MX-ROS migration patterns and examples. Use when looking up patterns (table, form, dialog, layout, button, store) or asking questions about migration guidelines.
+name: migration-patterns
+description: Query Angular migration patterns and examples. Use when looking up patterns (table, form, dialog, layout, button, store) or asking questions about migration guidelines.
 ---
 
-Query MX-ROS migration patterns and examples. This skill loads the migration documentation and helps with pattern lookup and answering migration questions.
+Query Angular migration patterns and examples. This skill loads the migration documentation and helps with pattern lookup and answering migration questions.
 
 ## Arguments
 
@@ -22,7 +22,7 @@ Query MX-ROS migration patterns and examples. This skill loads the migration doc
   - `pitfall` - Common pitfalls to avoid
   - Or ask any question about migration
 
-**Note:** For code review/linting, use `/mx-ros-lint` instead.
+**Note:** For code review/linting, use `/migration-lint` instead.
 
 ## Workflow
 

@@ -1,163 +1,163 @@
 ---
 name: full-migration-pipeline
-description: Complete MX-ROS migration pipeline that orchestrates all migration skills in sequence.
+description: Complete Angular migration pipeline that orchestrates all migration skills in sequence. Use when performing end-to-end page migration with analysis, implementation, quality checks, and QA verification.
 ---
 
 # Full Migration Pipeline
 
-自動化執行完整的 MX-ROS 遷移流程，串接所有相關 skills。
+Automated execution of the complete Angular migration workflow, orchestrating all related skills in sequence.
 
 ## Arguments
 
-- `$ARGUMENTS` - Format: `--from <source_path> --to <target_path>` 或 `--page <page_name>`
-  - `--from`: 舊專案路徑 (e.g., `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`)
-  - `--to`: 新專案路徑 (e.g., `libs/mx-ros/account-page`)
-  - `--page`: GitLab 頁面名稱 (e.g., `time`, `account`) - 使用此參數時自動從 GitLab 取得源碼
+- `$ARGUMENTS` - Format: `--from <source_path> --to <target_path>` or `--page <page_name>`
+  - `--from`: Legacy project path (e.g., `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`)
+  - `--to`: New project path (e.g., `libs/mx-ros/account-page`)
+  - `--page`: GitLab page name (e.g., `time`, `account`) - When using this parameter, source code is automatically fetched from GitLab
 
-## Pipeline 流程
+## Pipeline Workflow
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    FULL MIGRATION PIPELINE                       │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
-│  Phase 1: 分析階段                                               │
+│  Phase 1: Analysis                                               │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │ 1.1 執行 migrate-mx-ros-page (分析 + 產出文件)           │    │
-│  │ 1.2 執行 form-extraction (提取表單結構)                  │    │
-│  │     產出: MIGRATION-ANALYSIS.md                          │    │
+│  │ 1.1 Execute migrate-page (analysis + document generation)│    │
+│  │ 1.2 Execute form-extraction (extract form structure)     │    │
+│  │     Output: MIGRATION-ANALYSIS.md                         │    │
 │  └─────────────────────────────────────────────────────────┘    │
 │                           ↓                                      │
-│  Phase 2: 實作階段 (手動)                                        │
+│  Phase 2: Implementation (Manual)                                │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │ 2.1 建立 Domain Layer (model, api, store, helper)       │    │
-│  │ 2.2 建立 UI Layer (tables, forms)                        │    │
-│  │ 2.3 建立 Features Layer (page, dialogs)                  │    │
-│  │ 2.4 建立 Shell Layer (routes)                            │    │
-│  │     [等待用戶確認完成]                                    │    │
+│  │ 2.1 Create Domain Layer (model, api, store, helper)      │    │
+│  │ 2.2 Create UI Layer (tables, forms)                       │    │
+│  │ 2.3 Create Features Layer (page, dialogs)                 │    │
+│  │ 2.4 Create Shell Layer (routes)                           │    │
+│  │     [Await user confirmation]                             │    │
 │  └─────────────────────────────────────────────────────────┘    │
 │                           ↓                                      │
-│  Phase 3: 品質檢查階段                                           │
+│  Phase 3: Quality Assurance                                      │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │ 3.1 執行 mx-ros-lint (合規性檢查 + 自動修復)             │    │
-│  │ 3.2 執行 migration-review (遷移完整性檢查)               │    │
-│  │ 3.3 執行 compare-i18n-keys (翻譯 key 比對)               │    │
-│  │ 3.4 執行 check-barrel-files (檢查冗餘 barrel)            │    │
+│  │ 3.1 Execute migration-lint (compliance check + auto-fix) │    │
+│  │ 3.2 Execute migration-review (migration completeness)    │    │
+│  │ 3.3 Execute compare-i18n-keys (translation key compare)  │    │
+│  │ 3.4 Execute check-barrel-files (check redundant barrels) │    │
 │  └─────────────────────────────────────────────────────────┘    │
 │                           ↓                                      │
-│  Phase 4: QA 驗證階段                                            │
+│  Phase 4: QA Verification                                        │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │ 4.1 執行 generate-qa-test-cases (生成測試案例)           │    │
-│  │ 4.2 執行 verify-legacy-with-qa-testcases (驗證舊程式碼)  │    │
-│  │     產出: QA-TEST-CASES.md, LEGACY-VERIFICATION-REPORT.md│    │
+│  │ 4.1 Execute generate-qa-test-cases (generate test cases) │    │
+│  │ 4.2 Execute verify-legacy-with-qa-testcases (verify old) │    │
+│  │     Output: QA-TEST-CASES.md, LEGACY-VERIFICATION-REPORT.md│   │
 │  └─────────────────────────────────────────────────────────┘    │
 │                           ↓                                      │
-│  Phase 5: 最終報告                                               │
+│  Phase 5: Final Report                                           │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │ 產出 MIGRATION-SUMMARY.md (彙整所有階段結果)             │    │
+│  │ Output MIGRATION-SUMMARY.md (consolidate all results)    │    │
 │  └─────────────────────────────────────────────────────────┘    │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 執行流程
+## Execution Flow
 
-### Phase 1: 分析階段
+### Phase 1: Analysis
 
-**自動執行：**
+**Automated Execution:**
 
-1. **判斷來源類型**
-   - 如果提供 `--page`：使用 GitLab API 取得源碼
-   - 如果提供 `--from`：使用本地檔案
+1. **Determine Source Type**
+   - If `--page` is provided: Use GitLab API to fetch source code
+   - If `--from` is provided: Use local files
 
-2. **執行遷移分析**
+2. **Execute Migration Analysis**
    ```
-   根據來源類型執行：
-   - /migrate-mx-ros-page --from={source} --to={target}
-   - /migrate-mx-ros-page-gitlab --page={page_name}
+   Execute based on source type:
+   - /migrate-page --from={source} --to={target}
+   - /migrate-page-gitlab --page={page_name}
    ```
 
-3. **提取表單結構**（輔助分析）
-   - 讀取源碼中的表單定義
-   - 列出所有 formControlName, validators
+3. **Extract Form Structure** (Auxiliary Analysis)
+   - Read form definitions from source code
+   - List all formControlName and validators
 
-**產出：**
+**Output:**
 - `{target}/domain/src/lib/docs/MIGRATION-ANALYSIS.md`
 
-**詢問用戶：**
-> Phase 1 分析完成。是否開始 Phase 2 實作階段？
+**User Prompt:**
+> Phase 1 analysis complete. Proceed to Phase 2 implementation?
 
 ---
 
-### Phase 2: 實作階段
+### Phase 2: Implementation
 
-**提供實作指引：**
+**Implementation Guidelines:**
 
-顯示待實作項目清單（根據 MIGRATION-ANALYSIS.md）：
+Display pending implementation checklist (based on MIGRATION-ANALYSIS.md):
 
 ```markdown
-## 實作檢查清單
+## Implementation Checklist
 
 ### Domain Layer
-- [ ] 建立 `{feature}.model.ts` - API types, view models
-- [ ] 建立 `{feature}.api.ts` - API service (URL 直接 inline，不要用常數)
-- [ ] 建立 `{feature}.store.ts` - SignalStore
-- [ ] 建立 `{feature}.helper.ts` - Pure functions (如需要)
+- [ ] Create `{feature}.model.ts` - API types, view models
+- [ ] Create `{feature}.api.ts` - API service (inline URLs directly, do not use constants)
+- [ ] Create `{feature}.store.ts` - SignalStore
+- [ ] Create `{feature}.helper.ts` - Pure functions (if needed)
 
-### Features Layer (先實作)
-- [ ] 建立 Page component
-- [ ] 建立 Dialog components (如有)
-- [ ] 確認注入 store
+### Features Layer (Implement First)
+- [ ] Create Page component
+- [ ] Create Dialog components (if applicable)
+- [ ] Verify store injection
 
-### UI Layer (從 Features 提取)
-- [ ] 提取 Table components 到 UI layer
-- [ ] 提取 Form components 到 UI layer
-- [ ] 確認使用 input()/output()，無 store 注入
+### UI Layer (Extract from Features)
+- [ ] Extract Table components to UI layer
+- [ ] Extract Form components to UI layer
+- [ ] Verify input()/output() usage, no store injection
 
 ### Shell Layer
-- [ ] 建立 routes
-- [ ] 註冊到 app.routes.ts
+- [ ] Create routes
+- [ ] Register in app.routes.ts
 ```
 
-#### ⚠️ 重要：Form/Table 提取到 UI Layer
+#### Important: Form/Table Extraction to UI Layer
 
-**實作順序：**
-1. 先在 Features Layer 完成頁面功能
-2. 再將 Form 和 Table 提取到 UI Layer
-3. Features Layer 只保留 orchestration code
+**Implementation Order:**
+1. First complete page functionality in Features Layer
+2. Then extract Form and Table to UI Layer
+3. Features Layer should only retain orchestration code
 
-**提取標準：**
-- `<form>` 內有 `<mat-form-field>` → 提取到 UI
-- 表格 → 優先使用 `common-table` pattern（參考 `libs/mx-ros/shared/ui/src/lib/common-table`）
-- Dialog 保留在 Features（但 Dialog 內的 form 可提取到 UI）
+**Extraction Criteria:**
+- `<form>` containing `<mat-form-field>` -> Extract to UI
+- Tables -> Prefer `common-table` pattern (reference `libs/mx-ros/shared/ui/src/lib/common-table`)
+- Dialogs remain in Features (but forms inside Dialogs can be extracted to UI)
 
-**Table 實作方式：**
-- 優先使用 `CommonTableComponent` 搭配 `MxColumnDef[]` 定義欄位
-- 若有複雜客製需求才建立獨立的 table component 到 UI layer
+**Table Implementation Approach:**
+- Prefer using `CommonTableComponent` with `MxColumnDef[]` for column definitions
+- Only create standalone table component in UI layer for complex customization requirements
 
-**不需提取的例外：**
-- 極簡單的頁面（如只有 radio group 無表單驗證）
-- 僅供單一頁面使用且無複雜表單邏輯
+**Exceptions (No Extraction Required):**
+- Extremely simple pages (e.g., only radio group without form validation)
+- Components used by a single page without complex form logic
 
-#### ⚠️ 不要使用的 Pattern
+#### Patterns to Avoid
 
 ```typescript
-// ❌ 不要使用 TRANSLOCO_SCOPE
+// DO NOT use TRANSLOCO_SCOPE
 providers: [{ provide: TRANSLOCO_SCOPE, useValue: { scope: 'xxx' } }]
 
-// ❌ 不要使用 endpoint 常數
+// DO NOT use endpoint constants
 readonly #ENDPOINTS = { API: '/api/xxx' };
 
-// ✅ 直接 inline URL
+// CORRECT: Inline URLs directly
 this.#rest.get('/api/xxx');
 ```
 
-#### 分塊遷移技巧 (降低遺漏風險)
+#### Chunked Migration Strategy (Reducing Omission Risk)
 
-**原則：由大到小，逐塊完成**
+**Principle: Process from large sections to small units, completing each before proceeding**
 
 ```
-頁面結構分析：
+Page Structure Analysis:
 ┌─────────────────────────────────────┐
 │ Page                                │
 │ ┌─────────────────────────────────┐ │
@@ -173,24 +173,24 @@ this.#rest.get('/api/xxx');
 └─────────────────────────────────────┘
 ```
 
-**Step 1: 以 `mat-tab` 為區塊**
-- 先識別頁面有幾個 tab
-- 每個 tab 獨立處理，完成一個再做下一個
-- 建立 tab 對應的 checklist
+**Step 1: Segment by `mat-tab`**
+- First identify the number of tabs on the page
+- Process each tab independently, completing one before proceeding to the next
+- Create a checklist corresponding to each tab
 
-**Step 2: 以 `mat-card` / `content-wrapper` 切塊**
-- 在每個 tab 內，識別所有 card/section
-- 每個 card 視為一個獨立單元遷移
-- 完成一個 card 後立即驗證
+**Step 2: Segment by `mat-card` / `content-wrapper`**
+- Within each tab, identify all cards/sections
+- Treat each card as an independent migration unit
+- Verify immediately after completing each card
 
-**Step 3: 逐一遷移並驗證**
-- 遷移順序：由上到下、由左到右
-- 每完成一個區塊，執行 `/mx-ros-lint` 檢查
-- 比對舊程式碼確認無遺漏
+**Step 3: Migrate and Verify Incrementally**
+- Migration order: top to bottom, left to right
+- Execute `/migration-lint` after completing each segment
+- Compare with legacy code to confirm no omissions
 
-**範例 Checklist：**
+**Example Checklist:**
 ```markdown
-## 分塊遷移進度
+## Chunked Migration Progress
 
 ### Tab 1: General Settings
 - [x] Card 1.1: Basic Info
@@ -202,171 +202,171 @@ this.#rest.get('/api/xxx');
 - [ ] Card 2.2: Certificates
 ```
 
-**生成 library 結構：**
+**Generate Library Structure:**
 ```bash
 nx g @one-ui/one-plugin:library mx-ros {page-name} all
 ```
 
-**等待用戶確認：**
-> 請完成上述實作後輸入 "done" 或 "繼續" 進入 Phase 3。
-> 如需查詢模式，可使用 /mx-ros-patterns <keyword>
+**Await User Confirmation:**
+> After completing the above implementation, enter "done" or "continue" to proceed to Phase 3.
+> For pattern queries, use /migration-patterns <keyword>
 
 ---
 
-### Phase 3: 品質檢查階段
+### Phase 3: Quality Assurance
 
-**自動執行：**
+**Automated Execution:**
 
-1. **合規性檢查 + 自動修復**
+1. **Compliance Check + Auto-fix**
    ```
-   /mx-ros-lint {target}
+   /migration-lint {target}
    ```
-   - 自動修復：mat-raised-button → mat-flat-button
-   - 自動修復：*ngIf → @if
-   - 自動修復：Validators → OneValidators
-   - 產出合規報告
+   - Auto-fix: mat-raised-button -> mat-flat-button
+   - Auto-fix: *ngIf -> @if
+   - Auto-fix: Validators -> OneValidators
+   - Generate compliance report
 
-2. **遷移完整性檢查**
+2. **Migration Completeness Check**
    ```
    /migration-review --from={source} --to={target}
    ```
-   - 比對 form controls
-   - 比對 validators
-   - 比對 translation keys
-   - 比對 event bindings
+   - Compare form controls
+   - Compare validators
+   - Compare translation keys
+   - Compare event bindings
 
-3. **翻譯 key 比對**（針對主要 HTML 檔案）
+3. **Translation Key Comparison** (For primary HTML files)
    ```
    /compare-i18n-keys --from={source}/*.html --to={target}/**/*.html
    ```
 
-4. **檢查冗餘 barrel files**
+4. **Check Redundant Barrel Files**
    ```
    /check-barrel-files {target}
    ```
 
-**產出：**
-- 各檢查的報告（顯示在對話中）
-- 自動修復的變更清單
+**Output:**
+- Reports for each check (displayed in conversation)
+- List of auto-fixed changes
 
-**詢問用戶：**
-> Phase 3 品質檢查完成。發現 X 個問題已自動修復，Y 個問題需手動處理。
-> 是否繼續 Phase 4 QA 驗證階段？
+**User Prompt:**
+> Phase 3 quality assurance complete. X issues auto-fixed, Y issues require manual intervention.
+> Proceed to Phase 4 QA verification?
 
 ---
 
-### Phase 4: QA 驗證階段
+### Phase 4: QA Verification
 
-**自動執行：**
+**Automated Execution:**
 
-1. **生成 QA 測試案例**
+1. **Generate QA Test Cases**
    ```
    /generate-qa-test-cases {target}
    ```
-   - 從新程式碼提取測試案例
-   - 產出繁體中文報告
+   - Extract test cases from new code
+   - Generate structured test report
 
-2. **驗證舊程式碼**
+2. **Verify Legacy Code**
    ```
    /verify-legacy-with-qa-testcases {source}
    ```
-   - 用測試案例驗證舊程式碼
-   - 確認功能一致性
+   - Verify legacy code using test cases
+   - Confirm functional consistency
 
-**產出：**
+**Output:**
 - `{target}/domain/src/lib/docs/QA-TEST-CASES.md`
 - `{target}/domain/src/lib/docs/LEGACY-VERIFICATION-REPORT.md`
 
 ---
 
-### Phase 5: 最終報告
+### Phase 5: Final Report
 
-**自動產出 MIGRATION-SUMMARY.md：**
+**Auto-generate MIGRATION-SUMMARY.md:**
 
 ```markdown
-# {Feature Name} 遷移總結報告
+# {Feature Name} Migration Summary Report
 
-**遷移日期：** {date}
-**來源：** {source_path}
-**目標：** {target_path}
+**Migration Date:** {date}
+**Source:** {source_path}
+**Target:** {target_path}
 
-## 遷移狀態
+## Migration Status
 
-| 階段 | 狀態 | 備註 |
-|------|------|------|
-| Phase 1: 分析 | ✅ 完成 | |
-| Phase 2: 實作 | ✅ 完成 | |
-| Phase 3: 品質檢查 | ✅ 完成 | 自動修復 X 項 |
-| Phase 4: QA 驗證 | ✅ 完成 | |
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1: Analysis | Complete | |
+| Phase 2: Implementation | Complete | |
+| Phase 3: Quality Assurance | Complete | X items auto-fixed |
+| Phase 4: QA Verification | Complete | |
 
-## 產出文件
+## Generated Documents
 
 - [x] MIGRATION-ANALYSIS.md
 - [x] QA-TEST-CASES.md
 - [x] LEGACY-VERIFICATION-REPORT.md
-- [x] MIGRATION-SUMMARY.md (本文件)
+- [x] MIGRATION-SUMMARY.md (this document)
 
-## 合規性報告摘要
+## Compliance Report Summary
 
-### 自動修復項目
-{列出已自動修復的項目}
+### Auto-fixed Items
+{List of auto-fixed items}
 
-### 需手動處理項目
-{列出需手動處理的項目}
+### Items Requiring Manual Intervention
+{List of items requiring manual intervention}
 
-## 遷移完整性
+## Migration Completeness
 
-| 類別 | 來源 | 目標 | 完整度 |
-|------|------|------|--------|
+| Category | Source | Target | Completeness |
+|----------|--------|--------|--------------|
 | Form Controls | X | X | 100% |
 | Validators | X | X | 100% |
 | Translation Keys | X | X | 100% |
 | Event Bindings | X | X | 100% |
 
-## 下一步
+## Next Steps
 
-1. [ ] 執行完整測試
+1. [ ] Execute comprehensive testing
 2. [ ] Code Review
-3. [ ] 合併到主分支
+3. [ ] Merge to main branch
 ```
 
-**產出位置：** `{target}/domain/src/lib/docs/MIGRATION-SUMMARY.md`
+**Output Location:** `{target}/domain/src/lib/docs/MIGRATION-SUMMARY.md`
 
 ---
 
-## 使用範例
+## Usage Examples
 
-### 從本地源碼遷移
+### Migration from Local Source
 
 ```bash
 /full-migration-pipeline --from=/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account --to=libs/mx-ros/account-page
 ```
 
-### 從 GitLab 遷移
+### Migration from GitLab
 
 ```bash
 /full-migration-pipeline --page=account
 ```
 
-## 中斷與恢復
+## Interruption and Resumption
 
-如果流程中斷，可以從特定階段繼續：
+If the workflow is interrupted, continue from a specific phase:
 
 ```bash
-# 只執行 Phase 3 品質檢查
-/mx-ros-lint libs/mx-ros/account-page
+# Execute Phase 3 quality assurance only
+/migration-lint libs/mx-ros/account-page
 
-# 只執行 Phase 4 QA 驗證
+# Execute Phase 4 QA verification only
 /generate-qa-test-cases libs/mx-ros/account-page
 /verify-legacy-with-qa-testcases /path/to/legacy
 ```
 
-## 輔助 Skills
+## Auxiliary Skills
 
-在 Pipeline 執行過程中，可隨時使用：
+Available for use at any point during pipeline execution:
 
-| Skill | 用途 |
-|-------|------|
-| `/mx-ros-patterns <keyword>` | 查詢遷移模式 |
-| `/icon-replacement <icon>` | 查找替代圖示 |
-| `/ui-layout-guide <query>` | UI 版面指南 |
+| Skill | Purpose |
+|-------|---------|
+| `/migration-patterns <keyword>` | Query migration patterns |
+| `/icon-replacement <icon>` | Find replacement icons |
+| `/ui-layout-guide <query>` | UI layout guidelines |

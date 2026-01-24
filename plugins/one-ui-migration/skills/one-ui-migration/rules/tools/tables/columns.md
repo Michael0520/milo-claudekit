@@ -1,4 +1,4 @@
-# MX-ROS Table Migration - Column Configuration
+# Table Migration - Column Configuration
 
 ## TableColumn API
 
@@ -101,7 +101,7 @@ When a column uses a custom template (via `#tableColumnsTemplate`), you **MUST**
 
 > ⚠️ **CRITICAL**: `CommonTableComponent` does NOT handle external template directives. You MUST import these modules in components that have `#tableColumnsTemplate`.
 
-| 模板使用的指令                                     | 需要匯入的模組   |
+| Directives Used in Template                        | Required Module  |
 | -------------------------------------------------- | ---------------- |
 | `matColumnDef`, `*matHeaderCellDef`, `*matCellDef` | `MatTableModule` |
 | `mat-sort-header`                                  | `MatSortModule`  |
@@ -120,13 +120,13 @@ import { MatTableModule } from '@angular/material/table';
 })
 ```
 
-**常見錯誤訊息:**
+**Common Error Message:**
 
 ```
 A structural directive `matHeaderCellDef` was used in the template without a corresponding import in the component.
 ```
 
-**解決方法:** 在元件加入 `MatTableModule` 和 `MatSortModule` 匯入。
+**Solution:** Add `MatTableModule` and `MatSortModule` imports to the component.
 
 ### Component TypeScript
 

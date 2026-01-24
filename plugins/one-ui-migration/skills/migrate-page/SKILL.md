@@ -1,47 +1,30 @@
 ---
-name: migrate-mx-ros-page-gitlab
-description: Migrate MX-ROS page from GitLab source following DDD architecture.
+name: migrate-page
+description: Migrate Angular page from local source following DDD architecture. Use when migrating pages from Angular 16 to Angular 20 with domain-driven design patterns.
 ---
 
-# MX-ROS Page Migration Command (GitLab Source)
+# Page Migration Command
 
-Migrate a page from MX-ROS GitLab repository (Angular 16) to new one-ui monorepo (Angular 20) following DDD architecture.
+Migrate a page from legacy Angular project (Angular 16) to new one-ui monorepo (Angular 20) following DDD architecture.
 
 ## Arguments
 
-- `$ARGUMENTS` - Format: `--page <page_name>`
-  - `--page`: Page folder name in GitLab (e.g., `time`, `account`, `ddns`)
+- `$ARGUMENTS` - Format: `--from <source_path> --to <target_path>`
+  - `--from`: Source path in old project (e.g., `/Users/jayden/f2e-networking-jayden/apps/mx-ros-web/src/app/pages/account`)
+  - `--to`: Target path in new project (e.g., `libs/mx-ros/account-page`)
 
-**Target Path Convention**
-
-Target path is automatically derived as `libs/mx-ros/{page_name}-page`
-Example: `--page time` → `libs/mx-ros/time-page`
-
-**GitLab Source Base URL**
-
-`https://gitlab.com/moxa/sw/f2e/networking/f2e-networking/-/tree/main/apps/mx-ros-web/src/app/pages/{page_name}`
-
-**GitLab Access Token**
-
-Set environment variable `GITLAB_TOKEN` or use `private_token=${GITLAB_TOKEN}` for authenticated access.
-
-> **Security Note**: Never hardcode tokens in skill files. Use environment variables instead.
+> **Note: No page ID required**
+>
+> Only provide `--from` and `--to` path arguments, no additional page ID needed.
 
 ## Workflow
 
-### Phase 1: Fetch Source from GitLab & Analysis
+### Phase 1: Source Analysis
 
-**GitLab URLs (with token):**
-
-- Tree API: `https://gitlab.com/api/v4/projects/moxa%2Fsw%2Ff2e%2Fnetworking%2Ff2e-networking/repository/tree?path=apps/mx-ros-web/src/app/pages/{page_name}&ref=main&private_token=${GITLAB_TOKEN}`
-- Raw file: `https://gitlab.com/api/v4/projects/moxa%2Fsw%2Ff2e%2Fnetworking%2Ff2e-networking/repository/files/{url_encoded_path}/raw?ref=main&private_token=${GITLAB_TOKEN}`
-
-Use WebFetch to fetch source files (`*.component.ts`, `*.component.html`, `*.component.scss`, `*.service.ts`, `*.model.ts`).
-
-Analyze the fetched source and create a migration analysis document in `{target}/domain/src/lib/docs/MIGRATION-ANALYSIS.md`:
+Analyze the source path and create a migration analysis document in `{target}/domain/src/lib/docs/MIGRATION-ANALYSIS.md`:
 
 1. **File Structure Analysis**
-   - List all files fetched from GitLab
+   - List all files in the source directory
    - Categorize by type: components, services, models, templates, styles
 
 2. **Component Analysis**
@@ -65,13 +48,29 @@ Analyze the fetched source and create a migration analysis document in `{target}
    - Angular Material components used
    - Shared services/utils used
 
-6. **Translation Keys Analysis (CRITICAL)**
+6. **UI Interactions (for E2E testing)**
+   - Button clicks and their actions
+   - Form submissions
+   - Dialog open/close triggers
+   - Table operations (select, edit, delete, add)
+   - Navigation actions
+
+7. **Translation Keys Analysis (CRITICAL)**
    - **DO NOT create new translation keys**
    - **DO NOT modify existing translation keys**
    - List all translation keys used in source HTML templates
    - Copy exact keys for use in migrated components
+   - Document all translation keys by category:
+     - Page titles
+     - Tab labels
+     - Dialog titles and descriptions
+     - Form field labels
+     - Button labels
+     - Tooltip texts
+     - Table column headers
+     - Error messages and hints
 
-7. **Form Layout Analysis (CRITICAL)**
+8. **Form Layout Analysis (CRITICAL)**
    - **DO NOT change form field row groupings**
    - Analyze `fxLayout="row"` patterns in source templates
    - Document which fields appear on same row
@@ -107,6 +106,24 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} ui
 nx g @one-ui/one-plugin:library mx-ros {page-name} shell
 ```
 
+### Chunked Migration Strategy (Reducing Omission Risk)
+
+**Principle: Process from large sections to small units, completing each before proceeding**
+
+1. **Segment by `mat-tab`** - First identify the number of tabs on the page, then process each tab independently
+2. **Segment by `mat-card` / section** - Within each tab, identify all cards/sections
+3. **Migrate and verify incrementally** - Execute `/migration-lint` immediately after completing each segment
+
+**Example Checklist:**
+```markdown
+### Tab 1: General Settings
+- [x] Card 1.1: Basic Info
+- [ ] Card 1.2: Network Config
+
+### Tab 2: Security
+- [ ] Card 2.1: Authentication
+```
+
 ### Phase 3: Layer-by-Layer Migration
 
 1. **Domain Layer** (`domain/`) - see `.claude/skills/mx-ros-migration/references/ddd-architecture.md`
@@ -137,7 +154,20 @@ nx g @one-ui/one-plugin:library mx-ros {page-name} shell
 
 5. **App Routes Registration** (see `.claude/skills/mx-ros-migration/references/ui/page-layout.md`)
    - Add route to `apps/mx-ros/mx-ros/src/app/app.routes.ts`
-   - Register in `appRoutes` children array with breadcrumb resolver
+   - Register in `appRoutes` children array with breadcrumb resolver:
+
+   ```typescript
+   import { createBreadcrumbResolver, ROUTES_ALIASES } from '@one-ui/mx-ros/shared/domain';
+
+   {
+     path: ROUTES_ALIASES['{pageAlias}'].route,
+     loadChildren: () =>
+       import('@one-ui/mx-ros/{page-name}/shell').then((m) => m.createRoutes()),
+     resolve: {
+       breadcrumb: createBreadcrumbResolver(ROUTES_ALIASES['{pageAlias}'].id)
+     }
+   }
+   ```
 
 ### Phase 4: Syntax Modernization
 
@@ -175,6 +205,11 @@ Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references
 - Tables (see `basics.md`):
   - Table toolbar buttons: Use `mat-stroked-button` with `general.button.create`/`general.button.delete`
 
+**Helper Files** (see `.claude/skills/mx-ros-migration/references/ddd-architecture.md`):
+
+- Extract pure functions to `*.helper.ts` files in domain layer
+- Keep store files focused on state management
+
 **Translation Keys** (see `.claude/skills/mx-ros-migration/references/pitfalls/translation-layout.md`):
 
 - **MUST use exact same translation keys as source**
@@ -185,7 +220,9 @@ Apply Angular 20 syntax updates (see `.claude/skills/mx-ros-migration/references
 **Number-Only Input Directive** (see `.claude/skills/mx-ros-migration/references/pitfalls/forms-services.md`):
 
 - **MUST replace `appNumberOnly` with `oneUiNumberOnly`**
+- Search source for `appNumberOnly` usage: `grep -r "appNumberOnly" {source_path}`
 - Import `NumberOnlyDirective` from `@one-ui/mx-ros/shared/domain`
+- Location: `libs/mx-ros/shared/domain/src/lib/directives/number-only.directive.ts`
 
 ### Phase 5: Verification
 
@@ -208,19 +245,14 @@ nx build mx-ros-web
 After completing migration analysis (Phase 1), save the analysis to:
 `{target}/domain/src/lib/docs/MIGRATION-ANALYSIS.md`
 
-## Example Usage
+The document should contain:
 
-```
-/migrate-mx-ros-page-gitlab --page time
-/migrate-mx-ros-page-gitlab --page account
-/migrate-mx-ros-page-gitlab --page ddns
-```
-
-These will automatically migrate to:
-
-- `libs/mx-ros/time-page`
-- `libs/mx-ros/account-page`
-- `libs/mx-ros/ddns-page`
+- File structure overview
+- Component hierarchy
+- Form validations to migrate
+- API endpoints to migrate
+- UI interaction steps (for E2E testing)
+- Migration checklist with checkboxes
 
 ## Reference Examples
 

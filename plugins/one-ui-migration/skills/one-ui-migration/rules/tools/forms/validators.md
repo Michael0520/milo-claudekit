@@ -255,22 +255,22 @@ form = this.fb.group({
 
 ## ⚠️ CRITICAL: Error Display Patterns
 
-### 哪些 Validator 可以直接用 `oneUiFormError`？
+### Which Validators Can Use `oneUiFormError` Directly?
 
-| Validator | 內建訊息 | 用法 |
-| --------- | -------- | ---- |
-| `required` | `validators.required` | ✅ 直接用 `oneUiFormError` |
-| `minLength` | `validators.require_min_length` | ✅ 直接用 `oneUiFormError` |
-| `maxLength` | `validators.invalid_max_length` | ✅ 直接用 `oneUiFormError` |
-| `range` | `validators.invalid_range` | ✅ 直接用 `oneUiFormError` |
-| `rangeLength` | `validators.invalid_range` | ✅ 直接用 `oneUiFormError` |
-| `email` | `validators.invalid_email` | ✅ 直接用 `oneUiFormError` |
-| `pattern` | `validators.invalid` (太泛用) | ❌ **MUST** use `@if/@else` |
-| `duplicate` | `validators.duplicate` (可能需要更具體) | ❌ **MUST** use `@if/@else` |
-| Custom validators | 無內建訊息 | ❌ **MUST** use `@if/@else` |
-| **All other validators** | 不在上述 6 個基本 validators | ❌ **MUST** use `@if/@else` |
+| Validator | Built-in Message | Usage |
+| --------- | ---------------- | ----- |
+| `required` | `validators.required` | ✅ Use `oneUiFormError` directly |
+| `minLength` | `validators.require_min_length` | ✅ Use `oneUiFormError` directly |
+| `maxLength` | `validators.invalid_max_length` | ✅ Use `oneUiFormError` directly |
+| `range` | `validators.invalid_range` | ✅ Use `oneUiFormError` directly |
+| `rangeLength` | `validators.invalid_range` | ✅ Use `oneUiFormError` directly |
+| `email` | `validators.invalid_email` | ✅ Use `oneUiFormError` directly |
+| `pattern` | `validators.invalid` (too generic) | ❌ **MUST** use `@if/@else` |
+| `duplicate` | `validators.duplicate` (may need specificity) | ❌ **MUST** use `@if/@else` |
+| Custom validators | No built-in message | ❌ **MUST** use `@if/@else` |
+| **All other validators** | Not in above 6 basic validators | ❌ **MUST** use `@if/@else` |
 
-### Pattern 1: 簡單用法（內建訊息的 validators）
+### Pattern 1: Simple Usage (Validators with Built-in Messages)
 
 ```html
 <mat-form-field>
@@ -280,7 +280,7 @@ form = this.fb.group({
 </mat-form-field>
 ```
 
-### Pattern 2: 自訂訊息（All other validators）
+### Pattern 2: Custom Messages (All Other Validators)
 
 ```html
 <mat-form-field>
@@ -296,33 +296,33 @@ form = this.fb.group({
 </mat-form-field>
 ```
 
-### ❌ 錯誤寫法
+### ❌ Incorrect Pattern
 
 ```html
-<!-- oneUiFormError directive 無法顯示 pattern 專屬的 error message -->
+<!-- oneUiFormError directive cannot display pattern-specific error messages -->
 <mat-form-field>
   <mat-label>{{ t('general.common_account.account') }}</mat-label>
   <input matInput formControlName="account" />
-  <mat-error oneUiFormError="account"></mat-error>  <!-- ❌ Pattern error 不會正確顯示 -->
+  <mat-error oneUiFormError="account"></mat-error>  <!-- ❌ Pattern error will not display correctly -->
 </mat-form-field>
 ```
 
-### ✅ 正確寫法
+### ✅ Correct Pattern
 
 ```html
-<!-- 使用 @if/@else 來處理 pattern error -->
+<!-- Use @if/@else to handle pattern errors -->
 <mat-form-field>
   <mat-label>{{ t('general.common_account.account') }}</mat-label>
   <input matInput formControlName="account" />
   @if (form.controls.account.hasError('pattern')) {
-    <mat-error>{{ t('validators.invalid_format_not_space') }}</mat-error>  <!-- ✅ 自訂 pattern error message -->
+    <mat-error>{{ t('validators.invalid_format_not_space') }}</mat-error>  <!-- ✅ Custom pattern error message -->
   } @else {
-    <mat-error oneUiFormError="account"></mat-error>  <!-- ✅ 其他 error 由 directive 處理 -->
+    <mat-error oneUiFormError="account"></mat-error>  <!-- ✅ Other errors handled by directive -->
   }
 </mat-form-field>
 ```
 
-### 常用 Pattern Error Messages
+### Common Pattern Error Messages
 
 | Pattern Constant | Error Message Translation Key |
 |------------------|------------------------------|
@@ -330,7 +330,7 @@ form = this.fb.group({
 | `VAILD_REGEX_LEVEL_1` | `validators.invalid_regex_level_1` |
 | `IPADDR_REGEX` | `validators.invalid_ip_address` |
 
-### 完整範例
+### Complete Example
 
 ```html
 <!-- Configuration Name with pattern validation -->
@@ -370,8 +370,8 @@ form = this.fb.group({
 </mat-form-field>
 ```
 
-### 為什麼需要這樣做？
+### Why is this necessary?
 
-1. **`oneUiFormError` directive** 是設計來處理 `OneValidators` 內建的 error messages（如 `required`, `minLength`, `maxLength` 等）
-2. **Pattern validation** 的 error message 需要根據具體的 pattern 類型來顯示不同的訊息，這無法由 directive 自動推斷
-3. **Legacy code** 也是用相同的 `@if`/`@else` 模式，遷移時必須保持一致
+1. **`oneUiFormError` directive** is designed to handle built-in `OneValidators` error messages (e.g., `required`, `minLength`, `maxLength`)
+2. **Pattern validation** error messages need to display different messages based on the specific pattern type, which cannot be automatically inferred by the directive
+3. **Legacy code** uses the same `@if`/`@else` pattern, so migration must maintain consistency
