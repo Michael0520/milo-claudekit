@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/Michael0520/milo-claudekit/compare/git-v0.4.0...git-v0.5.0) (2026-01-24)
+
+
+### Features
+
+* **git:** add console.log detection in commit hook ([7386a7e](https://github.com/Michael0520/milo-claudekit/commit/7386a7e05deba3593d6f9fc2badb529285586ab9))
+
 ## [0.4.0](https://github.com/Michael0520/milo-claudekit/compare/git-v0.3.0...git-v0.4.0) (2026-01-17)
 
 
