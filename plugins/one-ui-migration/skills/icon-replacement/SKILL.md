@@ -3,7 +3,7 @@ name: icon-replacement
 description: Find replacement icons for migration. Use when migrating old code that uses icons not available in the new system, or when you need to find a suitable icon from the available icon set.
 ---
 
-Find and suggest replacement icons during migration. This skill provides the complete list of available icons in the MX-ROS system.
+Find and suggest replacement icons during migration. This skill provides the complete list of available icons in the One-UI system.
 
 ## Arguments
 
