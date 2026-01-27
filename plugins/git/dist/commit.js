@@ -205,10 +205,11 @@ async function detectDebugStatements(patterns = [
 	"tsx",
 	"js",
 	"jsx"
-]) {
+], exclude = []) {
 	const modifiedFiles = await getModifiedFiles();
 	const extRegex = new RegExp(`\\.(${extensions.join("|")})$`);
-	const targetFiles = modifiedFiles.filter((f) => extRegex.test(f));
+	let targetFiles = modifiedFiles.filter((f) => extRegex.test(f));
+	if (exclude.length > 0) targetFiles = targetFiles.filter((f) => !exclude.some((pattern) => f.includes(pattern)));
 	if (targetFiles.length === 0) return [];
 	const matches = [];
 	const patternRegex = new RegExp(`(${patterns.join("|")})`, "g");
@@ -289,7 +290,8 @@ if (isDebugDetectionEnabled) {
 		"js",
 		"jsx"
 	];
-	debugMatches = await detectDebugStatements(patterns, extensions);
+	const exclude = debugConfig?.exclude ?? [];
+	debugMatches = await detectDebugStatements(patterns, extensions, exclude);
 	if (debugMatches.length > 0) {
 		const matchesStr = debugMatches.map((m) => `  • ${m.file}:${m.line} - ${m.pattern}`).join("\n");
 		const warnTemplate = debugConfig?.warnMessage ?? DEFAULT_DEBUG_WARN_MESSAGE;

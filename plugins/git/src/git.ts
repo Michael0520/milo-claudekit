@@ -130,12 +130,18 @@ export async function getModifiedFiles(): Promise<string[]> {
 export async function detectDebugStatements(
   patterns: string[] = ["console\\.log", "console\\.debug", "console\\.warn", "console\\.info", "debugger"],
   extensions: string[] = ["ts", "tsx", "js", "jsx"],
+  exclude: string[] = [],
 ): Promise<DebugStatementMatch[]> {
   const modifiedFiles = await getModifiedFiles();
 
   // Filter by extensions
   const extRegex = new RegExp(`\\.(${extensions.join("|")})$`);
-  const targetFiles = modifiedFiles.filter((f) => extRegex.test(f));
+  let targetFiles = modifiedFiles.filter((f) => extRegex.test(f));
+
+  // Exclude files matching any exclude pattern
+  if (exclude.length > 0) {
+    targetFiles = targetFiles.filter((f) => !exclude.some((pattern) => f.includes(pattern)));
+  }
 
   if (targetFiles.length === 0) {
     return [];

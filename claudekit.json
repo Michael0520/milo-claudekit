@@ -9,6 +9,7 @@
       "enabled": true,
       "patterns": ["console\\.log", "console\\.debug", "debugger"],
       "extensions": ["ts", "tsx", "js", "jsx"],
+      "exclude": ["dist/", "node_modules/"],
       "enforce": false
     }
   },

@@ -23,6 +23,8 @@ export type CommitConfig = {
     patterns?: string[];
     /** File extensions to check (default: ts, tsx, js, jsx) */
     extensions?: string[];
+    /** Path patterns to exclude from detection (e.g., ["dist/", "node_modules/"]) */
+    exclude?: string[];
     /** Whether to block commit or just warn (default: false = warn only) */
     enforce?: boolean;
     /** Custom warning message */

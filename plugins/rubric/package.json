@@ -11,7 +11,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && rolldown -c",
+    "build": "tsc && rolldown -c && chmod +x dist/*.js",
     "test": "vitest --run",
     "test:watch": "vitest",
     "tsc": "tsc"

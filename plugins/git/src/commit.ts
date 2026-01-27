@@ -68,8 +68,9 @@ if (isDebugDetectionEnabled) {
     "debugger",
   ];
   const extensions = debugConfig?.extensions ?? ["ts", "tsx", "js", "jsx"];
+  const exclude = debugConfig?.exclude ?? [];
 
-  debugMatches = await detectDebugStatements(patterns, extensions);
+  debugMatches = await detectDebugStatements(patterns, extensions, exclude);
 
   if (debugMatches.length > 0) {
     const matchesStr = debugMatches

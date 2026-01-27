@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && rolldown -c",
+    "build": "tsc && rolldown -c && chmod +x dist/*.js",
     "tsc": "tsc"
   },
   "keywords": [],
