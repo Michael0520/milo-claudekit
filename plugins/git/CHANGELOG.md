@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/Michael0520/milo-claudekit/compare/git-v0.5.0...git-v0.5.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* **hooks:** add execute permissions and exclude option for debug detection ([453d164](https://github.com/Michael0520/milo-claudekit/commit/453d16481c08ef8fee852edfda05eec755d93f22))
+
 ## [0.5.0](https://github.com/Michael0520/milo-claudekit/compare/git-v0.4.0...git-v0.5.0) (2026-01-24)
 
 
