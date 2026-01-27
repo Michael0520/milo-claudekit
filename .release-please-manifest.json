@@ -1,5 +1,5 @@
 {
-  ".": "0.10.1",
+  ".": "0.10.2",
   "packages/config": "0.4.0",
   "packages/hook": "0.3.0",
   "plugins/dependabot": "0.4.1",

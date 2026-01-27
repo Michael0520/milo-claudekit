@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.2](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.10.1...claudekit-v0.10.2) (2026-01-27)
+
+
+### Bug Fixes
+
+* **hooks:** add execute permissions and exclude option for debug detection ([453d164](https://github.com/Michael0520/milo-claudekit/commit/453d16481c08ef8fee852edfda05eec755d93f22))
+
 ## [0.10.1](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.10.0...claudekit-v0.10.1) (2026-01-24)
 
 
