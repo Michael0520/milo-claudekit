@@ -697,32 +697,45 @@ import { MxTabGroupDirective } from '@moxa/formoxa/mx-tabs';
 
 ---
 
-## Table Component (11 items)
+## Table Component (13 items)
 
-📖 Details: [common-table.md](../tools/common-table.md) | [create-table.md](../guides/create-table.md)
+📖 Details: [common-table.md](../tools/common-table.md) | [create-table.md](../guides/create-table.md) | [auto-generate.md](../tools/tables/auto-generate.md)
 
 - [ ] Use `CommonTableComponent` from `@one-ui/shared/ui`
 - [ ] Create data item interface in domain layer (`model.ts`)
 - [ ] Create table component in UI layer
 - [ ] Define columns using `TableColumn<T>`
 - [ ] Use `input()` for data, `output()` for events
-- [ ] Custom columns have `noAutoGenerate: true`
+- [ ] Plain text columns use auto-generation (no `noAutoGenerate`, no custom template)
+- [ ] Date columns pre-formatted as string in `viewData` computed
+- [ ] Only Angular component columns (`<mx-status>`, `<mat-icon>`, `<button>`) have `noAutoGenerate: true`
 - [ ] Custom columns have filter function for searchable
 - [ ] Custom columns have `mat-sort-header` in `<th>`
 - [ ] `EDIT_COLUMN_KEY` has `stickyEnd: true`
-- [ ] Long text cells use `gl-ellipsis-text` class
-- [ ] Long text cells use `mxAutoTooltip` directive
+- [ ] Long text columns use `truncate` + `rowTooltip` / `rowTooltipDisable`
+- [ ] Composite headers use `translate()` + `langChanged()`
 
 ```typescript
 // ✅ Correct column definition
 readonly columns = computed(() => [
   { key: SELECT_COLUMN_KEY, disable: (row) => row.isCurrentUser },
-  { key: 'name', header: this.#transloco.translate('general.common.name') },
+  // auto-generate: plain text
+  { key: 'name', header: 'general.common.name' },
+  // auto-generate: long text with truncate + tooltip
+  {
+    key: 'description',
+    header: 'general.common.description',
+    width: '300px',
+    truncate: true,
+    rowTooltip: (row: unknown) => (row as RowType).description ?? '',
+    rowTooltipDisable: (row: unknown) => !(row as RowType).description
+  },
+  // custom template: Angular component required
   {
     key: 'status',
     header: this.#transloco.translate('general.common.status'),
-    noAutoGenerate: true,  // Custom template
-    filter: (data, filter) => {  // Required for search
+    noAutoGenerate: true,
+    filter: (data, filter) => {
       const status = data.enabled ? 'Enabled' : 'Disabled';
       return status.toLowerCase().includes(filter.toLowerCase());
     }

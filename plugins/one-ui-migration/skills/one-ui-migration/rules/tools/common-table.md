@@ -75,11 +75,15 @@ readonly columns = computed(() => [
 | Property | Type | Description |
 |----------|------|-------------|
 | `key` | string | Column key (must match data property) |
-| `header` | string | Column header |
+| `header` | string | Column header (i18n key for auto-generate, or pre-translated string) |
 | `stickyEnd` | boolean | Stick to right side |
-| `noAutoGenerate` | boolean | Use custom template |
+| `width` | string | Column width (`minWidth`; with `truncate`, also sets `maxWidth`) |
+| `truncate` | boolean | Truncate cell text with ellipsis (requires `width`) |
+| `noAutoGenerate` | boolean | Use custom template (only for Angular components) |
 | `filter` | function | Custom search filter |
 | `disable` | function | Disable row operations |
+| `rowTooltip` | function | Row cell tooltip content |
+| `rowTooltipDisable` | function | Disable row tooltip when no data |
 
 ---
 

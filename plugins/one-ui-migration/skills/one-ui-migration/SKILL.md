@@ -16,20 +16,19 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 
 | I need to... | Check this |
 |--------------|------------|
-| **Add form validation** | `rules/tools/one-validators.md` ⭐ |
-| **Create a form** | `rules/tools/form-builder.md` ⭐ |
-| **Use shared helpers** | `rules/tools/shared-helpers.md` 🆕 |
+| **Add form validation** | `rules/tools/one-validators.md` |
+| **Create a form** | `rules/tools/form-builder.md` |
+| **Use shared helpers** | `rules/tools/shared-helpers.md` |
 | **Manage state (Store)** | `rules/tools/signal-store.md` |
 | **Handle loading states** | `rules/tools/loading-states.md` |
 | **Create a table** | `rules/tools/common-table.md` |
+| **Simplify table columns** | `rules/tools/tables/auto-generate.md` |
 | **Create a dialog** | `rules/tools/ui/dialogs.md` |
 | **Use MX components** | `rules/tools/mx-components.md` |
 | **Page structure** | `rules/tools/ui/page-layout.md` |
 | **Configure routes** | `rules/tools/routing.md` |
 | **Translate text** | `rules/tools/transloco.md` |
 | **Handle authentication** | `rules/tools/auth.md` |
-
-⭐ Enhanced | 🆕 New
 
 ### What do I need to build?
 
@@ -43,12 +42,10 @@ allowed-tools: Read, Bash, Edit, Write, Glob, Grep
 
 | I need to... | Check this |
 |--------------|------------|
-| **DDD layer rules** | `rules/reference/ddd-architecture.md` ⭐ |
-| **Common migration mistakes** | `rules/reference/pitfalls.md` 🆕 |
+| **DDD layer rules** | `rules/reference/ddd-architecture.md` |
+| **Common migration mistakes** | `rules/reference/pitfalls.md` |
 | **Angular 20 syntax transforms** | `rules/reference/angular-20-syntax.md` |
-| **Pre-PR checklist** | `rules/reference/checklist.md` ⭐ |
-
-⭐ Enhanced | 🆕 New
+| **Pre-PR checklist** | `rules/reference/checklist.md` |
 
 ---
 
@@ -126,8 +123,8 @@ Route definitions?    → shell/
 
 ```
 rules/
-├── index.md                    # Router entry
-├── tools/                      # Tool reference (9 files + 3 subdirs)
+├── index.md
+├── tools/
 │   ├── one-validators.md
 │   ├── form-builder.md
 │   ├── signal-store.md
@@ -137,17 +134,43 @@ rules/
 │   ├── routing.md
 │   ├── transloco.md
 │   ├── auth.md
-│   ├── forms/                  # Form patterns
-│   ├── tables/                 # Table patterns
-│   └── ui/                     # UI patterns (dialogs, page-layout, buttons)
-├── guides/                     # Integration guides (3 files)
+│   ├── shared-helpers.md
+│   ├── forms/
+│   │   ├── validators.md
+│   │   ├── error-handling.md
+│   │   └── patterns.md
+│   ├── tables/
+│   │   ├── basics.md
+│   │   ├── columns.md
+│   │   ├── advanced.md
+│   │   └── auto-generate.md
+│   └── ui/
+│       ├── page-layout.md
+│       ├── forms.md
+│       ├── buttons.md
+│       ├── components.md
+│       └── dialogs.md
+├── guides/
 │   ├── create-page.md
 │   ├── create-dialog.md
 │   └── create-table.md
-└── reference/                  # Reference (3 files)
+└── reference/
     ├── ddd-architecture.md
     ├── angular-20-syntax.md
-    └── checklist.md
+    ├── api-types.md
+    ├── checklist.md
+    ├── migration-checklist.md
+    ├── migration-context.md
+    ├── migration-workflow.md
+    ├── shared-stores.md
+    ├── state-management.md
+    ├── pitfalls.md
+    └── pitfalls/
+        ├── index.md
+        ├── angular-syntax.md
+        ├── ddd-violations.md
+        ├── forms-services.md
+        └── translation-layout.md
 ```
 
 ---
