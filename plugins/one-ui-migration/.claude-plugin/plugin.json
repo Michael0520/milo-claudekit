@@ -1,7 +1,7 @@
 {
   "name": "one-ui-migration",
   "description": "Angular 16 to 20 migration with DDD architecture and SignalStore patterns",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "author": {
     "name": "Michael0520"
   }
