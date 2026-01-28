@@ -12,6 +12,7 @@ type TableColumn<R = any> = {
   tooltip?: string; // Header tooltip
   visible?: boolean; // Show/hide column
   width?: string; // Column width
+  truncate?: boolean; // Truncate cell text with ellipsis (requires width)
   noAutoGenerate?: boolean; // Use custom template
   filter?: (data: R, filter: string) => boolean; // Custom filter
   sort?: (data: R, sortId: string) => string | number; // Custom sort
