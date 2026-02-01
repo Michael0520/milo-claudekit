@@ -7,6 +7,13 @@
 
 * **milo-core:** add setup-nx-mcp command ([c84306e](https://github.com/Michael0520/milo-claudekit/commit/c84306e5ca90a1f6da1cec89e2acbf37cc90601d))
 
+## [1.5.0](https://github.com/Michael0520/milo-claudekit/compare/milo-core-v1.4.0...milo-core-v1.5.0) (2026-02-01)
+
+
+### Features
+
+* **milo-core:** add setup-nx-mcp command ([c84306e](https://github.com/Michael0520/milo-claudekit/commit/c84306e5ca90a1f6da1cec89e2acbf37cc90601d))
+
 ## [1.4.0](https://github.com/Michael0520/milo-claudekit/compare/milo-core-v1.3.0...milo-core-v1.4.0) (2026-01-24)
 
 

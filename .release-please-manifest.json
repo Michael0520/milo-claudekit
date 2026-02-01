@@ -9,5 +9,5 @@
   "plugins/chrome-devtools-mcp": "1.1.0",
   "plugins/worktree-manager": "1.1.0",
   "plugins/one-ui-migration": "1.5.1",
-  "plugins/milo-core": "1.4.0"
+  "plugins/milo-core": "1.5.0"
 }
