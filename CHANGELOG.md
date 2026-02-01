@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.10.2...claudekit-v0.11.0) (2026-02-01)
+
+
+### Features
+
+* **milo-core:** add setup-nx-mcp command ([c84306e](https://github.com/Michael0520/milo-claudekit/commit/c84306e5ca90a1f6da1cec89e2acbf37cc90601d))
+
 ## [0.10.2](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.10.1...claudekit-v0.10.2) (2026-01-27)
 
 
