@@ -99,7 +99,7 @@ case "$SUBCOMMAND" in
         ALL_DIRS+=("${DIRS[@]}")
 
         # Remove duplicates
-        UNIQUE_DIRS=($(printf '%s\n' "${ALL_DIRS[@]}" | sort -u))
+        mapfile -t UNIQUE_DIRS < <(printf '%s\n' "${ALL_DIRS[@]}" | sort -u)
 
         echo "Adding directories to sparse-checkout in: $WORKTREE_PATH"
         echo "New directories: ${DIRS[*]}"

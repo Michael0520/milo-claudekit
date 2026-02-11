@@ -40,7 +40,7 @@ SPARSE_DIRS="${9:-}"
 
 # Validate inputs
 if [ -z "$PROJECT" ] || [ -z "$BRANCH" ] || [ -z "$BRANCH_SLUG" ] || [ -z "$WORKTREE_PATH" ] || [ -z "$REPO_PATH" ] || [ -z "$PORTS" ]; then
-    echo "Usage: $0 <project> <branch> <branch-slug> <worktree-path> <repo-path> <ports> [task]"
+    echo "Usage: $0 <project> <branch> <branch-slug> <worktree-path> <repo-path> <ports> [task] [sparse-enabled] [sparse-dirs]"
     exit 1
 fi
 

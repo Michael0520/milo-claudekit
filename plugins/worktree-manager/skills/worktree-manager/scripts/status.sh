@@ -135,7 +135,7 @@ echo "$WORKTREES" | while read -r wt; do
     SPARSE="–"
     SPARSE_ENABLED=$(echo "$wt" | jq -r '.sparseCheckout.enabled // false')
     if [ "$SPARSE_ENABLED" = "true" ]; then
-        SPARSE_COUNT=$(echo "$wt" | jq -r '.sparseCheckout.directories | length // 0')
+        SPARSE_COUNT=$(echo "$wt" | jq -r '(.sparseCheckout.directories // []) | length')
         SPARSE="Yes($SPARSE_COUNT)"
     elif [ -d "$WORKTREE_PATH" ]; then
         # Check live sparse-checkout state if not tracked in registry
@@ -201,4 +201,5 @@ if [ -n "$SPARSE_ENTRIES" ]; then
         SC_DIRS=$(echo "$entry" | jq -r '.sparseCheckout.directories | join(", ")')
         echo "  $SC_PROJECT/$SC_BRANCH: $SC_DIRS"
     done
+    echo ""
 fi
