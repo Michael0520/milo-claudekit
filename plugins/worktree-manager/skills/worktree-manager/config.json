@@ -11,5 +11,9 @@
   "registryPath": "~/.claude/worktree-registry.json",
   "defaultCopyDirs": [".agents", ".env.example"],
   "healthCheckTimeout": 30,
-  "healthCheckRetries": 6
+  "healthCheckRetries": 6,
+  "sparseCheckout": {
+    "enabled": false,
+    "defaultDirectories": []
+  }
 }

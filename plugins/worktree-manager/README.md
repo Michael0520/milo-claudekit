@@ -3,7 +3,7 @@ Worktree Manager
 
 ## Purpose
 
-Git worktree management for parallel development with Claude Code agents. Create isolated worktrees, allocate ports, and launch agents in separate terminal windows.
+Git worktree management for parallel development with Claude Code agents. Create isolated worktrees with optional sparse-checkout for monorepos, allocate ports, and launch agents in separate terminal windows.
 
 ## Skills
 
@@ -15,9 +15,11 @@ Git worktree management for parallel development with Claude Code agents. Create
 
 Skill config at `~/.claude/skills/worktree-manager/config.json`:
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| terminal | ghostty | Terminal app (ghostty, iterm2, tmux) |
-| portPool.start | 8100 | First port in pool |
-| portPool.end | 8199 | Last port in pool |
-| portsPerWorktree | 2 | Ports allocated per worktree |
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `terminal` | string | `"ghostty"` | Terminal app (ghostty, iterm2, tmux) |
+| `portPool.start` | number | `8100` | First port in pool |
+| `portPool.end` | number | `8199` | Last port in pool |
+| `portsPerWorktree` | number | `2` | Ports allocated per worktree |
+| `sparseCheckout.enabled` | boolean | `false` | Enable sparse-checkout for new worktrees |
+| `sparseCheckout.defaultDirectories` | string[] | `[]` | Default directories to check out when sparse-checkout is enabled |

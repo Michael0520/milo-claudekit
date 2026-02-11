@@ -1,22 +1,30 @@
 #!/bin/bash
 # register.sh - Register a worktree in the global registry
 #
-# Usage: ./register.sh <project> <branch> <branch-slug> <worktree-path> <repo-path> <ports> [task]
+# Usage: ./register.sh <project> <branch> <branch-slug> <worktree-path> <repo-path> <ports> [task] [sparse-enabled] [sparse-dirs]
 #
 # Arguments:
-#   project       - Project name (e.g., "obsidian-ai-agent")
-#   branch        - Full branch name (e.g., "feature/auth")
-#   branch-slug   - Slugified branch (e.g., "feature-auth")
-#   worktree-path - Full path to worktree
-#   repo-path     - Full path to original repo
-#   ports         - Comma-separated ports (e.g., "8100,8101")
-#   task          - Optional task description
+#   project        - Project name (e.g., "obsidian-ai-agent")
+#   branch         - Full branch name (e.g., "feature/auth")
+#   branch-slug    - Slugified branch (e.g., "feature-auth")
+#   worktree-path  - Full path to worktree
+#   repo-path      - Full path to original repo
+#   ports          - Comma-separated ports (e.g., "8100,8101")
+#   task           - Optional task description
+#   sparse-enabled - Optional: "true" to enable sparse-checkout tracking
+#   sparse-dirs    - Optional: Comma-separated sparse-checkout directories (e.g., "apps/api,packages/core")
 #
 # Example:
 #   ./register.sh obsidian-ai-agent feature/auth feature-auth \
 #     ~/tmp/worktrees/obsidian-ai-agent/feature-auth \
 #     ~/Projects/obsidian-ai-agent \
 #     8100,8101 "Implement OAuth"
+#
+# Example with sparse-checkout:
+#   ./register.sh obsidian-ai-agent feature/auth feature-auth \
+#     ~/tmp/worktrees/obsidian-ai-agent/feature-auth \
+#     ~/Projects/obsidian-ai-agent \
+#     8100,8101 "Implement OAuth" true "apps/api,packages/core"
 
 set -e
 
@@ -27,6 +35,8 @@ WORKTREE_PATH="$4"
 REPO_PATH="$5"
 PORTS="$6"
 TASK="${7:-}"
+SPARSE_ENABLED="${8:-false}"
+SPARSE_DIRS="${9:-}"
 
 # Validate inputs
 if [ -z "$PROJECT" ] || [ -z "$BRANCH" ] || [ -z "$BRANCH_SLUG" ] || [ -z "$WORKTREE_PATH" ] || [ -z "$REPO_PATH" ] || [ -z "$PORTS" ]; then
@@ -93,13 +103,21 @@ else
     TASK_JSON="null"
 fi
 
+# Build sparse-checkout JSON
+if [ "$SPARSE_ENABLED" = "true" ] && [ -n "$SPARSE_DIRS" ]; then
+    SPARSE_DIRS_JSON=$(echo "$SPARSE_DIRS" | tr ',' '\n' | jq -R '.' | jq -s .)
+    SPARSE_JSON="{\"enabled\": true, \"directories\": $SPARSE_DIRS_JSON}"
+else
+    SPARSE_JSON='{"enabled": false, "directories": []}'
+fi
+
 # Generate UUID
 UUID=$(uuidgen 2>/dev/null || cat /proc/sys/kernel/random/uuid 2>/dev/null || echo "wt-$(date +%s)-$$")
 
 # Add entry
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 TMP=$(mktemp)
-jq ".worktrees += [{
+jq --argjson sparse "$SPARSE_JSON" ".worktrees += [{
     \"id\": \"$UUID\",
     \"project\": \"$PROJECT\",
     \"repoPath\": \"$REPO_PATH\",
@@ -112,7 +130,8 @@ jq ".worktrees += [{
     \"agentLaunchedAt\": null,
     \"task\": $TASK_JSON,
     \"prNumber\": null,
-    \"status\": \"active\"
+    \"status\": \"active\",
+    \"sparseCheckout\": \$sparse
 }]" "$REGISTRY" > "$TMP" && mv "$TMP" "$REGISTRY"
 
 echo "✅ Registered worktree:"
@@ -122,4 +141,7 @@ echo "   Path: $WORKTREE_PATH"
 echo "   Ports: $PORTS"
 if [ -n "$TASK" ]; then
     echo "   Task: $TASK"
+fi
+if [ "$SPARSE_ENABLED" = "true" ]; then
+    echo "   Sparse-checkout: $SPARSE_DIRS"
 fi

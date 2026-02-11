@@ -23,6 +23,11 @@ Manage parallel development across ALL projects using git worktrees with Claude 
 - "clean up merged worktrees"
 - "clean up the auth worktree"
 - "launch agent in worktree X"
+- "create worktree with sparse-checkout for apps/api"
+- "spin up a sparse worktree for the monorepo"
+- "add apps/frontend to the sparse-checkout"
+- "disable sparse-checkout on the auth worktree"
+- "show sparse-checkout dirs for my worktrees"
 
 ---
 
@@ -61,6 +66,18 @@ Branch names are slugified for filesystem safety by replacing `/` with `-`:
 
 **Slugify manually:** `echo "feature/auth" | tr '/' '-'` → `feature-auth`
 
+### Sparse-Checkout Support
+
+For monorepos, sparse-checkout lets you check out only the directories you need — saving disk space and improving IDE performance.
+
+**How it works:** After creating a worktree with `--no-checkout`, run `git sparse-checkout init --cone` then `git sparse-checkout set <dirs>` to populate only the specified directories.
+
+**Config priority (highest → lowest):**
+1. Explicit directories passed during creation
+2. Project config (`.claude/worktree.json` → `sparseCheckout.directories`)
+3. Skill config (`config.json` → `sparseCheckout.defaultDirectories`)
+4. Disabled (full checkout) if nothing configured
+
 ### Port Allocation Rules
 - **Global pool**: 8100-8199 (100 ports total)
 - **Per worktree**: 2 ports allocated (for API + frontend patterns)
@@ -91,7 +108,11 @@ Branch names are slugified for filesystem safety by replacing `/` with `-`:
       "agentLaunchedAt": "2025-12-04T10:03:00Z",
       "task": "Implement OAuth login",
       "prNumber": null,
-      "status": "active"
+      "status": "active",
+      "sparseCheckout": {
+        "enabled": true,
+        "directories": ["apps/api", "packages/core"]
+      }
     }
   ],
   "portPool": {
@@ -120,6 +141,7 @@ Branch names are slugified for filesystem safety by replacing `/` with `-`:
 | `task` | string\|null | Task description for the agent |
 | `prNumber` | number\|null | Associated PR number if exists |
 | `status` | string | `active`, `orphaned`, or `merged` |
+| `sparseCheckout` | object | `{ enabled: boolean, directories: string[] }` |
 
 **Port pool fields:**
 | Field | Type | Description |
@@ -171,7 +193,8 @@ jq '.worktrees += [{
   "agentLaunchedAt": null,
   "task": "My task",
   "prNumber": null,
-  "status": "active"
+  "status": "active",
+  "sparseCheckout": {"enabled": false, "directories": []}
 }]' ~/.claude/worktree-registry.json > "$TMP" && mv "$TMP" ~/.claude/worktree-registry.json
 ```
 
@@ -260,6 +283,7 @@ jq '.portPool.allocated += [8100] | .portPool.allocated |= unique | .portPool.al
 | Register worktree | `scripts/register.sh` | Manual jq (see above) |
 | Launch agent in terminal | `scripts/launch-agent.sh` | Manual (see below) |
 | Show status | `scripts/status.sh` | `cat ~/.claude/worktree-registry.json \| jq ...` |
+| Sparse-checkout | `scripts/sparse-checkout.sh` | `git sparse-checkout init --cone && git sparse-checkout set <dirs>` |
 | Cleanup worktree | `scripts/cleanup.sh` | Manual (see Cleanup section) |
 
 ---
@@ -289,9 +313,25 @@ For EACH branch (can run in parallel):
    Option A (script): ~/.claude/skills/worktree-manager/scripts/allocate-ports.sh 2
    Option B (manual): Find 2 unused ports from 8100-8199, add to registry
 
+2.5. DETERMINE SPARSE-CHECKOUT (if monorepo)
+   a. Check if user specified directories explicitly
+   b. Check .claude/worktree.json for sparseCheckout.directories
+   c. Check config.json for sparseCheckout.defaultDirectories
+   d. If any found and sparseCheckout enabled → use --no-checkout in step 3
+
 3. CREATE WORKTREE
+   # Without sparse-checkout:
    mkdir -p ~/tmp/worktrees/$PROJECT
    git worktree add $WORKTREE_PATH -b $BRANCH
+
+   # With sparse-checkout:
+   mkdir -p ~/tmp/worktrees/$PROJECT
+   git worktree add $WORKTREE_PATH -b $BRANCH --no-checkout
+   ~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh setup $WORKTREE_PATH <dir1> <dir2>...
+   # Or manually:
+   # git -C $WORKTREE_PATH sparse-checkout init --cone
+   # git -C $WORKTREE_PATH sparse-checkout set <dir1> <dir2>...
+
    # If branch exists already, omit -b flag
 
 4. COPY UNCOMMITTED RESOURCES
@@ -403,6 +443,54 @@ git push origin --delete feature/auth
 
 ---
 
+## Manual Sparse-Checkout Setup
+
+If `scripts/sparse-checkout.sh` fails, set up sparse-checkout manually:
+
+**Initialize sparse-checkout in an existing worktree:**
+```bash
+cd $WORKTREE_PATH
+git sparse-checkout init --cone
+git sparse-checkout set apps/api packages/core packages/shared
+```
+
+**Add more directories later:**
+```bash
+cd $WORKTREE_PATH
+# Get current directories
+CURRENT=$(git sparse-checkout list)
+# Set all directories (current + new)
+git sparse-checkout set $CURRENT apps/frontend
+```
+
+**View current sparse-checkout directories:**
+```bash
+cd $WORKTREE_PATH
+git sparse-checkout list
+```
+
+**Disable sparse-checkout (restore full checkout):**
+```bash
+cd $WORKTREE_PATH
+git sparse-checkout disable
+```
+
+**Create worktree with sparse-checkout from scratch:**
+```bash
+# 1. Create worktree without checking out files
+git worktree add ~/tmp/worktrees/$PROJECT/$BRANCH_SLUG -b $BRANCH --no-checkout
+
+# 2. Initialize sparse-checkout
+git -C ~/tmp/worktrees/$PROJECT/$BRANCH_SLUG sparse-checkout init --cone
+
+# 3. Set directories to check out
+git -C ~/tmp/worktrees/$PROJECT/$BRANCH_SLUG sparse-checkout set apps/api packages/core
+
+# 4. Files are now populated only in specified directories
+```
+
+---
+
 ## Package Manager Detection
 
 Detect by checking for lockfiles in priority order:
@@ -466,11 +554,15 @@ Projects can provide `.claude/worktree.json` for custom settings:
     "healthCheck": "curl -sf http://localhost:{{PORT}}/health",
     "stop": "docker-compose down"
   },
-  "copyDirs": [".agents", ".env.example", "data/fixtures"]
+  "copyDirs": [".agents", ".env.example", "data/fixtures"],
+  "sparseCheckout": {
+    "enabled": true,
+    "directories": ["apps/api", "apps/frontend", "packages/core", "packages/shared"]
+  }
 }
 ```
 
-If this file exists, use its settings. Otherwise, auto-detect.
+If this file exists, use its settings. Otherwise, auto-detect. When `sparseCheckout.enabled` is `true`, worktrees will be created with `--no-checkout` and only the listed directories will be checked out.
 
 ---
 
@@ -527,15 +619,31 @@ Scripts are in `~/.claude/skills/worktree-manager/scripts/`
 # Automatically updates registry
 ```
 
+### sparse-checkout.sh
+```bash
+~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh setup <worktree-path> <dir1> [dir2]...
+~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh list <worktree-path>
+~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh add <worktree-path> <dir1> [dir2]...
+~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh disable <worktree-path>
+# Example:
+~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh setup \
+  "$HOME/tmp/worktrees/my-project/feature-auth" apps/api packages/core
+```
+
 ### register.sh
 ```bash
 ~/.claude/skills/worktree-manager/scripts/register.sh \
-  <project> <branch> <branch-slug> <worktree-path> <repo-path> <ports> [task]
+  <project> <branch> <branch-slug> <worktree-path> <repo-path> <ports> [task] [sparse-enabled] [sparse-dirs]
 # Example:
 ~/.claude/skills/worktree-manager/scripts/register.sh \
   "my-project" "feature/auth" "feature-auth" \
   "$HOME/tmp/worktrees/my-project/feature-auth" \
   "/path/to/repo" "8100,8101" "Implement OAuth"
+# Example with sparse-checkout:
+~/.claude/skills/worktree-manager/scripts/register.sh \
+  "my-project" "feature/auth" "feature-auth" \
+  "$HOME/tmp/worktrees/my-project/feature-auth" \
+  "/path/to/repo" "8100,8101" "Implement OAuth" true "apps/api,packages/core"
 ```
 
 ### launch-agent.sh
@@ -580,7 +688,11 @@ Location: `~/.claude/skills/worktree-manager/config.json`
   },
   "portsPerWorktree": 2,
   "worktreeBase": "~/tmp/worktrees",
-  "defaultCopyDirs": [".agents", ".env.example"]
+  "defaultCopyDirs": [".agents", ".env.example"],
+  "sparseCheckout": {
+    "enabled": false,
+    "defaultDirectories": []
+  }
 }
 ```
 
@@ -628,6 +740,33 @@ find ~/tmp/worktrees -maxdepth 2 -type d
 4. Continue with other worktrees
 5. User can fix and re-validate manually
 
+### Sparse-checkout shows unexpected files
+```bash
+# Re-initialize cone mode
+cd $WORKTREE_PATH
+git sparse-checkout init --cone
+git sparse-checkout set <dir1> <dir2>
+```
+
+### Sparse-checkout disabled accidentally
+```bash
+# Re-enable with the same directories from registry
+DIRS=$(cat ~/.claude/worktree-registry.json | jq -r '.worktrees[] | select(.worktreePath == "'$WORKTREE_PATH'") | .sparseCheckout.directories[]')
+cd $WORKTREE_PATH
+git sparse-checkout init --cone
+git sparse-checkout set $DIRS
+```
+
+### Need a directory not in sparse-checkout
+```bash
+# Add it without disrupting existing checkout
+~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh add $WORKTREE_PATH apps/new-dir
+# Or manually:
+cd $WORKTREE_PATH
+CURRENT=$(git sparse-checkout list)
+git sparse-checkout set $CURRENT apps/new-dir
+```
+
 ---
 
 ## Example Session
@@ -673,4 +812,43 @@ find ~/tmp/worktrees -maxdepth 2 -type d
     | fix/login-bug | 8102, 8103 | ~/tmp/worktrees/.../fix-login-bug | Fix login redirect |
 
     Both agents running in Ghostty windows.
+    ```
+
+### Monorepo with Sparse-Checkout
+
+**User:** "Create a worktree for feature/new-api, only check out apps/api and packages/core"
+
+**You:**
+1. Detect project: `my-monorepo` (from git remote)
+2. Detect package manager: `bun` (found bun.lockb)
+3. Allocate 2 ports: `~/.claude/skills/worktree-manager/scripts/allocate-ports.sh 2` → `8100 8101`
+4. Create worktree with sparse-checkout:
+   ```bash
+   mkdir -p ~/tmp/worktrees/my-monorepo
+   git worktree add ~/tmp/worktrees/my-monorepo/feature-new-api -b feature/new-api --no-checkout
+   ~/.claude/skills/worktree-manager/scripts/sparse-checkout.sh setup \
+     ~/tmp/worktrees/my-monorepo/feature-new-api apps/api packages/core
+   ```
+5. Install deps (only in checked-out directories):
+   ```bash
+   (cd ~/tmp/worktrees/my-monorepo/feature-new-api && bun install)
+   ```
+6. Register with sparse-checkout info:
+   ```bash
+   ~/.claude/skills/worktree-manager/scripts/register.sh \
+     "my-monorepo" "feature/new-api" "feature-new-api" \
+     "$HOME/tmp/worktrees/my-monorepo/feature-new-api" \
+     "/path/to/my-monorepo" "8100,8101" "Build new API endpoints" \
+     true "apps/api,packages/core"
+   ```
+7. Launch agent
+8. Report:
+    ```
+    Created worktree with sparse-checkout:
+
+    | Branch | Ports | Sparse Dirs | Task |
+    |--------|-------|-------------|------|
+    | feature/new-api | 8100, 8101 | apps/api, packages/core | Build new API endpoints |
+
+    Only 2 directories checked out (saving disk space and IDE indexing time).
     ```

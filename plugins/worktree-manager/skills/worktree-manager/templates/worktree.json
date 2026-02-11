@@ -18,6 +18,11 @@
 
   "copyDirs": [".agents", ".env.example"],
 
+  "sparseCheckout": {
+    "enabled": false,
+    "directories": []
+  },
+
   "preBranch": null,
   "postCreate": null
 }

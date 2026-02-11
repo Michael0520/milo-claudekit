@@ -80,8 +80,8 @@ if [ -z "$WORKTREES" ]; then
 fi
 
 # Print header
-printf "%-25s %-20s %-12s %-8s %-10s %s\n" "PROJECT" "BRANCH" "PORTS" "PR" "STATUS" "TASK"
-printf "%-25s %-20s %-12s %-8s %-10s %s\n" "─────────────────────────" "────────────────────" "────────────" "────────" "──────────" "──────────────────────"
+printf "%-25s %-20s %-12s %-8s %-10s %-10s %s\n" "PROJECT" "BRANCH" "PORTS" "PR" "STATUS" "SPARSE" "TASK"
+printf "%-25s %-20s %-12s %-8s %-10s %-10s %s\n" "─────────────────────────" "────────────────────" "────────────" "────────" "──────────" "──────────" "──────────────────────"
 
 # Process each worktree
 echo "$WORKTREES" | while read -r wt; do
@@ -131,17 +131,32 @@ echo "$WORKTREES" | while read -r wt; do
         PR="#$PR"
     fi
 
+    # Detect sparse-checkout state
+    SPARSE="–"
+    SPARSE_ENABLED=$(echo "$wt" | jq -r '.sparseCheckout.enabled // false')
+    if [ "$SPARSE_ENABLED" = "true" ]; then
+        SPARSE_COUNT=$(echo "$wt" | jq -r '.sparseCheckout.directories | length // 0')
+        SPARSE="Yes($SPARSE_COUNT)"
+    elif [ -d "$WORKTREE_PATH" ]; then
+        # Check live sparse-checkout state if not tracked in registry
+        LIVE_SPARSE=$(git -C "$WORKTREE_PATH" sparse-checkout list 2>/dev/null || echo "")
+        if [ -n "$LIVE_SPARSE" ]; then
+            LIVE_COUNT=$(echo "$LIVE_SPARSE" | wc -l | tr -d ' ')
+            SPARSE="Yes($LIVE_COUNT)"
+        fi
+    fi
+
     # Check if any port is in use (indicates server running)
     FIRST_PORT=$(echo "$PORTS" | cut -d',' -f1)
     if lsof -i :"$FIRST_PORT" &>/dev/null; then
         PORTS="${PORTS}*"
     fi
 
-    printf "%-25s %-20s %-12s %-8s %-10s %s\n" "$PROJECT" "$BRANCH" "$PORTS" "$PR" "$STATUS" "$TASK"
+    printf "%-25s %-20s %-12s %-8s %-10s %-10s %s\n" "$PROJECT" "$BRANCH" "$PORTS" "$PR" "$STATUS" "$SPARSE" "$TASK"
 done
 
 echo ""
-echo "Legend: * = port in use, ✓ = PR merged, ✗ = PR closed"
+echo "Legend: * = port in use, ✓ = PR merged, ✗ = PR closed, – = no sparse-checkout"
 echo ""
 
 # Show port pool status
@@ -166,4 +181,24 @@ if [ -n "$PROJECT_FILTER" ]; then
     jq -r ".worktrees[] | select(.project == \"$PROJECT_FILTER\") | \"  \\(.project)/\\(.branchSlug): \\(.worktreePath)\"" "$REGISTRY" 2>/dev/null
 else
     jq -r '.worktrees[] | "  \(.project)/\(.branchSlug): \(.worktreePath)"' "$REGISTRY" 2>/dev/null
+fi
+echo ""
+
+# Show sparse-checkout details for worktrees that have it enabled
+SPARSE_ENTRIES=""
+if [ -n "$PROJECT_FILTER" ]; then
+    SPARSE_ENTRIES=$(jq -c ".worktrees[] | select(.project == \"$PROJECT_FILTER\" and .sparseCheckout.enabled == true)" "$REGISTRY" 2>/dev/null || echo "")
+else
+    SPARSE_ENTRIES=$(jq -c '.worktrees[] | select(.sparseCheckout.enabled == true)' "$REGISTRY" 2>/dev/null || echo "")
+fi
+
+if [ -n "$SPARSE_ENTRIES" ]; then
+    echo "───────────────────────────────────────────────────────────────────────────────"
+    echo "Sparse-Checkout Details:"
+    echo "$SPARSE_ENTRIES" | while read -r entry; do
+        SC_PROJECT=$(echo "$entry" | jq -r '.project')
+        SC_BRANCH=$(echo "$entry" | jq -r '.branchSlug')
+        SC_DIRS=$(echo "$entry" | jq -r '.sparseCheckout.directories | join(", ")')
+        echo "  $SC_PROJECT/$SC_BRANCH: $SC_DIRS"
+    done
 fi
