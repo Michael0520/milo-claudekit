@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.12.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.11.0...claudekit-v0.12.0) (2026-02-11)
+## [0.12.0](https://github.com/Michael0520/milo-claudekit/compare/claudekit-v0.11.0...claudekit-v0.12.0) (2026-02-19)
 
 
 ### Features
